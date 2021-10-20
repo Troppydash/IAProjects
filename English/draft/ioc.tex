@@ -1,0 +1,74 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[a4paper,bindingoffset=0.2in,%
+left=1in,right=1in,top=1in,bottom=1in,%
+footskip=.25in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{lineno}
+\usepackage{refcount}
+\usepackage{parskip}
+
+% this generate references
+\newcommand*{\test}[2]{%
+    \ifnum\getrefnumber{#1}=\getrefnumber{#2}%
+    \ref{#1}%
+    \else
+    \ref{#1}--\ref{#2}%
+    \fi
+}
+\renewcommand\linenumberfont{\normalfont\bfseries\small}
+
+\begin{document}
+
+\paragraph{Topic}
+How creative and persuasive text explore the issue of slavery.
+
+\paragraph{Literary Text}
+Perfume, The Story of a Murder, by Patrick Su\"skind
+
+\begin{linenumbers}
+    From his first glance at Monsieur Grimal --- no, from the first breath that sniffed in the odor
+enveloping Grimal --- Grenouille knew that this man was capable of thrashing him to death for the least
+infraction. His life was worth precisely as much as the work he could accomplish and consisted only of
+whatever utility Grimal ascribed to it.
+
+And so, Grenouille came to heel, never once making an attempt
+to  resist.  With  each  new  day,  he  would  bottle  up  inside  himself  the  energies  of  his  defiance  and
+contumacy  and  expend  them  solely  to  survive  the  impending  ice  age  in  his  ticklike  way.  Tough,
+uncomplaining,  inconspicuous,  he  tended  the  light  of  life’s  hopes  as  a  very  small,  but  carefully
+nourished flame. He was a paragon of docility, frugality, and diligence in his work, obeyed implicitly,
+and appeared satisfied with every meal offered. In the evening, he meekly let himself be locked up in a
+closet off to one side of the tannery floor, where tools were kept and the raw, salted hides were hung.
+There  he  slept  on  the  hard,  bare  earthen  floor.  During  the  day  he  worked  as  long  as  there  was
+light-eight  hours  in  winter,  fourteen,  fifteen,  sixteen  hours  in  summer.  He  scraped  the  meat  from
+bestially  stinking  hides,  watered  them  down,  dehaired  them,  limed,  bated, and fulled  them,  rubbed
+them down with pickling dung, chopped wood, stripped bark from birch and yew, climbed down into
+the tanning pits filled with caustic fumes, layered the hides and pelts just as the journeymen ordered
+him,  spread  them  with  smashed  gallnuts,  covered  this  ghastly  funeral  pyre  with  yew  branches  and
+earth.  Years  later,  he  would  have  to  dig  them  up  again  and  retrieve  these  mummified  hide
+carcasses-now tanned leather --- from their grave.
+
+When he was not burying or digging up hides, he was hauling water. For months on end, he
+hauled  water  up  from  the  river,  always  in  two  buckets,  hundreds  of  bucketfuls  a  day,  for  tanning
+requires vast quantities of water, for soaking, for boiling, for dyeing. For months on end, the water
+hauling left him without a dry stitch on his body; by evening his clothes were dripping wet and his skin
+was cold and swollen like a soaked shammy.
+\end{linenumbers}
+
+\newpage
+
+\paragraph{Language Text} What to the slave is the Fourth of July? By Frederick Douglass
+
+https://www.theguardian.com/commentisfree/2018/jul/05/frederick-douglass-anti-slavery-speech-what-to-the-slave-is-the-fourth-of-july
+
+\resetlinenumber
+\begin{linenumbers}
+ What, to the American slave, is your Fourth of July? I answer: a day that reveals to him, more than all other days in the year, the gross injustice and cruelty to which he is the constant victim. To him, your celebration is a sham; your boasted liberty, an unholy license; your national greatness, swelling vanity; your sounds of rejoicing are empty and heartless; your denunciations of tyrants, brass-fronted impudence; your shouts of liberty and equality, hollow mockery; your prayers and hymns, your sermons and thanksgivings, with all your religious parade, and solemnity, are, to him, mere bombast, fraud, deception, impiety, and hypocrisy – a thin veil to cover up crimes which would disgrace a nation of savages. There is not a nation on the earth guilty of practices, more shocking and bloody, than are the people of these United States, at this very hour.
+
+ Go where you may, search where you will, roam through all the monarchies and despotisms of the old world, travel through South America, search out every abuse, and when you have found the last, lay your facts by the side of the everyday practices of this nation, and you will say with me, that, for revolting barbarity and shameless hypocrisy, America reigns without a rival.
+
+ Americans! Your republican politics are flagrantly inconsistent. The existence of slavery in this country brands your republicanism as a sham, your humanity as a base pretense, and your Christianity as a lie. It destroys your moral power abroad; it corrupts your politicians at home. It saps the foundation of religion; it makes your name a hissing, and a byword to a mocking earth. It is the antagonistic force in your government, the only thing that seriously disturbs and endangers your Union. It fetters your progress; it is the enemy of improvement, the deadly foe of education; it fosters pride; it breeds insolence; it promotes vice; it shelters crime; it is a curse to the earth that supports it; and yet, you cling to it, as if it were the sheet anchor of all your hopes. Oh! Be warned! Be warned! A horrible reptile is coiled up in your nation’s bosom; the venomous creature is nursing at the tender breast of your youthful republic; for the love of God, tear away, and fling from you the hideous monster, and let the weight of twenty millions crush and destroy it forever!
+
+ Allow me to say, in conclusion, notwithstanding the dark picture I have this day presented of the state of the nation, I do not despair of this country. There are forces in operation, which must inevitably work the downfall of slavery. “The arm of the Lord is not shortened,” and the doom of slavery is certain. I, therefore, leave off where I began, with hope.
+\end{linenumbers}
+
+\end{document}
