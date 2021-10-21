@@ -12,3 +12,6 @@
 *.fls
 *.out
 *.run.xml
+
+# others
+*.kra~

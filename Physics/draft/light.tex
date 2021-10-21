@@ -14,6 +14,7 @@
 \usepackage{circuitikz}
 \usepackage{longtable}
 \usepackage{hyperref}
+\usepackage{subfig}
 
 % referencing
 \usepackage[style=apa]{biblatex}
@@ -30,10 +31,10 @@
 \counterwithin{figure}{section}
 
 % uncertainty
-\newcommand{\absun}{\Delta \text{un}\,}
-\newcommand{\relun}{\% \text{un}\,}
+\newcommand{\absun}{\Delta \text{unc}\,}
+\newcommand{\relun}{\% \text{unc}\,}
 
-\title{Empirically finding the typical luminous efficiency of a light bulb through the inverse square law}
+\title{Empirically finding the typical luminous efficiency of an incandescent light bulb through the inverse square law}
 \author{Terry Qi}
 
 \begin{document}
@@ -44,7 +45,7 @@
 
 \subsection{Introduction}
 % personal
-During the examination of a potential IA idea on the intensity of a refracted light-beam, I struggled with the implementation of a realistic light due to a lack of understanding and care towards the drop of intensity of light with respect to the distance. Because the glass cube I was working with had significant length, the decrease in intensity of the light-beam within the glass damaged my data and exponentially increased the difficulty in linearization. Therefore, I wanted to empirically see how the difference in distances will affect the measurement of light intensity. Additionally, I found the labs bulbs are prone to extreme heat even with little power and duration. Thus, I thought to use this experiment to find the luminous efficiency of the typical light-bulbs to confirm my suspicion.
+During the examination of a potential IA idea on the intensity of a refracted light-beam, I struggled with the implementation of a realistic light due to a lack of understanding and care towards the drop of intensity of light with respect to the distance. Because the glass cube I was working with had significant length, the decrease in intensity of the light-beam within the glass damaged my data and exponentially increased the difficulty in linearization. Therefore, I wanted to empirically see how the difference in distances will affect the measurement of light intensity. Additionally, I found the labs bulbs are prone to extreme heat even with little power and duration. Thus, I thought to use this experiment to find the luminous efficiency of an incandescent lab light-bulb to confirm my suspicion.
 
 \subsection{Research Question}
 \begin{quote}
@@ -118,7 +119,7 @@ of which we can use to define the amount of luminous power incident on a surface
 \end{figure}
 
 
-For the light sensor used in the experiment measures intensity in lux, the above dive into luminosity serves as a justification for why I think the inverse square root applies to not just radiant intensity, but also to luminous intensity. Because the process of conversion is linear, it seems reasonable to hypothesise that illuminance is proportional to the distance squared.
+For the light sensor used in the experiment measures intensity in lux, the above dive into luminosity serves as a justification for why I think the inverse square root applies to not just radiant intensity, but also to luminous intensity. Because the process of conversion is linear, it seems reasonable to hypothesize that illuminance is proportional to the distance squared.
 
 
 \subsection{Variables}
@@ -157,7 +158,7 @@ The temperature of the bulb filament & For the resistance of a resistor tend to 
 \begin{enumerate}
  \item Dim the room lights and choose a location with the least amount of ambient light to do the experiment. Ideally the test should be done early in the morning or at night.
 
- \item Connect the Vernier light sensor ($\pm$ 1 \si{lux}) to the connection hub, then to the laptop. Change the light sensor's range to (0–6000 \si{lux}) by flipping the side switch to the up position, and verify a reading within the software on the laptop. Enable ``Statistics'' in the software by clicking the button named ``Stats''.
+ \item Connect the Vernier light sensor ($\pm$ 2\si{lux}) to the connection hub, then to the laptop. Change the light sensor's range to (0–6000 \si{lux}) by flipping the side switch to the up position, and verify a reading within the software on the laptop. Enable ``Statistics'' in the software by clicking the button named ``Stats''.
 
  \item Set up the electrical circuit as shown in diagram \ref{fig:cd}, using a 5W light-bulb, 5 insulated wires, an 12V power supply dialled down to 8V, and a digital ammeter ($\pm 0.1 \si{A}$) and voltmeter ($\pm 0.1 \si{V}$). Note that the light-stand may need to be tilted so the light-bulb is in contract with the ground.
 
@@ -189,6 +190,7 @@ The temperature of the bulb filament & For the resistance of a resistor tend to 
 % annotated picture, & a software screen
 \begin{figure}[h!]
  \centering
+ \includegraphics[width=\textwidth]{assets/setuppiclabelled.png}
  \caption{The experiment layout}
  \label{fig:layout}
 \end{figure}
@@ -220,12 +222,13 @@ Power is defined in figure \ref{eq:work}:
         &= 0.27\si{A} \times 7.20\si{V} \approx 1.94 \si{W}
 \end{align*}
 
-\textit{Uncertainty}: \%un W = \%un A + \%un V
+\textit{Uncertainty}: $\relun$W =  $\relun$A +  $\relun$V
 \begin{align*}
     \relun A &= \frac{0.01}{0.27},\quad \relun V = \frac{0.01}{7.20}\\
-    \relun W &\approx 0.038,\quad \absun W \approx 0.07W
+    \relun \si{W} &\approx 0.038,\quad \absun \si{W} \approx 0.07\si{W}
 \end{align*}
 
+Therefore: $P = 1.94 \pm 0.07 \si{W}$
 
 \subsubsection*{Processing Illuminance}
 Subtract the each illuminance values by the ambient illuminance value (figure \ref{fig:corrected}).
@@ -235,7 +238,7 @@ Subtract the each illuminance values by the ambient illuminance value (figure \r
      \absun \text{Corrected} = 0.2 + 0.2 = 0.4\si{lx}
 \end{align*}
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.5]{assets/correcteddata.png}
     \caption{Corrected illuminance values}
@@ -244,14 +247,14 @@ Subtract the each illuminance values by the ambient illuminance value (figure \r
 
 Average the measured illuminance. Additionally, the distances are converted into standard SI units in meters (figure \ref{fig:average}, graph \ref{gph:average}).
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.6]{assets/averagedata.png}
     \caption{Averaged illuminance values}
     \label{fig:average}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{assets/averagegraph.png}
     \caption{Graph of the averaged illuminance values}
@@ -262,19 +265,21 @@ Graph \ref{gph:average} looks like an inverse squared graph, attempt straighteni
 
 \textit{Error bars}: $\relun 1/{\text{distance}}^2$ = $2 \times \relun \text{distance}$
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{assets/transformdata.png}
     \caption{Transformed distance data}
     \label{fig:tdata}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{assets/transformgraph.png}
+    \includegraphics[scale=0.5]{assets/transformgraph.png}
     \caption{Transformed distance graph}
     \label{gph:tdata}
 \end{figure}
+
+The justification for the horizontal error line of worst fit resides in the accuracy of the measuring devices: the percentage errors of the ruler are (for all values) larger than the percentage error of the light sensor, as indicated by the size of the error bars.
 
 The two linear regression formulas from graph \ref{gph:tdata} are as follow:
 \begin{align*}
@@ -297,12 +302,21 @@ Therefore, the equation is derived as figure \ref{fig:rel}:
     \label{fig:rel}
 \end{figure}
 
+% least range to most and halve range
+% justify the axis of unc
+
 \section{Conclusions}
 \subsection{Result}
+
+The final equation (figure \ref{fig:rel})
+
+
 \subsection{Implications}
 \subsection{Reflection}
 
 % other stuff
+
+%
 
 \newpage
 \nocite{*}
