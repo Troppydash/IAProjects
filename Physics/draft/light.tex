@@ -34,7 +34,10 @@
 \newcommand{\absun}{\Delta \text{unc}\,}
 \newcommand{\relun}{\% \text{unc}\,}
 
-\title{Empirically finding the typical luminous efficiency of an incandescent light bulb through the inverse square law}
+\newcommand{\paragraphnl}[1]{\textbf{#1}\\\\}
+
+
+\title{Empirically finding the typical luminous efficacy of an incandescent light bulb through the inverse square law}
 \author{Terry Qi}
 
 \begin{document}
@@ -45,7 +48,7 @@
 
 \subsection{Introduction}
 % personal
-During the examination of a potential IA idea on the intensity of a refracted light-beam, I struggled with the implementation of a realistic light due to a lack of understanding and care towards the drop of intensity of light with respect to the distance. Because the glass cube I was working with had significant length, the decrease in intensity of the light-beam within the glass damaged my data and exponentially increased the difficulty in linearization. Therefore, I wanted to empirically see how the difference in distances will affect the measurement of light intensity. Additionally, I found the labs bulbs are prone to extreme heat even with little power and duration. Thus, I thought to use this experiment to find the luminous efficiency of an incandescent lab light-bulb to confirm my suspicion.
+During the examination of a potential IA idea on the intensity of a refracted light-beam, I struggled with the implementation of a realistic light due to a lack of understanding and care towards the drop of intensity of light with respect to the distance. Because the glass cube I was working with had significant length, the decrease in intensity of the light-beam within the glass damaged my data and exponentially increased the difficulty in linearization. Therefore, I wanted to empirically see how the difference in distances will affect the measurement of light intensity. Additionally, I found the labs bulbs are prone to extreme heat even with little power and duration. Thus, I thought to use this experiment to find the luminous efficacy of an incandescent lab light-bulb to confirm my suspicion.
 
 \subsection{Research Question}
 \begin{quote}
@@ -207,15 +210,16 @@ Avoid touching the light-bulb throughout the experiment. The light-bulb got supe
     \centering
     \includegraphics[width=\textwidth]{assets/rawdata.png}
     \caption{Unprocessed experimental data}
+    \label{fig:raw}
 \end{figure}
 
 \subsection{Processing}
 \paragraph{Notation}
 
-Uncertainty: un \quad Absolute uncertainty: $\Delta$un \quad Relative uncertainty: \%un
+Uncertainty: unc \quad Absolute uncertainty: $\Delta$unc \quad Relative uncertainty: \%unc
 
 
-\subsubsection*{Processing Power}
+\subsubsection{Processing Power}
 Power is defined in figure \ref{eq:work}:
 \begin{align*}
 \text{Power} &= \text{Current} \times \text{Voltage}\\
@@ -230,7 +234,9 @@ Power is defined in figure \ref{eq:work}:
 
 Therefore: $P = 1.94 \pm 0.07 \si{W}$
 
-\subsubsection*{Processing Illuminance}
+\subsubsection{Processing Illuminance}
+
+\paragraphnl{Correcting for the ambient illuminance}
 Subtract the each illuminance values by the ambient illuminance value (figure \ref{fig:corrected}).
 
 \textit{Uncertainty}: $\absun$Corrected = $\absun$Measured + $\absun$Ambient
@@ -245,11 +251,12 @@ Subtract the each illuminance values by the ambient illuminance value (figure \r
     \label{fig:corrected}
 \end{figure}
 
+\paragraphnl{Averaging trial illuminances}
 Average the measured illuminance. Additionally, the distances are converted into standard SI units in meters (figure \ref{fig:average}, graph \ref{gph:average}).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.6]{assets/averagedata.png}
+    \includegraphics[scale=0.5]{assets/averagedata.png}
     \caption{Averaged illuminance values}
     \label{fig:average}
 \end{figure}
@@ -261,7 +268,9 @@ Average the measured illuminance. Additionally, the distances are converted into
     \label{gph:average}
 \end{figure}
 
-Graph \ref{gph:average} looks like an inverse squared graph, attempt straightening with $1/{\text{distance}}^2$ transformation. The transformation data and error is generated with Microsoft Excel (figure \ref{fig:tdata}, graph \ref{gph:tdata}).
+
+\paragraphnl{Applying inverse squared transform on distance}
+Graph \ref{gph:average} looks like an inverse squared graph, so I attempted to straighten it with $1/{\text{distance}}^2$ transformation. The transformation data and error is generated with Microsoft Excel (figure \ref{fig:tdata}, graph \ref{gph:tdata}).
 
 \textit{Error bars}: $\relun 1/{\text{distance}}^2$ = $2 \times \relun \text{distance}$
 
@@ -274,26 +283,30 @@ Graph \ref{gph:average} looks like an inverse squared graph, attempt straighteni
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.5]{assets/transformgraph.png}
+    \includegraphics[width=\textwidth]{assets/transformgraph.png}
     \caption{Transformed distance graph}
     \label{gph:tdata}
 \end{figure}
 
-The justification for the horizontal error line of worst fit resides in the accuracy of the measuring devices: the percentage errors of the ruler are (for all values) larger than the percentage error of the light sensor, as indicated by the size of the error bars.
+\paragraphnl{Gradient and Errors}
+The justification for the horizontal error line of worst fits in figure \ref{gph:tdata} resides in the accuracy of the measuring devices: the percentage errors of the ruler are (for all values) larger than the percentage error of the light sensor, as indicated by the size of the error bars.
 
-The two linear regression formulas from graph \ref{gph:tdata} are as follow:
-\begin{align*}
-    E_v &= 1.58 \frac{1}{s^2} + 49.2\\
-    E_v &= 1.76 \frac{1}{s^2} - 25.5
-\end{align*}
 
-Final \% error: $|1.58-1.76| / 1.58 \approx 0.114 \approx 11.4\%$
+Higher gradient line of worst fit (HGLWF): 1.7209
 
-\textit{Uncertainty}: 11.4\% of $1.58$ = 0.2 (1 sf)
+Lower gradient line of worst fit (LGLWF): 1.4768
+
+Gradient of line of best fit (GLBF): 1.5881
+
+Half range: $\frac{1}{2} (\text{HGLWF} - \text{LGLWF})= \frac{1}{2}(1.7209-1.4768) \approx 0.121 \approx 12.1\% $
+
+Final \% error: $12.1\%$
+
+\textit{Uncertainty}: \% error x GLBF = 12.1\% of $1.59$ = 0.2 (1 sf)
 
 Slope = $1.6 \pm 0.2$
 
-Therefore, the equation is derived as figure \ref{fig:rel}:
+Therefore, the relationship is summarized as in figure \ref{fig:rel}:
 \begin{figure}[h!]
     \[
        E_v = (1.6 \pm 0.2) \frac{1}{s^2} + 49.2
@@ -302,21 +315,74 @@ Therefore, the equation is derived as figure \ref{fig:rel}:
     \label{fig:rel}
 \end{figure}
 
-% least range to most and halve range
-% justify the axis of unc
-
 \section{Conclusions}
 \subsection{Result}
 
-The final equation (figure \ref{fig:rel})
+Following the data collection and some transformation for linearization, the relationship is summarized in figure \ref{fig:rel}. It seems that the data had supported my suspicion to a large extend. From graph \ref{gph:average}, one can see the that measured illuminance  greatly falls when the distance to source increases --- notice the distance scale. To create a linear curve, the illuminance ($E_v$) is plotted against the inverse square of the distance ($\frac{1}{s^2}$) shown in graph \ref{gph:tdata}. The small variance of the data points from the line of best fit is a strong evidence to support my hypothesis.
 
+However, for the hypothesis also suggests that the relation curve should also intercept the y axis at point (0, 0), the lack of that feature in the graph suggests some systematical error are present --- the line of best fit has a positive intercept of $34.2 \si{lx}$ instead of $0 \si{lx}$. The existance of some systematic error shifting the curve upwards usually means a degree of inaccuracy, but judging from the small percentage of the error in respect to the values data points --- $34.2 / 1798 \approx 2\%$, the inaccuracy present here is tiny, further indicating a success in my method. Nevertheless, the systematic error could be caused by the erroneous reading of the ambient illuminance, parallax error in aligning the ruler, or by a lack of calibration of the light sensor.
+
+Additionally, the experimental data contains a noticeable amount of uncertainties indicated by the large error bars, particularly at smaller distances. There also exists large random error in the illuminance measurement, as indicated by the high half ranges of the trials of illuminance measurements during averaging (figure \ref{fig:average}) --- sometimes to a degree of $102/1798 \approx 5.7\%$ at the distance of $3\si{cm}$. This is most likely caused by the fluctuation of the light level in the room, which is likely caused by the leakage of sunlight through the window blinds. This is also reflected in the gradient calculations, for the slope had a relatively large uncertainty of $12.1\%$, supporting the presence of large random errors. However, the averaging of the data seemed to reduce the effects of the error. The line of best fit passed through all 8 points of the independent variable, and had a very high R-squared value of $0.9995$. This shows a high level of correlation in the data. In conclusion, the raw dataset presented in figure \ref{fig:raw} is said to be highly accuracy but less precise, and contains medium amounts of uncertainty.
 
 \subsection{Implications}
+
+If we were to define the proportionality constant $k(P)$ in figure \ref{eq:li} with parameter power, such that:
+
+\begin{align*}
+    k(P) &= \eta P
+    E_v = \eta P \frac{1}{s^2},
+\end{align*}
+
+where $\eta$ is another constant, I can fulfill my motivation for this experiment. Notice the units of the constant $\eta$ is $(\frac{\si{lx}}{\si{W\per m^2}} = \frac{\si{lm}}{\si{W}})$, is a value that is only depended on the light source used. Therefore, the constant $\eta$ is a measure of the efficacy of the light-bulb used in the amount of luminous power produced per unit power. This is also known as the typical luminous efficacy, one that I can use to compare to other light-bulbs using an online database. Furthermore, the value can be used to compare efficiency of light-bulbs in your daily life, whether that is to save money, or like me, to appreciate how far lighting technology had advanced.
+
+A division is needed to calculate the luminous efficacy $\eta$:
+\begin{align*}
+    \eta &= \frac{k}{P} = \frac{1.6 \pm 0.2}{1.94 \pm 0.07}\\
+    &\approx 0.82 \pm 0.13 \si{lm\per W}.
+\end{align*}
+
+In comparison to the typical values shown in table \ref{tbl:leff}, the lab incandescent 5W light-bulb that I've used, which has a luminous efficacy value of $0.82 \pm 0.13 (\si{lm\per W})$, looks to be as efficient in producing light as a typical fireplace. This is unsurprising, as the outer glass casing of the bulb readily heats up when it is powered, indicating energy loss in the form of thermal energy. A suggestion is to made for the school physics department for a switch to safer (less temperature), and more energy efficient light-bulbs for general experiments.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l|l}
+        Category     & Luminous Efficacy (lm/W) \\ \hline
+        Combustion   & 1-2                      \\
+        Incandescent & 5-17.5                   \\
+        Halogen      & 16.7-35                  \\
+        Fluorescent  & 46-104.2                 \\
+        LED          & 75-210
+    \end{tabular}
+    \caption{List of common luminous efficacy values of light sources}
+    \label{tbl:leff}
+\end{table}
+
+%https://www.wikiwand.com/en/Luminous_efficacy
+
 \subsection{Reflection}
 
-% other stuff
+Here is a list on the handling of the controlled variables/potential error factors, and future improvements to be made.
 
-%
+\subsection{Random Errors}
+\paragraph{Fluctuation of the outside light level} This is potentially a significant factor in creating a large uncertainty and low precision in the raw illuminance data. The advice would be to conduct the experiment at night, or in a totally blackout room without light pollution. This will increase the precision of the experiment and decrease the uncertainty on the luminous efficacy.
+
+\paragraph{The sensitivity of the light sensor} Insignificant, for the equipment is properly taped down, removing the problem of a shaky hand.
+
+\paragraph{The power supplied to the light-bulb}
+Insignificant, for the power held stable during the experiment.
+
+\subsection{Systematic Errors}
+\paragraph{Environmental room intensity}
+A potentially significant variable. The small but existent systematic error is likely to be caused by the erroneous measure of the ambient room light level. Performing the experiment in a blackout room or at night is likely to reduce the effects of the ambient room intensity and increase the accuracy of the dataset, possibility creating a curve that intercepts closer to 0 on the y axis.
+
+\paragraph{The temperature of the bulb filament}
+Insignificant, for the power is kept below the operating power limit and a lack of systematic decreasing illuminance during trials.
+
+\paragraph{Parallax placements of the ruler}
+A potentially significant variable. For the wooden ruler have depth, an angled top-down view to place the ruler is likely to result in parallax errors, thus systematically displacing the measured distances. It may be wise to have used a paper with beforehand markings of the distances, which is likely in reducing the systematic error shown in the curve, and potentially help bring the intercept closer to point (0,0).
+
+\paragraph{Accuracy of the light sensor}
+A variable that I was the most concerned about. This may be the largest cause of the systematic error. I could follow a lengthy calibration test listed on the manufacture's website against a factory calibrated source, which will decrease the systematic error and increase the accuracy of the data.
 
 \newpage
 \nocite{*}
