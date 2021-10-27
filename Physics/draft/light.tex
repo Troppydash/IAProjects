@@ -121,10 +121,11 @@ of which we can use to define the amount of luminous power incident on a surface
  \label{eq:dti}
 \end{figure}
 
+For the light sensor I have only measures intensity in lux, the above dive into luminosity serves as a justification for why I think the inverse square root applies to not just radiant intensity, but also to luminous intensity. Because the process of conversion is linear, it seems reasonable to hypothesize that illuminance is proportional to the distance squared.
 
-For the light sensor used in the experiment measures intensity in lux, the above dive into luminosity serves as a justification for why I think the inverse square root applies to not just radiant intensity, but also to luminous intensity. Because the process of conversion is linear, it seems reasonable to hypothesize that illuminance is proportional to the distance squared. Therefore, I will be testing the illuminance of a lab incandescent light-bulb against a small range of distances from 3cm to 10cm, so that the scale of illuminance have a smaller range for the intensity seems to decrease very rapidly due to the inverse square relation.
+To test my hypothesis, I thought to conduct the experiment on the small 5W lab light-bulbs, for they have a tendency to heat up quickly before. Through some preliminary testing, I decided to decrease the supply voltage: the bulb gets dangerously hot on 12V, and placing sensor no closer than 3cm, and no further than 10cm, for at too close the illuminance exceeds the limit of the sensor, and that illuminance quickly drops off from the starting value, bringing no need of longer distances. 
 
-% TODO: justify my research and personal approaches to the problem
+Additionally, I figured to connect a voltmeter along side the ammeter. This is to measure the power of the light source, but the voltmeter is significant in that I do not trust the supply voltage of the power supply. I may be able to use the power measurement to calculate the luminous efficacy later on.
 
 \subsection{Variables}
 \paragraph{Independent Variable}
@@ -148,30 +149,30 @@ The temperature of the bulb filament & For the resistance of a resistor tend to 
 
 \subsection{Materials}
 \begin{itemize}
- \item Vernier light sensor \& connection hub
+ \item Vernier light sensor ($\pm 2\si{lx}$) \& connection hub
  \item laptop with Vernier Data Logger software
  \item 5W light-bulb
  \item 5 wires
  \item 12V power supply
- \item digital ammeter and voltmeter
- \item one meter long ruler (1m)
+ \item digital ammeter ($\pm 0.1\si{A}$) and voltmeter ($\pm 0.1\si{V}$)
+ \item one meter long ruler ($\pm 0.1\si{cm}$)
  \item reasonable supply of duct tape
  \end{itemize}
 
 \subsection{Method}
 
 \begin{enumerate}
- \item Dim the room lights and choose a location with the least amount of ambient light to do the experiment. Ideally the test should be done early in the morning or at night.
+ \item Choose a location with the least amount of ambient light, ideally early morning or at night.
 
- \item Connect the Vernier light sensor ($\pm$ 2\si{lux}) to the connection hub, then to the laptop. Change the light sensor's range to (0–6000 \si{lux}) by flipping the side switch to the up position, and verify a reading within the software on the laptop. Enable ``Statistics'' in the software by clicking the button named ``Stats''.
+ \item Connect the Vernier light sensor to the laptop, set light sensor's range to (0–6000 \si{lx}). Enable ``Statistics'' in the Vernier logger lite software by clicking ``Stats''.
 
- \item Set up the electrical circuit as shown in diagram \ref{fig:cd}, using a 5W light-bulb, 5 insulated wires, an 12V power supply dialled down to 8V, and a digital ammeter ($\pm 0.1 \si{A}$) and voltmeter ($\pm 0.1 \si{V}$). Note that the light-stand may need to be tilted so the light-bulb is in contract with the ground.
+ \item Set up the electrical circuit as shown in diagram \ref{fig:cd}, set the power supply voltage to8V, with a digital ammeter and voltmeter. Allow the light-bulb to be in contract with the ground.
 
- \item Align the meter wooden ruler perpendicularly to the light-bulb, position the Vernier sensor unit along the long edge of the ruler at a distance of 3cm to the light-bulb. The final layout should be similar to figure \ref{fig:layout}.
+ \item Align the meter wooden ruler perpendicularly to the light-bulb, position the Vernier light sensor parallel to the ruler at a distance of 3cm to the light-bulb. The final layout should be similar to figure \ref{fig:layout}.
 
- \item Secure down the light sensor using tape at distances of 3cm to 10cm, step 1cm, of a total of 8 distances.
+ \item Secure down the light sensor at distances of 3cm to 10cm, step 1cm, of a total of 8 distances.
 
- \item For each distance, first record the readings on the ammeter and voltmeter. If the readings fail to match that of the previous IV, retry the previous test. Wait for the illuminance value to stop fluctuating at a great scale, then press the ``record'' button in the Vernier logger software. Note down the mean illuminance value shown in a textbox from the recording in a spreadsheet. Repeat this recording of illuminance 5 times at the same distance while noting down their respective values.
+ \item For each distance, record the readings on the ammeter and voltmeter, retry the measurement if they differ from the last distance. Record the illuminance over 10 seconds in the software, and note down the average illuminance value. Repeat the illuminance recording 5 times at the same distance.
 \end{enumerate}
 
 \subsection{Diagrams}
@@ -195,7 +196,7 @@ The temperature of the bulb filament & For the resistance of a resistor tend to 
 % annotated picture, & a software screen
 \begin{figure}[h!]
  \centering
- \includegraphics[width=\textwidth]{assets/setuppiclabelled.png}
+ \includegraphics[width=\textwidth]{assets/setuppic.png}
  \caption{The experiment layout}
  \label{fig:layout}
 \end{figure}
