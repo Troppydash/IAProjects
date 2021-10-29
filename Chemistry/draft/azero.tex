@@ -16,6 +16,10 @@
 \usepackage{hyperref}
 \usepackage{subfig}
 
+\renewcommand{\arraystretch}{1.3}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\tptt}{$\times\,$}
+
 
 \title{Empirically finding the value of absolute zero using the ideal gas law}
 \author{Terry Qi}
@@ -68,13 +72,19 @@ For there is a linear relationship between pressure and temperature, in the case
 % https://www.jove.com/science-education/11147/ideal-gas-law
 
 % its connection to the idea of absolute zero
-However, if we were to
+However, by transposing the two axis (so that it is a Temperature against Pressure graph), extrapolating the linear relationship, where $k$ is a proportionality constant:
+\[
+    T = kP,
+\]
+can display an incredible result. The absolute zero is a theoretical measurement of temperature that sets the lower bound of the temperature scale. At the temperature, the movements of the gas particles are precisely zero, therefore the gas has zero outwards pressure. Therefore the y-intercept of the regression line (the temperature when pressure is zero), should be zero when using an standard unit such as Kelvin, and would measure the value of absolute zero in Celsius when the temperature unit is in Celsius.
+
+% show graph
 
 % TODO: flip graph
 
 
 % potential implication
-% quick talk about pressure
+Additionally, the proportionality constant $k$ can be used to determine the boiling point of water at a range of attitudes. Suppose there exists a function $f$ that is a mapping between heights and the atmospheric pressure,
 
 
 % how I would measure it
@@ -85,17 +95,20 @@ However, if we were to
 \paragraph{Independent Variable}
 The temperature of the air mixture in unit Celsius
 
-\paragraph{Depended Variable}
+\paragraph{Dependent Variable}
 The pressure of the air mixture in unit Pascal
 
 \subsection{Control Variables}
 
 % table here
+\begin{longtable}{P{0.2\textwidth}|P{0.35\textwidth}|P{0.35\textwidth}}
+Controls & Reason & How\\\hline
+\end{longtable}
 
 \subsection{Materials}
 
 \begin{itemize}
-    \item Gas pressure measurement probe ($\pm 0.25\si{psi}$)
+    \item gas pressure measurement probe ($\pm 0.25\si{psi}$)
     \item 500ml glass beaker
     \item 2 $\times$ digital thermometer ($\pm 0.1\si{C}$)
     \item 2 $\times$ retort stands
@@ -107,13 +120,31 @@ The pressure of the air mixture in unit Pascal
 
 
 \begin{enumerate}
-    \item Setup the experiment as shown as in figure ()
-    \item
+    \item Setup the experiment as shown as in figure \ref{fig:exp}, using two retort stands \& clamps, the bunsen burner setup, and an empty 500ml glass beaker.
+    \item Lift the two clamps holding the gas pressure measurement probe, 
+    \item 
 
 \end{enumerate}
 
-
 \subsection{Diagrams}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.2]{assets/setup.jpg}
+ \caption{The gas pressure measurement probe}
+ \label{fig:gpmp}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[scale=0.4]{assets/setup.jpg}
+ \caption{The experiment setup}
+ \label{fig:exp}
+\end{figure}
+
+
+
+
 \subsection{Safety}
 
 \section{Data}
