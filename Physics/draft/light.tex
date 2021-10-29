@@ -89,10 +89,10 @@ Using the unit definition of intensity, we can derive using the equation of the 
     \label{eq:isl}
 \end{figure}
 
-However, the human eyes does not perceive the intensity of light uniformly through the wavelengths (citation). Under conditions for photopic vision --- the vision of the eye in a well lit area, we perceive light in the green wavelength (555 $\si{nm}$) the most intensely. Therefore there is a need for a unit that displays the normalized intensity of different wavelengths of light --- the unit Candela and the photopic luminosity function.
+However, the human eyes does not perceive the intensity of light uniformly through the wavelengths \parencite{candela}. Under conditions for photopic vision --- the vision of the eye in a well lit area, we perceive light in the green wavelength (555 $\si{nm}$) the most intensely. Therefore there is a need for a unit that displays the normalized intensity of different wavelengths of light --- the unit Candela and the photopic luminosity function \parencite{si_candela}.
 
 % talk about the relationship between
-The intensity derived from the inverse square law (figure \ref{eq:isl}) is more formally known as the \textit{radiant intensity} (citation), represented as a function of wavelength: $I_v(\lambda)$. By taking the incomplete integral on the weighted radiant intensity split into frequencies for all frequencies, we come to the definition of the \textit{luminous intensity} $I_v$, shown in figure \ref{eq:li}.
+The intensity derived from the inverse square law (figure \ref{eq:isl}) is more formally known as the \textit{radiant intensity} \parencite{candela}, represented as a function of wavelength: $I_v(\lambda)$. By taking the incomplete integral on the weighted radiant intensity split into frequencies for all frequencies, we come to the definition of the \textit{luminous intensity} $I_v$, shown in figure \ref{eq:li}.
 
 \begin{figure}[h!]
     \[
@@ -108,14 +108,14 @@ Combining the notion of luminous intensity with the 3D generalized angle quantit
     \Phi_v = \si{\ohm} I_v,
 \]
 
-of which we can use to define the amount of luminous power incident on a surface through the quantity of illuminance, measured in units lux ($\si{lm\per m^2}$). The finalized relation is summarized in figure \ref{eq:dti}:
+of which we can use to define the amount of luminous power incident on a surface through the quantity of illuminance, measured in units lux ($\si{lm\per m^2}$). The finalized relation is summarized in figure \ref{eq:dti}, \parencite{intensityLuminous_se}:
 
 \begin{figure}[h!]
  \centering
  \begin{align*}
  I_e(\lambda) &= c(\lambda) \frac{P}{4\pi s^2}\\
   E_v &= \frac{1}{4\pi s^2 A} \si{\ohm} P K_{cd} \int_{0}^{\infty} V(\lambda) c(\lambda) \, d\lambda\\
-  E_v & \propto \frac{1}{s^2}
+  E_v & \propto P\frac{1}{s^2}
  \end{align*}
  \caption{The complete distance to illuminance relationship}
  \label{eq:dti}
@@ -146,10 +146,9 @@ The temperature of the bulb filament & For the resistance of a resistor tend to 
 
 \end{longtable}
 
-
 \subsection{Materials}
 \begin{itemize}
- \item Vernier light sensor ($\pm 2\si{lx}$) \& connection hub
+ \item Vernier light sensor ($\pm 2\si{lx}$) \parencite{vernier_manual} \& connection hub
  \item laptop with Vernier Data Logger software
  \item 5W light-bulb
  \item 5 wires
@@ -231,7 +230,7 @@ Power is defined in figure \ref{eq:work}:
 
 \textit{Uncertainty}: $\relun$W =  $\relun$A +  $\relun$V
 \begin{align*}
-    \relun A &= \frac{0.01}{0.27},\quad \relun V = \frac{0.01}{7.20}\\
+    \relun \si{A} &= \frac{0.01}{0.27},\quad \relun \si{V} = \frac{0.01}{7.20}\\
     \relun \si{W} &\approx 0.038,\quad \absun \si{W} \approx 0.07\si{W}
 \end{align*}
 
@@ -256,6 +255,15 @@ Subtract the each illuminance values by the ambient illuminance value (figure \r
 
 \paragraphnl{Averaging trial illuminances}
 Average the measured illuminance. Additionally, the distances are converted into standard SI units in meters (figure \ref{fig:average}, graph \ref{gph:average}).
+
+\textit{Uncertainty:} $\absun \text{illum.}_{\text{avg}} = \frac{\text{max}(\text{illum}.) - \text{min}(\text{illum}.)}{2}$
+
+for distance 3cm:
+\begin{align*}
+ \absun \text{illuminance}_{\text{avg}} &= \frac{1940-1737}{2}\\
+ &\approx 102 \,\si{lx}
+\end{align*}
+
 
 \begin{figure}[H]
     \centering
@@ -329,11 +337,11 @@ Additionally, the experimental data contains a noticeable amount of uncertaintie
 
 \subsection{Implications}
 
-If we were to define the proportionality constant $k(P)$ in figure \ref{eq:li} with parameter power, such that:
+If we were to define the proportionality constant $\eta$ in figure \ref{eq:li} with parameter power, such that:
 
 \begin{align*}
-    k(P) &= \eta P
-    E_v = \eta P \frac{1}{s^2},
+    \eta &= \frac{1}{4\pi A} \si{\ohm} K_{cd} \int_{0}^{\infty} V(\lambda) c(\lambda) \, d\lambda\\
+    E_v &= \eta P \frac{1}{s^2},
 \end{align*}
 
 where $\eta$ is another constant, I can fulfill my motivation for this experiment. Notice the units of the constant $\eta$ is $(\frac{\si{lx}}{\si{W\per m^2}} = \frac{\si{lm}}{\si{W}})$, is a value that is only depended on the light source used. Therefore, the constant $\eta$ is a measure of the efficacy of the light-bulb used in the amount of luminous power produced per unit power. This is also known as the typical luminous efficacy, one that I can use to compare to other light-bulbs using an online database. Furthermore, the value can be used to compare efficiency of light-bulbs in your daily life, whether that is to save money, or like me, to appreciate how far lighting technology had advanced.
@@ -387,7 +395,6 @@ A potentially significant variable. For the wooden ruler have depth, an angled t
 \paragraph{Accuracy of the light sensor}
 A variable that I was the most concerned about. This may be the largest cause of the systematic error. I could follow a lengthy calibration test listed on the manufacture's website against a factory calibrated source, which will decrease the systematic error and increase the accuracy of the data.
 
-\newpage
 \nocite{*}
 \printbibliography
 
