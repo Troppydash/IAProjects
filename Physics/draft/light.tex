@@ -48,7 +48,7 @@
 
 \subsection{Introduction}
 % personal
-During the examination of a potential IA idea on the intensity of a refracted light-beam, I struggled with the implementation of a realistic light due to a lack of understanding and care towards the drop of intensity of light with respect to the distance. Because the glass cube I was working with had significant length, the decrease in intensity of the light-beam within the glass damaged my data and exponentially increased the difficulty in linearization. Therefore, I wanted to empirically see how the difference in distances will affect the measurement of light intensity. Additionally, I found the labs bulbs are prone to extreme heat even with little power and duration. Thus, I thought to use this experiment to find the luminous efficacy of an incandescent lab light-bulb to confirm my suspicion.
+During the examination of a potential IA idea on the intensity of a refracted light-beam, I struggled with modeling a realistic light due to a lack of understanding and care towards the decrease in intensity of the light with respect to the distance. Because the glass cube I was working with had significant length, the decrease in intensity of the light-beam within the glass damaged my data and exponentially increased the difficulty in linearization. Therefore, I wanted to empirically see how the difference in distances will affect the measurement of light intensity. Additionally, I found the labs bulbs are prone to extreme heat even with little power and on duration. Thus, I thought to use this experiment to find the luminous efficacy of an incandescent lab light-bulb to confirm my suspicion.
 
 \subsection{Research Question}
 \begin{quote}
@@ -57,7 +57,7 @@ During the examination of a potential IA idea on the intensity of a refracted li
 
 \subsection{Background}
 
-For a light-bulb to produce light, an electrical current in the form of moving electrical charges must be presented and pass through a light emitting electrical resistor. While there exists difference in the efficiency of such resistors --- modern light emitting diodes (LED) are much more energetically efficient comparing to an incandescent light-bulb, the physical result needed to illuminate a room through the emission of light waves in the visible spectrum, does not differ. Therefore, the theoretical definition of the rate of work, $P$, is only depended upon the level of electrical current (the flow rate of charges), and voltage (the work potential of charges), shown in figure \ref{eq:work}.
+For a light-bulb to produce light, an electrical current in the form of moving electrical charges must be presented and pass through a light emitting electrical resistor. While there exists difference in the efficiency of such resistors --- modern light emitting diodes (LED) are much more energetically efficient comparing to an incandescent light-bulb, the physical result: needed to illuminate a room through the emission of light waves in the visible spectrum, does not differ. Therefore, the theoretical definition of the rate of work, $P$, is only depended upon the level of electrical current (the flow rate of charges), and voltage (the work potential of charges), shown in figure \ref{eq:work}.
 
 \begin{figure}[h!]
     \[
@@ -123,7 +123,7 @@ of which we can use to define the amount of luminous power incident on a surface
 
 For the light sensor I have only measures intensity in lux, the above dive into luminosity serves as a justification for why I think the inverse square root applies to not just radiant intensity, but also to luminous intensity. Because the process of conversion is linear, it seems reasonable to hypothesize that illuminance is proportional to the distance squared.
 
-To test my hypothesis, I thought to conduct the experiment on the small 5W lab light-bulbs, for they have a tendency to heat up quickly before. Through some preliminary testing, I decided to decrease the supply voltage: the bulb gets dangerously hot on 12V, and placing sensor no closer than 3cm, and no further than 10cm, for at too close the illuminance exceeds the limit of the sensor, and that illuminance quickly drops off from the starting value, bringing no need of longer distances.
+To test my hypothesis, I thought to conduct the experiment on the small 5W lab light-bulbs, for they have a tendency to heat up quickly before. Through some preliminary testing, I decided to decrease the supply voltage: the bulb gets dangerously hot on 12V, and placing sensor no closer than 3cm, and no further than 10cm, for at too close the illuminance exceeds the limits of the sensor, and that illuminance quickly drops off from the starting value, bringing no need of longer distances.
 
 Additionally, I figured to connect a voltmeter along side the ammeter. This is to measure the power of the light source, but the voltmeter is significant in that I do not trust the supply voltage of the power supply. I may be able to use the power measurement to calculate the luminous efficacy later on.
 
@@ -165,7 +165,7 @@ The temperature of the bulb filament & For the resistance of a resistor tend to 
 
  \item Connect the Vernier light sensor to the laptop, set light sensor's range to (0–6000 \si{lx}). Enable ``Statistics'' in the Vernier logger lite software by clicking ``Stats''.
 
- \item Set up the electrical circuit as shown in diagram \ref{fig:cd}, set the power supply voltage to8V, with a digital ammeter and voltmeter. Allow the light-bulb to be in contract with the ground.
+ \item Set up the electrical circuit as shown in diagram \ref{fig:cd}, set the power supply voltage to 8V, with a digital ammeter and voltmeter. Allow the light-bulb to be in contact with the ground.
 
  \item Align the meter wooden ruler perpendicularly to the light-bulb, position the Vernier light sensor parallel to the ruler at a distance of 3cm to the light-bulb. The final layout should be similar to figure \ref{fig:layout}.
 
@@ -364,11 +364,9 @@ In comparison to the typical values shown in table \ref{tbl:leff}, the lab incan
         Fluorescent  & 46-104.2                 \\
         LED          & 75-210
     \end{tabular}
-    \caption{List of common luminous efficacy values of light sources}
+    \caption{List of common luminous efficacy values of light sources \parencite{le_value1} \parencite{le_value2} \parencite{le_value3} \parencite{le_value4}}
     \label{tbl:leff}
 \end{table}
-
-%https://www.wikiwand.com/en/Luminous_efficacy
 
 \subsection{Reflection}
 
