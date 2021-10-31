@@ -245,7 +245,7 @@ The value of absolute zero for each trial is reflected in the y-intercept of the
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{assets/azerodata.png}
+    \includegraphics[scale=0.7]{assets/azerodata.png}
     \captionof{table}{The y-intercepts of the trials}
     \label{fig:yi}
 \end{figure}
@@ -288,30 +288,46 @@ In both methods, there are some rather largely sized error bars in the pressure 
 The value and range of absolute zero computed in both methods contains the true value of absolute zero. The low percentage error of 6.16\% and 1.15\% for both methods displays the high accuracy of the data. Additionally, this suggests that the usage of multiple trials had succeeded in improving the accuracy of the outcome. The experiment data is considered to be highly accurate but lesser precise.
 
 % theory & science involved
-The high correlation coefficients in both methods showcases a strong correlation between the temperature and pressure of a gas mixture at constant volume and amount. This strongly confirms my hypothesis on the relationship between gas temperature and pressure, where it is described as:
+The high correlation coefficients in both methods showcases a strong correlation between the temperature and pressure of a gas mixture at constant volume and amount. Additionally, there were no anomalous results in the 5 trials even when the data is being collected on separate days and time. This strongly confirms my hypothesis on the relationship between gas temperature and pressure, where it is described as:
 \[
     T = kP + T_{\text{absolute zero}},
 \]
 
-and $k$ is the proportionality constant. This confirms parts of the whole ideal gas law (figure \ref{fig:igl}), and showcases the validity of the kinetic theory of ideal gases. By assuming the gas mixture as an ideal gas: most important assumptions here are that the volume and intermolecular forces of particles are negligible. Because pressure is a measure of the average collision force per area of the from the particles against the container, increasing temperature increases the average kinetic energy of the particles, and increases the speed of these collision, causing higher pressure.
+and $k$ is the proportionality constant. This confirms parts of the whole ideal gas law (figure \ref{fig:igl}), and showcases the validity of the kinetic theory of ideal gases.
+% TODO: rephrase this more in context of the experiment
+By assuming the gas mixture as an ideal gas: most important assumptions here are that the volume and intermolecular forces of particles are negligible. Because pressure is a measure of the average collision force per area of the from the particles against the container, increasing temperature increases the average kinetic energy of the particles, and increases the speed of these collision, causing higher pressure.
 
 \subsection{Implications}
-The obvious implication of the relationship between temperature and pressure is to offer a very simple procedure to measure the value of absolute zero. For past scientists, this value is the uttermost important piece of the puzzle that is in creation of the gas kinetic theory, because a non standardized unit of temperature will be plagued with minus signs at certain conditions, increasing the complexity of the formulas. This had ultimately created the field of thermodynamics.
+The obvious implication of the relationship between temperature and pressure is to offer a very simple procedure to measure the value of absolute zero. For past scientists, this value is the uttermost important piece of the puzzle that is in creation of the gas kinetic theory, because a non standardized unit of temperature will be plagued with minus signs at certain conditions, increasing the complexity of the formulas. This had ultimately lead to creating the field of thermodynamics.
 
 
 % maybe talk about the implications of the relationship, boiling & melting points, propane gas cans and atlitudes.
 
 \subsection{Reflection}
 
-
-
 Here is a list on the handling of the controlled variables/potential error factors, and future improvements to be made.
 
-% some errors and what not, i am tired
-\subsubsection*{Systematic Errors}
-% blah blah
 \subsubsection*{Random Errors}
-% blah blah
+\paragraph{Large uncertainties of the pressure probe} This is very significant in contributing to the lack of precision in the dataset. The large size of the steps (0.25$\si{psi}$) in the scales and the small range of changes in the pressure relative to the scale means that a sizable temperature change may not cause a visible pressure change, leading me to note down the same value twice or more, thus increasing the spread of the data points. I have attempted to counteract this by using a timer and a constant interval, but a more precise measurement is required, I suggest to increase the range of pressure measurements --- starting with cold water instead of at room temperature, and to use a less uncertain instrument.
+
+\paragraph{Malfunctions of the thermometer readings}
+Not significant in reducing precision of temperature readings at high level, for it is controlled using a backup. The digital thermometer used does not respond nicely to heat and all the LEDs were faintly active at high temperature. If two thermometers are unavailable, consider conducting the experiment at relatively lower light levels to ease the temperature readings; or to create a plastic shield placed under the head of the thermometer.
+
+\paragraph{Delay in data readings}
+Slightly significant in increasing the spread of the dataset. The separate recording of the two sensors means that there is a random variable of delay between the temperature and pressure readings. Consider using a datalogger instead of human judgment.
+
+\subsubsection*{Systematic Errors}
+\paragraph{Boiling of the water}
+Relating to the controlled variable of the volume of water in the beaker, a fear of mine is that the boiling of the water will systematically shift the pressure measurements at higher temperatures upwards. The vaporization of water creates water vapor with temperature higher than $100\si{\celsius}$, heating the stem of the pressure probe and causing a systematic difference in the temperature of the air mixture and water. This is like to explain the dip in the transposed Temperature/Pressure graph in figure \ref{fig:comb}. Consider stopping the heating process at around $90-95\si{\celsius}$ to increase the accuracy of the result.
+
+\paragraph{Environmental temperatures}
+Less significant in decreasing the accuracy of the result. For the stem of the pressure probe is not submerged in to the water, a colder room temperature will systematically increase the water and air mixture temperature difference, particularly at lower temperatures. But the variable controlled in the experiment and no significant systematic shifts at lower temperatures are seen.
+
+\paragraph{Delay in heat transfer}
+The method relies on the conduction heat transfer between the water to the air mixture across glass. A systematic temperature difference in temperature may decrease the accuracy of the data points throughout all temperatures, but the low \% error indicates a low significance of this error.
+
+\paragraph{Sensors}
+In few trials, the temperature readings as the water boils is seen to increase above $100\si{\celsius}$. This showcases the systematic error of the thermometer, which shifts all points upwards in the transposed graph, resulting in a higher point of absolute zero. However, this is not the case in the experiment, which can be explained through the likely influence of the dipped higher pressure points, overwriting the systematic errors of the temperature sensor. Consider using an additional mercury thermometer alone side the digit one, and average their measurements to increase the accuracy of the final result of absolute zero.
 
 \newpage
 \section*{Appendix}
