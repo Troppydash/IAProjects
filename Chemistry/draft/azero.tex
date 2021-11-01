@@ -11,13 +11,18 @@
 \usepackage{float}
 \usepackage{parskip}
 \usepackage{graphicx}
-\usepackage{circuitikz}
 \usepackage{longtable}
 \usepackage{hyperref}
 
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{wrapfig}
+
+
+% referencing
+\usepackage[style=apa]{biblatex}
+\addbibresource{azero.bib}
+\usepackage{hyperref}
 
 
 % figures labelings
@@ -27,7 +32,6 @@
 \renewcommand{\arraystretch}{1.7}
 \newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
 \newcommand{\tptt}{$\times\,$}
-
 
 % uncertainty
 \newcommand{\absun}{\Delta \text{unc}\,}
@@ -56,7 +60,7 @@ During a trip for the purpose of completing my duke of edinburgh, when we have r
 % talk about gases and the ideal gas law
 There exists a wide range of chemical reactions that includes a variety of gases as reactants or products. For the sake of stoichiometric analysis, it is heavily desirable to be able to measure the number of moles of a gas. To ease the calculations involved with millions of individual gas particle at the microscopic level, the field of kinetic theory of matter created a model of the ideal gas with optimistic attributes attached that still resembles real gases in the world.
 
-The five assumptions of an ideal gas are that: (1) the gas molecule collisions are elastic, (2) the volume of the particles are negligible, (3) there exists no intermolecular forces between the particles, (4) the particles of a gas obey Newtonian motion and move with a range of speed and direction. These assumptions will be crucial in designing my experiment.
+The five assumptions of an ideal gas are that: (1) the gas molecule collisions are elastic, (2) the volume of the particles are negligible, (3) there exists no intermolecular forces between the particles, (4) the particles of a gas obey Newtonian motion and move with a range of speed and direction \parencite{gas_law}. These assumptions will be crucial in designing my experiment.
 
 With the help of numerous scientists over the span of 200 years, the model of the ideal gas law can be summarized in figure \ref{fig:igl}.
 
@@ -78,12 +82,9 @@ The law contains the relationships between the four gaseous state quantities, ea
     \label{fig:pt}
 \end{figure}
 
-The relationship showcases that as temperature of an ideal gas increases, its pressure also increases. This is because pressure measures the average force per area of the moving particles in the gas elastically colliding with the walls of the container. For temperature is a measure of the average kinetic energy of the particles, its increase is a description of faster moving particles, causing an average larger force on the gas container.
+The relationship showcases that as temperature of an ideal gas increases, its pressure also increases. This is because pressure measures the average force per area of the moving particles in the gas elastically colliding with the walls of the container. For temperature is a measure of the average kinetic energy of the particles, its increase is a description of faster moving particles, causing an average larger force on the gas container \parencite{pearson}.
 
-% For there is a linear relationship between pressure and temperature, in the case of an ideal gas, I should measure a linear trend when graphing the gas pressure against its temperature, with an intercept of zero when the units are standard (Pascals and Kelvin).
-
-% TODO: show graph
-% https://www.jove.com/science-education/11147/ideal-gas-law
+% For there is a linear relationship between pressure and temperature, in the case of an ideal gas, I should measure a linear trend when graphing the gas pressure against its temperature, with an intercept of zero when the units are standard (Pascals and Kelvin).% 
 
 
 \begin{wrapfigure}{r}{0.5\textwidth}
@@ -102,7 +103,7 @@ can display an incredible result. The absolute zero is a theoretical measurement
 
 
 % https://en.wikipedia.org/wiki/Barometric_formula?oldformat=true
-% Additionally, the proportionality constant $k$ can be used to determine the boiling point of water at a range of attitudes. A substance boils when the average kinetic energy of the particles exceeds average kinetic energy of the surrounding air. Macroscopically, this occurs when the pressure of the liquid is higher than the atmospheric pressure. The barometric function $P(h)$ is a mapping between heights and the atmospheric pressure (citation), therefore we can deduce the boiling point
+% Additionally, the proportionality constant $k$ can be used to determine the boiling point of water at a range of attitudes. A substance boils when the average kinetic energy of the particles exceeds average kinetic energy of the surrounding air. Macroscopically, this occurs when the pressure of the liquid is higher than the atmospheric pressure. The barometric function $P(h)$ is a mapping between heights and the atmospheric pressure, therefore we can deduce the boiling point
 
 
 % how I would measure it
@@ -206,9 +207,9 @@ The reason for a backup thermometer is because the high temperature of the water
 \end{figure}
 
 \subsection{Processing}
-To convert between unit psi to kPa, the following conversion equation is used on all pressure measurements(citation):
+To convert between unit psi to kPa, the following conversion equation is used on all pressure measurements \parencite{conver_units}:
 \[
-    P_{\text{kPa}} \approx 6.894757 \times P_{\text{psi}}.
+    P_{\text{kPa}} \approx 6.89476 \times P_{\text{psi}}.
 \]
 
 \textit{Uncertainties}: $\relun P_{\text{kPa}} = \relun P_{\text{psi}}$
@@ -257,7 +258,7 @@ Half range of the y-intercepts: $\frac{\max - \min}{2} \approx 21.70 \si{\celsiu
 
 Therefore, our empirical value for absolute zero is: $-290 \pm 20 \si{\celsius}$
 
-The International System of Units defines the absolute zero at $-273.15\si{\celsius}$ (citation), which is within our uncertainty region: $-310 < -273.15 < -270$. The percentage error of the our empirical value is: $\frac{-273.15- -290}{-273.15} \approx 6.16\%$
+The International System of Units defines the absolute zero at $-273.15\si{\celsius}$ \parencite{si_form}, which is within our uncertainty region: $-310 < -273.15 < -270$. The percentage error of the our empirical value is: $\frac{-273.15- -290}{-273.15} \approx 6.16\%$
 
 However, I was curious and thought to use another method to compute absolute zero using the given trial datasets. By combining the data from all of the trials onto one dataset, the result can be graphed and a regression line can be fitted (figure \ref{fig:comb}). I believe that this method will result in a more realistic value and uncertainty, given that it is analogous to conduct a really long trial with multiple cooling and heating.
 
@@ -327,6 +328,10 @@ The method relies on the conduction heat transfer between the water to the air m
 
 \paragraph{Sensors}
 In few trials, the temperature readings as the water boils is seen to increase above $100\si{\celsius}$. This showcases the systematic error of the thermometer, which shifts all points upwards in the transposed graph, resulting in a higher point of absolute zero. However, this is not the case in the experiment, which can be explained through the likely influence of the dipped higher pressure points, overwriting the systematic errors of the temperature sensor. Consider using an additional mercury thermometer alone side the digit one, and average their measurements to increase the accuracy of the final result of absolute zero.
+
+\nocite{*}
+\printbibliography
+
 
 \newpage
 \section*{Appendix}
