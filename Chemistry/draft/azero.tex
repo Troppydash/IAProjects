@@ -201,13 +201,12 @@ The endpoint of the heating is determined by the boiling of the water. In few tr
 The reason for a backup thermometer is because the high temperature of the water steamed up the display of the digital thermometer. I supposed operating with clamps at a dangerously high temperature is a potential safety hazard, therefore I stopped one of the trials from reach temperatures higher than 70$\si{\celsius}$.
 
 % TODO: change this to a better format
-% change figure label, longer captions and better captions
-% change gas mixture to air mixture
+% longer captions and better captions
 % state lack of error bars
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{assets/rawdata.png}
-    \captionof{table}{Raw quantitiative data showing the relationship between pressure and temperature}
+    \captionof{table}{Raw quantitiative data of 5 experiments, showing the relationship between pressure and temperature of air mixture}
 \end{figure}
 
 \subsection{Processing}
@@ -250,7 +249,7 @@ The value of absolute zero for each trial is reflected in the y-intercept of the
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{assets/azerodata.png}
+    \includegraphics[scale=0.4]{assets/azerodata.png}
     \captionof{table}{The y-intercepts of the trials}
     \label{fig:yi}
 \end{figure}
@@ -277,9 +276,9 @@ Using this method, the measurement of absolute zero is the value of the y-interc
 
 Y-intercept = $-275.2\si{\celsius}$
 
-MSLWF = $-226.8\si{\celsius}$. LSLWF = $-332.0\si{\celsius}$
+MSLWF = $-214.5\si{\celsius}$. LSLWF = $-320.0\si{\celsius}$
 
-\textit{Uncertainty}: $\frac{\text{MSLWF} - \text{LSLWF}}{2} \approx 46.6 \si{\celsius}$
+\textit{Uncertainty}: $\frac{\text{MSLWF} - \text{LSLWF}}{2} \approx 52.8 \si{\celsius}$
 
 Therefore, the experimental value of absolute zero using the method is: $-270 \pm 50 \si{\celsius}$. The percentage error is: $\frac{-270 - -273.15}{-273.15} \approx 1.15\%$
 
@@ -333,6 +332,7 @@ The method relies on the conduction heat transfer between the water to the air m
 \paragraph{Sensors}
 In few trials, the temperature readings as the water boils is seen to increase above $100\si{\celsius}$. This showcases the systematic error of the thermometer, which shifts all points upwards in the transposed graph, resulting in a higher point of absolute zero. However, this is not the case in the experiment, which can be explained through the likely influence of the dipped higher pressure points, overwriting the systematic errors of the temperature sensor. Consider using an additional mercury thermometer alone side the digit one, and average their measurements to increase the accuracy of the final result of absolute zero.
 
+\newpage
 \nocite{*}
 \printbibliography
 
@@ -342,14 +342,14 @@ In few trials, the temperature readings as the water boils is seen to increase a
 \appendix
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.55]{assets/unitdata.png}
+    \includegraphics[width=\textwidth]{assets/unitdata.png}
     \captionof{table}{Processed quantitivative data with pressure in kPa}
     \label{fig:pq}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.55]{assets/unitdata_unc.png}
+    \includegraphics[width=\textwidth]{assets/unitdata_unc.png}
     \captionof{table}{Uncertainty of processed quantitivative data with pressure in kPa}
     \label{fig:upq}
 \end{figure}
@@ -357,7 +357,7 @@ In few trials, the temperature readings as the water boils is seen to increase a
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.87\textwidth]{assets/graphs.png}
+    \includegraphics[width=0.76\textwidth]{assets/graphs.png}
     \captionof{figure}{Data graphs of trials 2-5}
     \label{fig:dg25}
 \end{figure}
