@@ -17,7 +17,7 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{wrapfig}
-
+\usepackage{fancyhdr}
 
 % referencing
 \usepackage[style=apa]{biblatex}
@@ -38,7 +38,18 @@
 \newcommand{\relun}{\% \text{unc}\,}
 
 \title{Empirically finding the value of absolute zero using the ideal gas law}
-\author{Terry Qi}
+
+% no author or date
+\author{}
+\date{\vspace{-8ex}}
+
+% bottom right
+\pagestyle{fancy}
+\fancyhf{}
+
+\rfoot{Page \thepage}
+\renewcommand{\headrulewidth}{0pt}
+
 
 \begin{document}
 
@@ -46,16 +57,16 @@
 
 \section{Design}
 \subsection{Introduction}
-On a trip for my Duke of Edinburgh bronze medal, we were cooking the various dinner each of us have bought using butane gas tanks. The supervisor --- which happened to be a physics teacher, informed us to be careful with the butane gas tanks. He stated that when heated, they will explode due to the pressure buildup within the cans.
+On my Duke of Edinburgh bronze medal trip, we were using butane gas tanks to cook the various dinner each of us has bought. The supervisor --- which happened to be a physics teacher, informed us to be careful with the butane gas tanks. He stated that when heated, they will explode due to the pressure buildup within the cans.
 
-For I often go outdoors and camp overnight, I find this phenomenon interesting and important --- for my own safety. After some initial research \parencite{lpg}, and flicking through the IB textbook, I stumbled upon a relationship between the temperature and pressure of gases, showing that the chance of explosion is due to the increase in the pressure of the butane gas inside against the container. Therefore I decided to investigate the relationship between temperature and pressure, which caused me to realize its connection to a fundamental quantity when I extrapolate the regression line.
+For I often go outdoors and camp overnight, I find this phenomenon both interesting and important --- for my own safety. After some initial research \parencite{lpg}, and flicking through the IB textbook, I stumbled upon a relationship between the temperature and pressure of gases, indicating that the explosion is caused by the increase in the pressure of the butane gas inside the container under temperature changes. Therefore I decided to investigate the relationship between temperature and pressure, which caused me to realize its connection to a fundamental quantity when I extrapolate the regression line.
 
-While I've been told in class that the temperature of absolute zero is not physically reachable and is only useful in calculations, I now have a simple yet powerful procedure that calculates this variable. This investigation aims to empirically find the value of absolute zero using the relationship between a sample of air mixture temperature and pressure.
+While I've been told in class that the temperature of absolute zero is not physically reachable and is only useful in calculations, I now have a simple yet powerful procedure that calculates this value. This investigation aims to empirically find the value of absolute zero using the relationship between the temperature and pressure of a sample of air mixture.
 
 
 \subsection{Research Question}
 \begin{quote}
-    What is the relationship between the pressure of air mixture against its temperature under constant volume and quantity?
+    What is the relationship between the pressure of a sample of air mixture against its temperature under constant container volume and gas molecular quantity?
 \end{quote}
 
 \subsection{Background}
