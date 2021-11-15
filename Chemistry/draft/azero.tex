@@ -46,10 +46,14 @@
 % bottom right
 \pagestyle{fancy}
 \fancyhf{}
-
-\rfoot{Page \thepage}
+\fancyfoot[R]{\thepage}
+\fancypagestyle{plain}{%
+    \renewcommand{\headrulewidth}{0pt}%
+    \fancyhf{}%
+    \fancyfoot[R]{\thepage}%
+}
+%go
 \renewcommand{\headrulewidth}{0pt}
-
 
 \begin{document}
 
@@ -59,14 +63,14 @@
 \subsection{Introduction}
 On my Duke of Edinburgh bronze medal trip, we were using butane gas tanks to cook the various dinner each of us has bought. The supervisor --- which happened to be a physics teacher, informed us to be careful with the butane gas tanks. He stated that when heated, they will explode due to the pressure buildup within the cans.
 
-For I often go outdoors and camp overnight, I find this phenomenon both interesting and important --- for my own safety. After some initial research \parencite{lpg}, and flicking through the IB textbook, I stumbled upon a relationship between the temperature and pressure of gases, indicating that the explosion is caused by the increase in the pressure of the butane gas inside the container under temperature changes. Therefore I decided to investigate the relationship between temperature and pressure, which caused me to realize its connection to a fundamental quantity when I extrapolate the regression line.
+For I often go outdoors and camp overnight, I find this phenomenon both interesting and important --- for my own safety. After some initial research \parencite{lpg}, and flicking through the IB textbook, I stumbled upon a relationship between the temperature and pressure of gases, indicating that the explosion is caused by the increase in the pressure of the butane gas inside the container under temperature changes. Therefore I decided to investigate the relationship between temperature and pressure of gases, which caused me to realize its connection to a fundamental quantity when I extrapolate the regression line.
 
 While I've been told in class that the temperature of absolute zero is not physically reachable and is only useful in calculations, I now have a simple yet powerful procedure that calculates this value. This investigation aims to empirically find the value of absolute zero using the relationship between the temperature and pressure of a sample of air mixture.
 
 
 \subsection{Research Question}
 \begin{quote}
-    What is the relationship between the pressure of a sample of air mixture against its temperature under constant container volume and gas molecular quantity?
+    What is the relationship between the pressure of a sample of air mixture against its temperature under constant container volume and mixture molecular quantity?
 \end{quote}
 
 \subsection{Background}
@@ -121,7 +125,7 @@ can display an incredible result. The absolute zero is a theoretical measurement
 
 % how I would measure it
 % potential source of errors
-To test the theory, I have decided to use a pressure probe dipped in water within a beaker above a bunsen burner, where the temperature of the water is the independent variable and pressure of the air mixture is the dependent variable. The chosen range of temperature is from $20\si{\celsius}$ to $100\si{\celsius}$, for it ensures the widest possible range of temperatures of water (room temperature to boiling point) for regression.
+To test the theory, I have decided to use a pressure probe containing a sample of air mixture dipped in water within a beaker above a bunsen burner, where the temperature of the water is the independent variable and pressure of the air mixture is the dependent variable. The chosen range of temperature is from $20\si{\celsius}$ to $100\si{\celsius}$, for it ensures the widest possible range of temperatures of water (room temperature to boiling point) for regression.
 
 I chose to heat the water up to its boiling point, and waiting for it to cool down to a reasonable temperature of around $65\si{\celsius}$, taking measurements along the way. For the uncertainty of the pressure probe is relatively high, I choose to repeat this experiment a total of 5 times to increase its accuracy.
 
@@ -129,10 +133,10 @@ For the air mixture is transparent to my eye, the gas particles are likely to ha
 
 \subsection{Variables}
 \paragraph{Independent Variable}
-The temperature of the air mixture in unit Celsius
+The temperature of the air mixture in degrees Celsius. This is measured using a digital thermometer in water with uncertainty ($\pm 0.1\si{\celsius}$). The temperature ranges from room temperature to the boiling point of water, from $\approx20\si{\celsius}$ to $ \approx100\si{\celsius}$.
 
 \paragraph{Dependent Variable}
-The pressure of the air mixture in unit Pascal
+The pressure of the air mixture in PSI. This is measured using a pressure probe (figure \ref{fig:probe}) submerged in 200ml water in a 500ml beaker with uncertainty ($\pm 0.25\text{psi}$). The pressure ranges from $14\text{psi}$ to $19\text{psi}$.
 
 \subsection{Control Variables}
 
@@ -140,11 +144,11 @@ The pressure of the air mixture in unit Pascal
 \begin{longtable}{P{0.2\textwidth}|P{0.35\textwidth}|P{0.35\textwidth}}
 Controls & Reason & How\\\hline
 
-Volume of water in beaker & The quantity of water determines the submersion depth of the pressure probe, and changes the surface area of the container in contact with water, creating discrepancy between the water and air mixture temperature. This will systematically lower the pressure measurements & Use a constant, large enough volume (200ml) of water for each trials. The water should submerge the spherical bulb up to the stem, but not too much as to overflow \\
+Submersion depth of pressure probe & The submersion depth of the probe determines the surface area between the glass container with the heated water. The larger the surface area, the faster the heat conducts from the water to the air mixture, causing a lower than measured temperature inside the probe and creating systematic error in the y-intercept of the pressure vs. temperature relationship & Use a constant volume (200ml) of water and a constant size beaker (500ml) for each experiment. The water should submerge the spherical bulb up to the stem, but not too much as to overflow \\
 
-Interval between measurements & Large pressure probe uncertainty means a change in temperature may not reflect in a change in pressure. This will increase the random errors when measurements are taken too swiftly & Use a timer to take measurements every 30 seconds when heating, and every 1 minute when cooling, as to ensure meaningful pressure changes during the interval \\
+Interval between measurements & Pressure probe uncertainty means a small change in temperature does not reflect in a change in pressure, frequent measurements will map multiple temperature values to a single pressure value. As temperature rate of change fluctuates throughout the experiment, a random amount of temperature measurements per pressure value. This randomly weights each pressure measurement in the regression process, causing random error in the y-intercept & Use a timer to take measurements every 30 seconds when heating, and every 1 minute when cooling, as to ensure meaningful pressure changes during the intervals \\
 
-Placement of sensors & Contact between the sensors and the beaker will cause systematic error in their measurements & Using clamps to suspend the thermometer and gas pressure probe within the water. Also avoid direct contact between the sensors \\
+Placement of sensors & Contact between the sensors and the beaker will cause systematic error in their measurements & Using clamps to suspend the thermometer and gas pressure probe within the water. (Also avoid direct contact between the sensors) \\
 
 Environmental atmospheric pressure & Changes in the surrounding atmospheric pressure can systemically increase the pressure measurements & Conduct the experiment at the same location for each trial, ideally all within a short time span of a week
 \\
@@ -160,7 +164,7 @@ Method of measurements & Non-direct viewing of the pressure probe will cause par
     \item 2 $\times$ digital thermometer ($\pm 0.1\si{C}$)
     \item 2 $\times$ retort stands \& clamps
     \item a timer ($\pm 1\si{s}$)
-    \item bunsen burner, tripod, and heating mat
+    \item bunsen burner, tripod, gaze mat, and heating mat
     \item lighter
 \end{itemize}
 
@@ -168,8 +172,8 @@ Method of measurements & Non-direct viewing of the pressure probe will cause par
 
 
 \begin{enumerate}
-    \item Setup the experiment as shown as in figure \ref{fig:setup}, using two retort stands \& clamps, the temperature and pressure sensor, the bunsen burner setup, and an empty 500ml glass beaker.
-    \item Lift the two clamps holding the sensors. Fill the glass beaker with tap water, stop at approximately 200ml. Carefully reinsert the two sensors into the water.
+    \item Connect the bunsen burner to the gas output and place it on top of a heating mat on a table, place the tripod on top of the burner with a gaze mat on the tripod. Place the 500ml glass beaker on top of the gaze mat. Setup the two retort stands by attaching the clamps, then fitting the pressure probe and thermometer to each of the clamp. Slowly lower the sensors so that they are inside the glass beaker. Check the setup matches figure \ref{fig:setup}, or figure \ref{fig:setupdrawn}.
+    \item Lift the two clamps holding the sensors. Fill the glass beaker with tap water, stop at 200ml using the markings on the beaker. Carefully reinsert the two sensors into the water.
     \item Wait for 1 minute for the sensors to stabilize in readings. Then light the bunsen burner, start the timer, and record the first reading of temperature and pressure.
     \item Record the temperature and pressure every 30 seconds using the timer, stop the bunsen burner when the thermometer reads above 100$\si{\celsius}$. Carefully change the thermometer if the display become hard to read.
     \item Record the temperature and pressure every minute using the timer as the water cools in the beaker, stop recording when the thermometer reads below around 65$\si{\celsius}$. Carefully remove the beaker and clean it with cold water.
@@ -216,12 +220,10 @@ The endpoint of the heating is determined by the boiling point of water. In few 
 
 The reason for a backup thermometer is because the high temperature of the water steamed up the display of the digital thermometer. I supposed operating with clamps at a dangerously high temperature is a potential safety hazard, therefore I stopped one of the trials from reaching temperatures higher than 75$\si{\celsius}$.
 
-% TODO: change this to a better format
-% longer captions and better captions
-% state lack of error bars
+\subsubsection*{Quantitative data}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{assets/rawdata.png}
+    \frame{\includegraphics[width=\textwidth]{assets/rawdata.png}}
     \captionof{table}{Raw quantitiative data of 5 experiments, showing the relationship between pressure (kPa) against temperature ($\si{\celsius}$) of the air mixture}
 \end{figure}
 
@@ -247,7 +249,8 @@ Therefore: $P_{\text{kPa}} = \num{1.034e+2} \pm \num{1.7} \si{kPa}$
 
 The full processed data tables are in the appendix: (table \ref{fig:pq}, table \ref{fig:upq}).
 
-\subsection{Presentation}
+\newpage
+\subsection{Analysis}
 
 Transpose the pressure and temperature columns, the graph for experiment 1 is shown in figure \ref{fig:t1} --- the remaining graphs of the 4 additional experiments are in the appendix.
 
@@ -258,25 +261,25 @@ Transpose the pressure and temperature columns, the graph for experiment 1 is sh
     \label{fig:t1}
 \end{figure}
 
-\paragraph{Note}: The y error bars shows the absolute uncertainties of the thermometer. The x error bars plots the calculated absolute uncertainties of the pressure measurements. The small uncertainty of the thermometer means the y error bars are not visible.
+\paragraph{Note} The y error bars shows the absolute uncertainties of the thermometer. The x error bars plots the calculated absolute uncertainties of the pressure measurements. The small uncertainty of the thermometer means the y error bars are not visible.
 
 The value of absolute zero for each experiment is reflected in the y-intercept of their regression line. Averaging and calculating the half range for the 5 trials will increase the accuracy of the result (figure \ref{fig:yi}).
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.4]{assets/azerodata.png}
-    \captionof{table}{The y-intercepts of the trials}
+    \frame{\includegraphics[scale=0.45]{assets/azerodata.png}}
+    \captionof{table}{The y-intercepts of the experiments}
     \label{fig:yi}
 \end{figure}
 
 
-Mean of the y-intercepts: $\frac{\sum \text{y-intercepts}}{5} \approx -292.0 \si{\celsius}$
+Average of the y-intercepts: $\frac{\sum \text{y-intercepts}}{5} \approx -292.0 \si{\celsius}$
 
 Half range of the y-intercepts: $\frac{\max - \min}{2} \approx 21.70 \si{\celsius}$
 
 Therefore, our empirical value for absolute zero is: $-290 \pm 20 \si{\celsius}$
 
-The International System of Units defines the absolute zero at $-273.15\si{\celsius}$ \parencite{si_form}, which is within our uncertainty region: \[-310 < -273.15 < -270.\] The percentage error of the our empirical value is: $\frac{-273.15- -290}{-273.15} \approx 6.16\%$
+The International System of Units defines the absolute zero at $-273.15\si{\celsius}$ \parencite{si_form}, which is within our uncertainty region: \[-310 < -273.15 < -270\] The percentage error of the our empirical value is: $\frac{-273.15- -290}{-273.15} \approx 6.16\%$
 
 However, I was curious and thought to use another method to compute the absolute zero using the given dataset. By combining the data from all of the experiment into one dataset, the result can be graphed and a regression line can be fitted (figure \ref{fig:comb}). I believe that this method will result in a more realistic value and uncertainty, given that it is analogous to conducting a really long experiment with multiple cooling and heating steps.
 
@@ -321,15 +324,15 @@ The obvious implication of the relationship between temperature and pressure is 
 
 % maybe talk about the implications of the relationship, boiling & melting points, propane gas cans and atlitudes.
 % but already too much words
-\subsection{Reflection}
+\subsection{Evaluation}
 
-Here is a list on the handling of the controlled variables/potential error factors, and future improvements to be made.
+%Here is a list on the handling of the controlled variables/potential error factors, and future improvements to be made.
 
 \subsubsection{Random Errors}
 \paragraph{Large uncertainties of the pressure probe} This is very significant in contributing to the lack of precision in the dataset. The large size of the steps (0.25$\si{psi}$) in the scales and the small range of changes in the pressure relative to the scale means that a sizable temperature change may not cause a visible pressure change, leading me to note down the same value twice or more, thus increasing the spread of the data points. I have attempted to counteract this by using a timer and a constant interval, but a more precise measurement is required, I suggest increasing the range of pressure measurements --- starting with cold water instead of at room temperature, and using a less uncertain instrument.
 
-\paragraph{Malfunctions of the thermometer readings}
-Not significant in reducing precision of temperature readings at high level, for it is controlled using a backup. The digital thermometer used does not respond nicely to heat and all the LEDs were faintly active at high temperature. If two thermometers are unavailable, consider conducting the experiment at relatively lower light levels to ease the temperature readings; or to create a plastic shield placed under the head of the thermometer.
+\paragraph{Malfunctions of the thermometer}
+May be significant in reducing precision of high temperature readings. The digital thermometer's readings fails to display at high temperatures, leading me to guess an approximate value. This is partial handled by switching to a new thermometer when the current one fails. Also consider conducting the experiment at relatively lower light levels to ease the temperature readings; or to create a plastic shield placed under the head of the thermometer.
 
 \paragraph{Delay in data readings}
 Slightly significant in increasing the spread of the dataset. The separate recording of the two sensors means that there is a random variable of delay between the temperature and pressure readings. Consider using a data logger instead of human judgment.
@@ -339,13 +342,18 @@ Slightly significant in increasing the spread of the dataset. The separate recor
 Relating to the controlled variable of the volume of water in the beaker, a fear of mine is that the boiling of the water will systematically shift the pressure measurements at higher temperatures upwards. The vaporization of water creates water vapor with a temperature higher than $100\si{\celsius}$, heating the stem of the pressure probe and causing a systematic difference in the temperature of the air mixture and water. This is likely to explain the dip in the transposed Temperature/Pressure graph in figure \ref{fig:comb}. Consider stopping the heating process at around $90-95\si{\celsius}$ to increase the accuracy of the result.
 
 \paragraph{Environmental temperatures}
-Less significant in decreasing the accuracy of the result. For the stem of the pressure probe is not submerged into water, a colder room temperature will systematically increase the water and air mixture temperature difference, particularly at lower temperatures. But the variable controlled in the experiment and no significant systematic shifts at lower temperatures are seen.
+Less significant in decreasing the accuracy of the \\result. For the stem of the pressure probe is not submerged into water, a colder room temperature will systematically increase the water and air mixture temperature difference, particularly at lower temperatures. But the variable controlled in the experiment and no significant systematic shifts at lower temperatures are seen.
 
 \paragraph{Delay in heat transfer}
 The method relies on the conduction heat transfer between the water to the air mixture across glass. A systematic temperature difference in temperature may decrease the accuracy of the data points throughout all temperatures, but the low \% error indicates a low significance of this error.
 
 \paragraph{Sensors}
 In a few trials, the temperature readings as the water boils are seen to increase above $100\si{\celsius}$. This showcases the systematic error of the thermometer, which shifts all points upwards in the transposed graph, resulting in a higher point of absolute zero. However, this is not the case in the experiment, which can be explained through the likely influence of the dipped higher pressure points, overwriting the systematic errors of the temperature sensor. Consider using an additional mercury thermometer alone side the digit one, and average their measurements to increase the accuracy of the final result of absolute zero.
+
+\subsection{Further Investigations}
+To further investigate the ideal gas law and the value of absolute zero, other relations from the equation (figure \ref{fig:igl}) can be used. One can measure the volume of an air mixture against its temperature using an ice bath and a freely moving syringe with air inside. The y-intercept of the volume against temperature graph will be the value of absolute zero as well. This may give a more certain estimation of absolute zero, for the volume readings on syringes may be less uncertain than the pressure probe.
+
+Furthermore, an interesting experiment would be to test the deviation of the ideal gas law at low temperatures or high pressure. By performing the aforementioned experiments in a freezer or on top of a mountain, it is likely to explain and correct the small but significant systematic errors in this experiment.
 
 \newpage
 \nocite{*}
