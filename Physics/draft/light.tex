@@ -38,7 +38,10 @@
 
 
 \title{Empirically finding the typical luminous efficacy of an incandescent light bulb through the inverse square law}
-\author{Terry Qi}
+
+% no author or date
+\author{}
+\date{\vspace{-8ex}}
 
 \begin{document}
 
@@ -47,17 +50,24 @@
 \section{Design}
 
 \subsection{Introduction}
+I've seen a video online discussing a historical usage of light to illuminate the street, where it mentioned a ``Moonlight tower'' in San Jose, California to light up an entire city through a single light source (citation). The video considered it to be a joke of an invention for the very little light it gave out for pedestrians, as comparable to the actual moon --- hence the name ``Moonlight''. While it is common sense that the further you are from a light source, the less bright it seems. I was fascinated by how fast the brightness had decreased so much so that a sun-like light bulb can be so dim only 100 meters away. I want to test how the light intensity changes with the distance to the light source.
+
+For the video had also poke at the inefficiency of the light-bulbs at the time, I wanted to see how technology has improved through 200 years of development. Particularly, the 5 watt light-bulbs we used in physics always felt blazing hot when powered on --- wasted thermal energy in energy conversion between electrical and light energy. I decided to use this opportunity and select one of such bulb to a test of efficiency. How efficient are our light-bulbs at producing illuminance comparing to other light sources?
+
 % TODO: change this
-During the examination of a potential IA idea on the intensity of a refracted light-beam, I struggled with modeling a realistic light due to a lack of understanding and care towards the decrease in intensity of the light with respect to the distance. Because the glass cube I was working with had significant length, the decrease in intensity of the light-beam within the glass damaged my data and exponentially increased the difficulty in linearization. Therefore, I wanted to empirically see how the difference in distances will affect the measurement of light intensity. Additionally, I found the labs bulbs are prone to extreme heat even with little power and on duration. Thus, I thought to use this experiment to find the luminous efficacy of an incandescent lab light-bulb to confirm my suspicion.
+%During the examination of a potential IA idea on the intensity of a refracted light-beam, I struggled with modeling a realistic light due to a lack of understanding and care towards the decrease in intensity of the light with respect to the distance. Because the glass cube I was working with had significant length, the decrease in intensity of the light-beam within the glass damaged my data and exponentially increased the difficulty in linearization. Therefore, I wanted to empirically see how the difference in distances will affect the measurement of light intensity. Additionally, I found the labs bulbs are prone to extreme heat even with little power and on duration. Thus, I thought to use this experiment to find the luminous efficacy of an incandescent lab light-bulb to confirm my suspicion.
 
 \subsection{Research Question}
 \begin{quote}
- What is the relationship between the distance to the light source in respect to the perceived illuminance?
+ What is the relationship between the distance to an incandescent light bulb in respect to the measured illuminance?
 \end{quote}
 
 \subsection{Background}
 
-For a light-bulb to produce light, an electrical current in the form of moving electrical charges must be presented and pass through a light emitting electrical resistor. While there exists difference in the efficiency of such resistors --- modern light emitting diodes (LED) are much more energetically efficient comparing to an incandescent light-bulb, the physical result: needed to illuminate a room through the emission of light waves in the visible spectrum, does not differ. Therefore, the theoretical definition of the rate of work, $P$, is only depended upon the level of electrical current (the flow rate of charges), and voltage (the work potential of charges), shown in figure \ref{eq:work}.
+For a light-bulb to produce light, an electrical current in the form of moving electrical charges must be presented and pass through a light emitting electrical resistor. The ability to produce such electromagnetic waves in the form of visible light is depended on the energy per second passing through the resistor, also known as work, which is defined as:
+
+
+%While there exists difference in the efficiency of such resistors --- modern light emitting diodes (LED) are much more energetically efficient comparing to an incandescent light-bulb, the physical result: needed to illuminate a room through the emission of light waves in the visible spectrum, does not differ. Therefore, the theoretical definition of the rate of work, $P$, is only depended upon the level of electrical current (the flow rate of charges), and voltage (the work potential of charges), shown in figure \ref{eq:work}.
 
 \begin{figure}[h!]
     \[
