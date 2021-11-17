@@ -14,7 +14,7 @@
 \usepackage{circuitikz}
 \usepackage{longtable}
 \usepackage{hyperref}
-\usepackage{subfig}
+
 
 % referencing
 \usepackage[style=apa]{biblatex}
@@ -33,8 +33,13 @@
 % uncertainty
 \newcommand{\absun}{\Delta \text{unc}\,}
 \newcommand{\relun}{\% \text{unc}\,}
+\newcommand{\tsf}{\,\text{sf}}
 
 \newcommand{\paragraphnl}[1]{\textbf{#1}\\\\}
+
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{wrapfig}
 
 
 \title{Empirically finding the typical luminous efficacy of an incandescent light bulb through the inverse square law}
@@ -50,11 +55,10 @@
 \section{Design}
 
 \subsection{Introduction}
-I've seen a video online discussing a historical usage of light to illuminate the street, where it mentioned a ``Moonlight tower'' in San Jose, California to light up an entire city through a single light source (citation). The video considered it to be a joke of an invention for the very little light it gave out for pedestrians, as comparable to the actual moon --- hence the name ``Moonlight''. While it is common sense that the further you are from a light source, the less bright it seems. I was fascinated by how fast the brightness had decreased so much so that a sun-like light bulb can be so dim only 100 meters away. I want to test how the light intensity changes with the distance to the light source.
+I've seen a video online discussing a historical usage of electrical light sources to illuminate the street, where it mentioned a ``Moonlight tower'' in San Jose, California to light up an entire city through a single light source (citation). The video considered it to be a joke of an invention for the very little light it gave out for pedestrians, as comparable to the actual moon --- hence the name ``Moonlight''. While it is common sense that the further you are from a light source, the less bright it seems. I was fascinated by how fast the brightness had decreased so much so that a sun-like light bulb can be so dim only 100 meters away. I want to test how the light intensity changes with the distance to the light source.
 
 For the video had also poke at the inefficiency of the light-bulbs at the time, I wanted to see how technology has improved through 200 years of development. Particularly, the 5 watt light-bulbs we used in physics always felt blazing hot when powered on --- wasted thermal energy in energy conversion between electrical and light energy. I decided to use this opportunity and select one of such bulb to a test of efficiency. How efficient are our light-bulbs at producing illuminance comparing to other light sources?
 
-% TODO: change this
 %During the examination of a potential IA idea on the intensity of a refracted light-beam, I struggled with modeling a realistic light due to a lack of understanding and care towards the decrease in intensity of the light with respect to the distance. Because the glass cube I was working with had significant length, the decrease in intensity of the light-beam within the glass damaged my data and exponentially increased the difficulty in linearization. Therefore, I wanted to empirically see how the difference in distances will affect the measurement of light intensity. Additionally, I found the labs bulbs are prone to extreme heat even with little power and on duration. Thus, I thought to use this experiment to find the luminous efficacy of an incandescent lab light-bulb to confirm my suspicion.
 
 \subsection{Research Question}
@@ -64,7 +68,7 @@ For the video had also poke at the inefficiency of the light-bulbs at the time, 
 
 \subsection{Background}
 
-For a light-bulb to produce light, an electrical current in the form of moving electrical charges must be presented and pass through a light emitting electrical resistor. The ability to produce such electromagnetic waves in the form of visible light is depended on the energy per second passing through the resistor, also known as work, which is defined as:
+For a light-bulb to produce light, an electrical current in the form of moving electrical charges must be present and pass through a light emitting electrical resistor. The experiment will use an incandescent light-bulb as the light source, which functions by heating a wire filament to a temperature that generates light. Its perceived brightness is depended on the energy per second dissipated within the filament, which is known as power represented with symbol (P), and defined as the voltage (V) across the resistor times the current (I) through the resistor. The higher the power across the light-bulb, the brighter the light-bulb is.
 
 
 %While there exists difference in the efficiency of such resistors --- modern light emitting diodes (LED) are much more energetically efficient comparing to an incandescent light-bulb, the physical result: needed to illuminate a room through the emission of light waves in the visible spectrum, does not differ. Therefore, the theoretical definition of the rate of work, $P$, is only depended upon the level of electrical current (the flow rate of charges), and voltage (the work potential of charges), shown in figure \ref{eq:work}.
@@ -73,128 +77,185 @@ For a light-bulb to produce light, an electrical current in the form of moving e
     \[
     P = IV
     \]
-    \caption{The electrical definition of work}
+    \caption{The electrical relationship of power}
     \label{eq:work}
 \end{figure}
 
-For it is the emission of light waves/photons that we call ``light'', the density of these photons in an area naturally defines the intensity of light (of units $\si{W\per m^2}$). This relationship is a part of the IB curriculum at topic 4.3, Waves Characteristics, where it states a fundamental property of light intensity --- that the intensity of light is proportional to the inverse distance squared (figure \ref{eq:prop}).
+The energy dissipated in the filament within the light-bulb are converted into thermal energy and electromagnetic waves. The waves are energy disturbances in the air medium traveling in all directions originated at the filament, and the rate of these light waves incidence per unit area is the intensity of the light-source at the location, represented with symbol (I) and in units watts per meter squared ($\si{W/m^2}$). The  inverse square law is a relationship between the light intensity (I) at a distance (d) of a light source with power (P) (citation):
 
-\begin{figure}[h!]
-    \[
-    I \propto \frac{1}{s^2}
-    \]
-    \caption{The inverse square relation}
-    \label{eq:prop}
-\end{figure}
 
-Furthermore, if we consider the emission of these photons to be a perfect sphere around the light source, the density of photons at a given distance is simply represented via the surface area of the sphere with a radius of the distance.
+%For it is the emission of light waves/photons that we call ``light'', the density of these photons in an area naturally defines the intensity of light (of units $\si{W\per m^2}$). This relationship is a part of the IB curriculum at topic 4.3, Waves Characteristics, where it states a fundamental property of light intensity --- that the intensity of light is proportional to the inverse distance squared (figure \ref{eq:prop}).
+
+%\begin{figure}[h!]
+%    \[
+%    I \propto \frac{1}{s^2}
+%    \]
+%    \caption{The inverse square relation}
+%    \label{eq:prop}
+%\end{figure}
+
+%Furthermore, if we consider the emission of these photons to be a perfect sphere around the light source, the density of photons at a given distance is simply represented via the surface area of the sphere with a radius of the distance.
 %images
-Using the unit definition of intensity, we can derive using the equation of the surface area of a sphere, the full intensity equation in figure \ref{eq:isl}:
+%Using the unit definition of intensity, we can derive using the equation of the surface area of a sphere, the full intensity equation in figure \ref{eq:isl}:
 
 \begin{figure}[h!]
     \[
-    I = \frac{P}{\text{Area}} = \frac{P}{4\pi s^2}
+    I \propto \frac{P}{d^2}
     \]
     \caption{The inverse square law}
     \label{eq:isl}
 \end{figure}
 
-However, the human eyes does not perceive the intensity of light uniformly through the wavelengths \parencite{candela}. Under conditions for photopic vision --- the vision of the eye in a well lit area, we perceive light in the green wavelength (555 $\si{nm}$) the most intensely. Therefore there is a need for a unit that displays the normalized intensity of different wavelengths of light --- the unit Candela and the photopic luminosity function \parencite{si_candela}.
+The inverse square law in figure \ref{eq:isl} states that light intensity will decrease inversely proportional to the distance from the source, and is proportional to the source power.
 
-% talk about the relationship between
-The intensity derived from the inverse square law (figure \ref{eq:isl}) is more formally known as the \textit{radiant intensity} \parencite{candela}, represented as a function of wavelength: $I_v(\lambda)$. By taking the incomplete integral on the weighted radiant intensity split into frequencies for all frequencies, we come to the definition of the \textit{luminous intensity} $I_v$, shown in figure \ref{eq:li}.
+However, the light sensor I've used instead measures light intensity in illuminance ($E_v$) of unit lux. For the human eyes does not perceive each wavelength of the electromagnetic spectrum equally --- red light appears dimmer than green light at the same intensity, the unit illuminance takes this into consideration and weights each wavelength differently as to help reducing this phenomenon. Illuminance is defined through the following equation, where $d$ is the distance to the source, $y(\lambda)$ as the weighting function of a wavelength, and $P$ as the power of the light source.
 
 \begin{figure}[h!]
-    \[
-     I_v = K_{cd} \int_{0}^{\infty} V(\lambda) I_e(\lambda) \, d\lambda
-    \]
-    \caption{The definition of Luminous Intensity}
-    \label{eq:li}
+    \centering
+    \begin{align*}
+        E_v &= \frac{1}{4\pi d^2} \times 683 \int_{0}^{\infty} y(\lambda) P \, d\lambda
+    \end{align*}
+    \caption{The Illuminance equation}
+    \label{eq:dti}
 \end{figure}
 
-Combining the notion of luminous intensity with the 3D generalized angle quantity, steradian ($\si{\ohm}$), we can derive the total luminous power ($\Phi_v$) created by the source, measured in unit lumen ($\si{lm}$),
+Furthermore, it can be shown using figure \ref{eq:dti} that illuminance also obeys the inverse square law. This means that illuminance is simply another measurement of light intensity.
+
+\begin{align*}
+ E_v &=  \frac{P}{d^2} \frac{1}{4\pi} \times 683 \int_{0}^{\infty} y(\lambda) \, d\lambda\\
+ E_v &\propto \frac{P}{d^2}
+\end{align*}
+
+By plotting the illuminance measurements against the distance, an inverse square graph to the likes of figure \ref{fig:relation} is to be expected, with illuminance decreasing at a decreasing rate as distance to source is increased.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.37\textwidth]{assets/relationship.png}
+    \caption{Graph of Illuminance against Distance}
+    \label{fig:relation}
+\end{figure}
+
+The efficiency of the incandescent light-bulb can then be calculated using the proportionality constant $k$ of the illuminance vs. 1/distance relationship, which is:
 
 \[
-    \Phi_v = \si{\ohm} I_v,
+E_v = k \frac{1}{d^2}
 \]
 
-of which we can use to define the amount of luminous power incident on a surface through the quantity of illuminance, measured in units lux ($\si{lm\per m^2}$). The finalized relation is summarized in figure \ref{eq:dti}, \parencite{intensityLuminous_se}:
+The typical luminous efficacy ($K$) of a light source is a measurement of the amount of light waves produced per watt, in unit $\frac{\si{lm}}{W}$. For the constant $k$ have unit $\si{lm}$, the typical luminous efficacy is the proportionality constant divided by the source wattage, or as:
 
-\begin{figure}[h!]
- \centering
- \begin{align*}
- I_e(\lambda) &= c(\lambda) \frac{P}{4\pi s^2}\\
-  E_v &= \frac{1}{4\pi s^2 A} \si{\ohm} P K_{cd} \int_{0}^{\infty} V(\lambda) c(\lambda) \, d\lambda\\
-  E_v & \propto P\frac{1}{s^2}
- \end{align*}
- \caption{The complete distance to illuminance relationship}
- \label{eq:dti}
-\end{figure}
+\[
+K = \frac{k}{P}
+\]
+The value can then be compared to a list of common light sources to determine the relative efficiency of the physics departments' light-bulbs.
 
-For the light sensor I have only measures intensity in lux, the above dive into luminosity serves as a justification for why I think the inverse square root applies to not just radiant intensity, but also to luminous intensity. Because the process of conversion is linear, it seems reasonable to hypothesize that illuminance is proportional to the distance squared.
+%However, the human eyes does not perceive the intensity of light uniformly through the wavelengths \parencite{candela}. Under conditions for photopic vision --- the vision of the eye in a well lit area, we perceive light in the green wavelength (555 $\si{nm}$) the most intensely. Therefore there is a need for a unit that displays the normalized intensity of different wavelengths of light --- the unit Candela and the photopic luminosity function \parencite{si_candela}.
 
-To test my hypothesis, I thought to conduct the experiment on the small 5W lab light-bulbs, for they have a tendency to heat up quickly before. Through some preliminary testing, I decided to decrease the supply voltage: the bulb gets dangerously hot on 12V, and placing sensor no closer than 3cm, and no further than 10cm, for at too close the illuminance exceeds the limits of the sensor, and that illuminance quickly drops off from the starting value, bringing no need of longer distances.
+% talk about the relationship between
+%The intensity derived from the inverse square law (figure \ref{eq:isl}) is more formally known as the \textit{radiant intensity} \parencite{candela}, represented as a function of wavelength: $I_v(\lambda)$. By taking the incomplete integral on the weighted radiant intensity split into frequencies for all frequencies, we come to the definition of the \textit{luminous intensity} $I_v$, shown in figure \ref{eq:li}.
 
-Additionally, I figured to connect a voltmeter along side the ammeter. This is to measure the power of the light source, but the voltmeter is significant in that I do not trust the supply voltage of the power supply. I may be able to use the power measurement to calculate the luminous efficacy later on.
+%\begin{figure}[h!]
+%    \[
+%     I_v = K_{cd} \int_{0}^{\infty} V(\lambda) %I_e(\lambda) \, d\lambda
+%    \]
+ %   \caption{The definition of Luminous Intensity}
+ %   \label{eq:li}
+%\end{figure}
+
+%Combining the notion of luminous intensity with the 3D generalized angle quantity, steradian ($\si{\ohm}$), we can derive the total luminous power ($\Phi_v$) created by the source, measured in unit lumen ($\si{lm}$),
+
+%\[
+  %  \Phi_v = \si{\ohm} I_v,
+%\]
+
+%of which we can use to define the amount of luminous power incident on a surface through the quantity of illuminance, measured in units lux ($\si{lm\per m^2}$). The finalized relation is summarized in figure \ref{eq:dti}, \parencite{intensityLuminous_se}:
+
+%\begin{figure}[h!]
+% \centering
+% \begin{align*}
+% I_e(\lambda) &= c(\lambda) \frac{P}{4\pi s^2}\\
+%  E_v &= \frac{1}{4\pi s^2 A} \si{\ohm} P K_{cd} \int_{0}^{\infty} V(\lambda) c(\lambda) \, d\lambda\\
+%  E_v & \propto P\frac{1}{s^2}
+% \end{align*}
+% \caption{The complete distance to illuminance %relationship}
+% \label{eq:dti}
+%\end{figure}
+
+%For the light sensor I have only measures intensity in lux, the above dive into luminosity serves as a justification for why I think the inverse square root applies to not just radiant intensity, but also to luminous intensity. Because the process of conversion is linear, it seems reasonable to hypothesize that illuminance is proportional to the distance squared.
+
+% how to do it
+To test the inverse square law, I have decided to use a Vernier light sensor against a 5 watt light-bulb sampled from the physics department. The light-bulb is supplied with only 8 volts of the 12 volts power supply, for from past experience, the bulb gets dangerously hot quickly on 12 volts. The dependent variable is the illuminance measurements from the light sensor, which ranges from 0-6000 lux. The independent variable is the distance of the light sensor from the light-bulb, and would be placed from 0.03m to 0.10m with steps of 0.01m, as it provides a wide range of illuminance values from the Vernier light sensor. This is repeated for a total of 5 times, as the light sensor often fluctuates even when held completely still. The repetition can help in reducing the uncertainties of the illuminance measurements.
+
+%To test my hypothesis, I thought to conduct the experiment on the small 5W lab light-bulbs, for they have a tendency to heat up quickly before. Through some preliminary testing, I decided to decrease the supply voltage: the bulb gets dangerously hot on 12V, and placing sensor no closer than 3cm, and no further than 10cm, for at too close the illuminance exceeds the limits of the sensor, and that illuminance quickly drops off from the starting value, bringing no need of longer distances.
+
+Additionally, I decided to connect a voltmeter along side an ammeter. During some testing using the power supply, I have observed that the voltage provided by the supply always decreases when a component is connected to it. This is due to the significant internal resistance within the power supply. Therefore the voltmeter ensures a more accurate voltage measurement than the knob value on the power supply.
+
+%This is to measure the power of the light source, but the voltmeter is significant in that I do not trust the supply voltage of the power supply. The power value can then be used to derive
 
 \subsection{Variables}
 \paragraph{Independent Variable}
-The distance the light sensor is to the light source measured in centimeters.
+The distance, measured in meters, the Vernier light sensor is from the 5W light-bulb.
 
 \paragraph{Dependent Variable}
-The illuminance of the area measured by the light sensor at the distance in unit lux.
+The illuminance of the area measured by the Vernier light sensor in unit lux.
 
 \subsection{Control Variables}
 
 \begin{longtable}{P{0.2\textwidth}|P{0.35\textwidth}|P{0.35\textwidth}}
 Controls & Reason & How\\\hline
 Environmental room intensity & Systematically increase the the measured illuminance of the light-ray from the light-box & Conduct the experiment in a dark room, and record the ambient illuminance of the room \\
+
 The sensitivity of the light sensor & Light sensors are sensitive to angular tilts, and a disturbed sensor due to shaky hands most likely will produce random errors throughout the experiment & Use strong tape to clamp down the light sensor at the given distance\\
-Fluctuation of the outside light level & Environment lighting will leak through the lab windows, and have the ability to systematically change the measurements for a small time period & Conduct the experiment early in the morning or late at night, as to minimize the impacts from the sun\\
+
+Fluctuation of the outside light level & Environmental lighting leaking through the lab windows fluctuating can have the ability to randomly change the measurements for a small time period & Conduct the experiment in a dark room \\
+
 The power supplied to the light-bulb & Higher power will increase intensity at all distances, as shown in figure \ref{eq:isl}, causing systematic errors & Assert the connected ammeter and voltmeter readings are unchanged after changing the independent variable, the distance\\
-The temperature of the bulb filament & For the resistance of a resistor tend to increase as it is heated, electrical current may fall in value, decreasing the power supplied, creating systematic errors & It is discouraged to directly touch the light-bulbs. Thus it is best to conduct the experiment quickly in time, as to minimize the possible heating up of the light-bulb.
+
+The temperature of the bulb filament & For the resistance of a resistor tend to increase as it is heated, electrical current may fall in value, decreasing the power supplied, creating systematic errors & It is best to conduct the experiment quickly in time, as to minimize the extend of the heating of the light-bulb --- the physics light-bulbs heats up very quickly.
 
 \end{longtable}
+
+\newpage
 
 \subsection{Materials}
 \begin{itemize}
  \item Vernier light sensor ($\pm 2\si{lx}$) \parencite{vernier_manual} \& connection hub
  \item laptop with Vernier Data Logger software
  \item 5W light-bulb
- \item 5 wires
  \item 12V power supply
- \item digital ammeter ($\pm 0.1\si{A}$) and voltmeter ($\pm 0.1\si{V}$)
- \item one meter long ruler ($\pm 0.1\si{cm}$)
- \item reasonable supply of duct tape
+ \item digital ammeter ($\pm 0.01\si{A}$) and voltmeter ($\pm 0.01\si{V}$)
+ \item one meter long ruler ($\pm 0.001\si{m}$)
+ \item duct tape
  \end{itemize}
 
 \subsection{Method}
 
 \begin{enumerate}
- \item Choose a location with the least amount of ambient light, ideally early morning or at night.
+ \item Choose a location with the least amount of ambient light, preferably at a darkened room.
 
  \item Connect the Vernier light sensor to the laptop, set light sensor's range to (0–6000 \si{lx}). Enable ``Statistics'' in the Vernier logger lite software by clicking ``Stats''.
 
- \item Set up the electrical circuit as shown in diagram \ref{fig:cd}, set the power supply voltage to 8V, with a digital ammeter and voltmeter. Allow the light-bulb to be in contact with the ground.
+ \item Set up the electrical circuit as shown in diagram \ref{fig:cd}, set the power supply voltage to 8V, with a digital ammeter and voltmeter.
 
  \item Align the meter wooden ruler perpendicularly to the light-bulb, position the Vernier light sensor parallel to the ruler at a distance of 3cm to the light-bulb. The final layout should be similar to figure \ref{fig:layout}.
 
- \item Secure down the light sensor at distances of 3cm to 10cm, step 1cm, of a total of 8 distances.
+ \item Secure down the light sensor at distances from 0.03m to 0.10m, step 0.01m, for a total of 8 distances.
 
- \item For each distance, record the readings on the ammeter and voltmeter, retry the measurement if they differ from the last distance. Record the illuminance over 10 seconds in the software, and note down the average illuminance value. Repeat the illuminance recording 5 times at the same distance.
+ \item For each distance, record the readings on the ammeter and voltmeter, retry the measurement if they differ from the last distance. Record the illuminance over 10 seconds in the software, and note down the mean illuminance value as indicated in the software.
+
+ \item Repeat steps 5-6 for a total of five times.
 \end{enumerate}
 
 \subsection{Diagrams}
 
 % circuit
-\begin{figure}[h!]
+\begin{figure}[H]
 \centering
 \begin{circuitikz} \draw
     (0,3) to[battery,a=8V] (5,3) -- (5,0)
     to[lamp,a=5W] (0,0)
-    to[ammeter] (0,3)
+    to[rmeter, t=A] (0,3)
     (1,0) -- (1,-1.5)
-    to[voltmeter] (4,-1.5) -- (4,0)
+    to[rmeter, t=V] (4,-1.5) -- (4,0)
     ;
 \end{circuitikz}
 \caption{The circuit diagram of the setup}
@@ -203,7 +264,7 @@ The temperature of the bulb filament & For the resistance of a resistor tend to 
 
 % diagram
 % annotated picture, & a software screen
-\begin{figure}[h!]
+\begin{figure}[H]
  \centering
  \includegraphics[width=\textwidth]{assets/setuppic.png}
  \caption{The experiment layout}
@@ -214,86 +275,100 @@ The temperature of the bulb filament & For the resistance of a resistor tend to 
 \subsection{Safety}
 Avoid direct contact with exposed parts of the wires, additionally ensure a dry hand during the experiment. This will reduce the chance of an electrical accident.
 
-Avoid touching the light-bulb throughout the experiment. The light-bulb got super hot during my experiment and direct skin contract may incur burns.
+Avoid touching the light-bulb throughout the experiment. The light-bulb got very hot during my experiment and direct skin contract may incur burns.
 
 \section{Data}
 \subsection{Raw data}
-\begin{figure}[h!]
+\subsubsection*{Qualitative Data}
+As I conducted the experiment in a not totally dark room, I've noticed the ambient room light level occasionally changing throughout the experiment. I attempted to reduce this factor of error by setting up the experiment where my body was blocking the sun light.
+
+The screen light from my laptop had affected some initial measurements --- of which I had to re-measure. This led me to turn all devices off when measuring the illuminance values.
+
+\subsubsection*{Quantitative Data}
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{assets/rawdata.png}
-    \caption{Unprocessed experimental data}
+    \caption{Raw quantitative experimental data}
     \label{fig:raw}
 \end{figure}
 
 \subsection{Processing}
 \paragraph{Notation}
 
-Uncertainty: unc \quad Absolute uncertainty: $\Delta$unc \quad Relative uncertainty: \%unc
+Uncertainty: unc, Absolute uncertainty: $\Delta$unc, Relative uncertainty: \%unc
 
 
 \subsubsection{Processing Power}
-Power is defined in figure \ref{eq:work}:
+The power is defined as the current times the voltage:
 \begin{align*}
 \text{Power} &= \text{Current} \times \text{Voltage}\\
-        &= 0.27\si{A} \times 7.20\si{V} \approx 1.94 \si{W}
+        &= 0.27\si{A} \times 7.20\si{V} = 1.94 \si{W} \,(3 \tsf)
 \end{align*}
 
-\textit{Uncertainty}: $\relun$W =  $\relun$A +  $\relun$V
-\begin{align*}
-    \relun \si{A} &= \frac{0.01}{0.27},\quad \relun \si{V} = \frac{0.01}{7.20}\\
-    \relun \si{W} &\approx 0.038,\quad \absun \si{W} \approx 0.07\si{W}
-\end{align*}
+\textit{Uncertainty of Power}: $\relun$Power =  $\relun$Current +  $\relun$Voltage
+\begin{alignat*}
+    \relun \si{A} &= \frac{0.01}{0.27},\quad &&\relun \si{V} = \frac{0.01}{7.20}\\
+    \relun \si{W} &= 0.04 \,(1 \tsf), \quad &&\absun \si{W} = 0.07\si{W} \,(1 \tsf)
+\end{alignat*}
 
-Therefore: $P = 1.94 \pm 0.07 \si{W}$
+Therefore: Power$ = 1.94 \pm 0.07 \si{W}$
 
 \subsubsection{Processing Illuminance}
 
 \paragraphnl{Correcting for the ambient illuminance}
-Subtract the each illuminance values by the ambient illuminance value (figure \ref{fig:corrected}).
+Subtract each illuminance values by the ambient illuminance value.
 
-\textit{Uncertainty}: $\absun$Corrected = $\absun$Measured + $\absun$Ambient
+For example, in trial 1, at distance 0.03m:
 \begin{align*}
-     \absun \text{Corrected} = 0.2 + 0.2 = 0.4\si{lx}
+    \text{Corrected} &= \text{Measured} - \text{Ambient }\\
+    &= 1785 - 18 = 1767 \si{lx}
 \end{align*}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[scale=0.5]{assets/correcteddata.png}
-    \caption{Corrected illuminance values}
-    \label{fig:corrected}
-\end{figure}
+\textit{Uncertainty of corrected illuminance}: $\absun$Corrected = $\absun$Measured + $\absun$Ambient
+\begin{align*}
+     \absun \text{Corrected} = 2 + 2 = 4\si{lx}
+\end{align*}
+
+%\begin{figure}[H]
+ %   \centering
+ %   \includegraphics[scale=0.5]{assets/correcteddata.png}
+ %   \caption{Corrected illuminance values}
+ %   \label{fig:corrected}
+%\end{figure}
 
 \paragraphnl{Averaging trial illuminances}
-Average the measured illuminance. Additionally, the distances are converted into standard SI units in meters (figure \ref{fig:average}, graph \ref{gph:average}).
+Average the measured illuminance from 5 trials. Figure \ref{fig:average} shows the corrected illumiance values and the averages. Figure \ref{gph:average} plots the averaged illuminance values against the distances.
 
-\textit{Uncertainty:} $\absun \text{illum.}_{\text{avg}} = \frac{\text{max}(\text{illum}.) - \text{min}(\text{illum}.)}{2}$
+\textit{Uncertainty using half ranges:} $\absun \text{illum.}_{\text{average}} = \frac{\text{max}(\text{illum}.) - \text{min}(\text{illum}.)}{2}$
 
-for distance 3cm:
+For example, at distance 0.03m:
 \begin{align*}
  \absun \text{illuminance}_{\text{avg}} &= \frac{1940-1737}{2}\\
- &\approx 102 \,\si{lx}
+ &= 102 \,\si{lx}
 \end{align*}
 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.5]{assets/averagedata.png}
-    \caption{Averaged illuminance values}
+    \includegraphics[width=\textwidth]{assets/averagedata.png}
+    \caption{The averaged and corrected illuminance values}
     \label{fig:average}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{assets/averagegraph.png}
-    \caption{Graph of the averaged illuminance values}
+    \caption{Graph of the corrected and averaged illuminance values}
     \label{gph:average}
 \end{figure}
 
 
 \paragraphnl{Applying inverse squared transform on distance}
-Graph \ref{gph:average} looks like an inverse squared graph, so I attempted to straighten it with $1/{\text{distance}}^2$ transformation. The transformation data and error is generated with Microsoft Excel (figure \ref{fig:tdata}, graph \ref{gph:tdata}).
+Figure \ref{gph:average} looks like an inverse squared graph, so I attempted to straighten it with $1/{\text{distance}}^2$ transformation. The transformation data and error is generated with Microsoft Excel (figure \ref{fig:tdata}, graph \ref{gph:tdata}).
 
-\textit{Error bars}: $\relun 1/{\text{distance}}^2$ = $2 \times \relun \text{distance}$
+\textit{Uncertainty of the transformed distance}: $\relun 1/{\text{distance}}^2$ = $2 \times \relun \text{distance}$
+
+% TODO: example
 
 \begin{figure}[H]
     \centering
