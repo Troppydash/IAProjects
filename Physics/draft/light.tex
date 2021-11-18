@@ -337,7 +337,7 @@ For example, in trial 1, at distance 0.03m:
 %\end{figure}
 
 \paragraphnl{Averaging trial illuminances}
-Average the measured illuminance from 5 trials. Figure \ref{fig:average} shows the corrected illumiance values and the averages. Figure \ref{gph:average} plots the averaged illuminance values against the distances.
+Average the measured illuminance from 5 trials. Figure \ref{fig:average} shows the corrected illuminance values and the averages. Figure \ref{gph:average} plots the averaged illuminance values against the distances.
 
 \textit{Uncertainty using half ranges:} $\absun \text{illum.}_{\text{average}} = \frac{\text{max}(\text{illum}.) - \text{min}(\text{illum}.)}{2}$
 
@@ -385,8 +385,11 @@ Figure \ref{gph:average} looks like an inverse squared graph, so I attempted to 
 \end{figure}
 
 \paragraphnl{Gradient and Errors}
-The justification for the horizontal error line of worst fits in figure \ref{gph:tdata} resides in the accuracy of the measuring devices: the percentage errors of the ruler are (for all values) larger than the percentage error of the light sensor, as indicated by the size of the error bars.
+Figure \ref{gph:tdata} shows the regression line and its equation (top equation), and the two lines of worst fits for error calculations (middle and lower equation). The $1/\text{Distance}^2$ horizontal error bars are used for plotting the line of worst fits as they are larger in size then the illumiance/vertical errors. The uncertainty of the gradient in the regression line is calculated using the half range of the gradient in the line of worst fits.
 
+%The justification for the horizontal error line of worst fits in figure \ref{gph:tdata} resides in the accuracy of the measuring devices: the percentage errors of the ruler are (for all values) larger than the percentage error of the light sensor, as indicated by the size of the error bars.
+
+Gradient of regression line: 1.59
 
 Higher gradient line of worst fit (HGLWF): 1.7209
 
