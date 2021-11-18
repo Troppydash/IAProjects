@@ -41,7 +41,6 @@
 \usepackage{subcaption}
 \usepackage{wrapfig}
 
-
 \title{Empirically finding the typical luminous efficacy of an incandescent light bulb through the inverse square law}
 
 % no author or date
@@ -55,7 +54,7 @@
 \section{Design}
 
 \subsection{Introduction}
-I've seen a video online discussing a historical usage of electrical light sources to illuminate the street, where it mentioned a ``Moonlight tower'' in San Jose, California to light up an entire city through a single light source (citation). The video considered it to be a joke of an invention for the very little light it gave out for pedestrians, as comparable to the actual moon --- hence the name ``Moonlight''. While it is common sense that the further you are from a light source, the less bright it seems. I was fascinated by how fast the brightness had decreased so much so that a sun-like light bulb can be so dim only 100 meters away. I want to test how the light intensity changes with the distance to the light source.
+I've seen a video online discussing a historical usage of electrical light sources to illuminate the street, where it mentioned a ``Moonlight tower'' in San Jose, California to light up an entire city through a single light source \parencite{tower}. The video considered it to be a joke of an invention for the very little light it gave out for pedestrians, as comparable to the actual moon --- hence the name ``Moonlight''. While it is common sense that the further you are from a light source, the less bright it seems. I was fascinated by how fast the brightness had decreased so much so that a sun-like light bulb can be so dim only 100 meters away. I want to test how the light intensity changes with the distance to the light source.
 
 For the video had also poke at the inefficiency of the light-bulbs at the time, I wanted to see how technology has improved through 200 years of development. Particularly, the 5 watt light-bulbs we used in physics always felt blazing hot when powered on --- wasted thermal energy in energy conversion between electrical and light energy. I decided to use this opportunity and select one of such bulb to a test of efficiency. How efficient are our light-bulbs at producing illuminance comparing to other light sources?
 
@@ -81,7 +80,7 @@ For a light-bulb to produce light, an electrical current in the form of moving e
     \label{eq:work}
 \end{figure}
 
-The energy dissipated in the filament within the light-bulb are converted into thermal energy and electromagnetic waves. The waves are energy disturbances in the air medium traveling in all directions originated at the filament, and the rate of these light waves incidence per unit area is the intensity of the light-source at the location, represented with symbol (I) and in units watts per meter squared ($\si{W/m^2}$). The  inverse square law is a relationship between the light intensity (I) at a distance (d) of a light source with power (P) (citation):
+The energy dissipated in the filament within the light-bulb are converted into thermal energy and electromagnetic waves. The waves are energy disturbances in the air medium traveling in all directions originated at the filament, and the rate of these light waves incidence per unit area is the intensity of the light-source at the location, represented with symbol (I) and in units watts per meter squared ($\si{W/m^2}$). The inverse square law is a relationship between the light intensity (I) at a distance (d) of a light source with power (P) \parencite{isl}:
 
 
 %For it is the emission of light waves/photons that we call ``light'', the density of these photons in an area naturally defines the intensity of light (of units $\si{W\per m^2}$). This relationship is a part of the IB curriculum at topic 4.3, Waves Characteristics, where it states a fundamental property of light intensity --- that the intensity of light is proportional to the inverse distance squared (figure \ref{eq:prop}).
@@ -143,9 +142,14 @@ E_v = k \frac{1}{d^2}
 
 The typical luminous efficacy ($K$) of a light source is a measurement of the amount of light waves produced per watt, in unit $\frac{\si{lm}}{W}$. For the constant $k$ have unit $\si{lm}$, the typical luminous efficacy is the proportionality constant divided by the source wattage, or as:
 
-\[
-K = \frac{k}{P}
-\]
+\begin{figure}[H]
+    \[
+    K = \frac{k}{P}
+    \]
+    \caption{The typical luminous efficacy formula}
+    \label{fig:tle}
+\end{figure}
+
 The value can then be compared to a list of common light sources to determine the relative efficiency of the physics departments' light-bulbs.
 
 %However, the human eyes does not perceive the intensity of light uniformly through the wavelengths \parencite{candela}. Under conditions for photopic vision --- the vision of the eye in a well lit area, we perceive light in the green wavelength (555 $\si{nm}$) the most intensely. Therefore there is a need for a unit that displays the normalized intensity of different wavelengths of light --- the unit Candela and the photopic luminosity function \parencite{si_candela}.
@@ -311,7 +315,7 @@ The power is defined as the current times the voltage:
     \relun \si{W} &= 0.04 \,(1 \tsf), \quad &&\absun \si{W} = 0.07\si{W} \,(1 \tsf)
 \end{alignat*}
 
-Therefore: Power$ = 1.94 \pm 0.07 \si{W}$
+Therefore: $\text{Power} = 1.94 \pm 0.07 \si{W}$
 
 \subsubsection{Processing Illuminance}
 
@@ -339,7 +343,7 @@ For example, in trial 1, at distance 0.030m:
 \paragraphnl{Averaging trial illuminances}
 Average the measured illuminance from 5 trials. Figure \ref{fig:average} shows the corrected illuminance values and the averages. Figure \ref{gph:average} plots the averaged illuminance values against the distances.
 
-For example, averaging the illumiance measurements at distance 0.030m:
+For example, averaging the illuminance measurements at distance 0.030m:
 \begin{align*}
  \text{Illuminance}_{\text{average}} &= \frac{\sum \text{Illuminance}}{5}\\
  &= \frac{1767+1940+1737+1781+1767}{5}\\
@@ -371,22 +375,21 @@ For example, at distance 0.030m:
 
 
 \paragraphnl{Applying inverse squared transform on distance}
-Figure \ref{gph:average} looks like an inverse squared graph, so I attempted to straighten it with $1/{\text{distance}}^2$ transformation on the horizontal axis. The transformation data and error is generated with Microsoft Excel (figure \ref{fig:tdata}, graph \ref{gph:tdata}).
+Figure \ref{gph:average} looks like an inverse squared graph, so I attempted to straighten it with $1/{\text{distance}}^2$ transformation on the horizontal axis. The transformation data and error is generated with Microsoft Excel (figure \ref{fig:tdata}, figure \ref{gph:tdata}).
 
 For example, at distance 0.030m:
 \begin{align*}
- \frac{1}{\text{Distance}^2} &= 0.03 ^ {-2}\\
- &= 1100\,\si{m^-2}\, (2 \tsf)\\
+ \frac{1}{\text{Distance}^2} &= 0.030 ^ {-2}\\
+ &= 1110\,\si{m^{-2}}\, (3 \tsf)\\
 \end{align*}
-
 
 \textit{Uncertainty of the transformed distance}: $\relun 1/{\text{Distance}}^2$ = $2 \times \relun \text{Distance}$
 
 For distance 0.030m:
 \begin{align*}
- 2 \times \relun \text{Distance} &= 2 \times 0.033 = 0.0667 \,(2 \tsf)\\
- \frac{1}{\text{Distance}^2} &= 1100\, \si{lx} \pm 6.67\%\\
- &= 1100 \pm 100 \,\si{lx}
+ \relun 1/{\text{Distance}}^2 = 2 \times \relun \text{Distance} &= 2 \times 0.0333 = 0.0667 \,(3 \tsf)\\
+ \frac{1}{\text{Distance}^2} &= 1110\, \si{lx} \pm 6.67\%\\
+ &= 1110 \pm 70 \,\si{lx}
 \end{align*}
 
 
@@ -405,64 +408,68 @@ For distance 0.030m:
 \end{figure}
 
 \paragraphnl{Gradient and Errors}
-Figure \ref{gph:tdata} shows the regression line and its equation (top equation), and the two lines of worst fits for error calculations (middle and lower equation). The $1/\text{Distance}^2$ horizontal error bars are used for plotting the line of worst fits as they are larger in size then the illumiance/vertical errors. The uncertainty of the gradient in the regression line is calculated using the half range of the gradient in the line of worst fits.
+Figure \ref{gph:tdata} also displays the regression line and its equation (top equation), and the two lines of worst fits for error calculations (middle and lower equation). The $1/\text{Distance}^2$ horizontal error bars are used for plotting the line of worst fits as they are larger in size then the illuminance/vertical errors. The uncertainty of the gradient and y-intercept of the regression line are calculated using the half range of values in the line of worst fits.
 
 %The justification for the horizontal error line of worst fits in figure \ref{gph:tdata} resides in the accuracy of the measuring devices: the percentage errors of the ruler are (for all values) larger than the percentage error of the light sensor, as indicated by the size of the error bars.
 
-Gradient of regression line: 1.59
+Regression line gradient, y-intercept: 1.59, 34.2 ($3 \tsf$)
 
-Higher gradient line of worst fit (HGLWF): 1.7209
+\textit{Uncertainty of gradient using half range}:\\
+Highest gradient error line gradient, y-intercept: 1.72, 12.9 ($3 \tsf$).
 
-Lower gradient line of worst fit (LGLWF): 1.4768
+Lowest gradient error line gradient, y-intercept: 1.48, 47.1 ($3 \tsf$).
 
-Gradient of line of best fit (GLBF): 1.5881
+Gradient uncertainty: $\frac{1.72-1.48}{2} = 0.120$
 
-Half range: $\frac{1}{2} (\text{HGLWF} - \text{LGLWF})= \frac{1}{2}(1.7209-1.4768) \approx 0.121 \approx 12.1\% $
+y-intercept uncertainty: $\frac{47.1-12.9}{2} = 17.1$
 
-Final \% error: $12.1\%$
+Therefore, the regression line and thus the relationship between illuminance ($E_v$) against the distance ($d$) is:
 
-\textit{Uncertainty}: \% error x GLBF = 12.1\% of $1.59$ = 0.2 (1 sf)
-
-Slope = $1.6 \pm 0.2$
-
-Therefore, the relationship is summarized as in figure \ref{fig:rel}:
+%Therefore, the relationship is summarized as in figure \ref{fig:rel}:
 \begin{figure}[h!]
     \[
-       E_v = (1.6 \pm 0.2) \frac{1}{s^2} + 49.2
+       E_v = (1.6 \pm 0.1) \frac{1}{d^2} + (30 \pm 20)
     \]
     \caption{Experimental relationship between illuminance against distance from source}
     \label{fig:rel}
 \end{figure}
 
+% TODO: compare with actual data
+
 \section{Conclusions}
 \subsection{Result}
 
-Following the data collection and some transformation for linearization, the relationship is summarized in figure \ref{fig:rel}. It seems that the data had supported my suspicion to a large extend. From graph \ref{gph:average}, one can see the that measured illuminance  greatly falls when the distance to source increases --- notice the distance scale. To create a linear curve, the illuminance ($E_v$) is plotted against the inverse square of the distance ($\frac{1}{s^2}$) shown in graph \ref{gph:tdata}. The small variance of the data points from the line of best fit is a strong evidence to support my hypothesis.
+There exists a clear and strong inverse squared relationship between the illuminance and the distance to the light-bulb, as shown in the transformed graph in figure \ref{gph:tdata}, and the close to one correlation coefficient $\sqrt{0.9995}=0.9997$. This shows that as the distance to a light source increases, the illuminance decreases relatively rapidly at close distances but relatively less at far distances, and vice versa.
+%Following the data collection and some transformation for linearization, the relationship is summarized in figure \ref{fig:rel}. The data had mostly supported the theory of the inverse square law. From figure \ref{gph:average}, one can see the that the measured illuminance falls rapidly when the distance to source increases. To create a linear curve, the illuminance ($E_v$) is plotted against the inverse square of the distance ($\frac{1}{d^2}$) shown in figure \ref{gph:tdata}. The small variance of the data points from the regression line is a strong evidence to support my hypothesis.
 
-However, for the hypothesis also suggests that the relation curve should also intercept the y axis at point (0, 0), the lack of that feature in the graph suggests some systematical error are present --- the line of best fit has a positive intercept of $34.2 \si{lx}$ instead of $0 \si{lx}$. The existance of some systematic error shifting the curve upwards usually means a degree of inaccuracy, but judging from the small percentage of the error in respect to the values data points --- $34.2 / 1798 \approx 2\%$, the inaccuracy present here is tiny, further indicating a success in my method. Nevertheless, the systematic error could be caused by the erroneous reading of the ambient illuminance, parallax error in aligning the ruler, or by a lack of calibration of the light sensor.
+However, the theory of inverse square law also suggests that the relationship curve should have a y-intercept of 0. The non-zero y-intercept of the regression line --- even considering the ranges of uncertainty ($0 \notin [10, 50]$), suggests some systematical error are present. The curve is shifted upwards by however a relatively small amount, which could be caused by the erroneous reading of the ambient illuminance, parallax error in aligning the ruler, or by a lack of calibration of the light sensor. This indicates that the experiment data was not very accurate.
 
-Additionally, the experimental data contains a noticeable amount of uncertainties indicated by the large error bars, particularly at smaller distances. There also exists large random error in the illuminance measurement, as indicated by the high half ranges of the trials of illuminance measurements during averaging (figure \ref{fig:average}) --- sometimes to a degree of $102/1798 \approx 5.7\%$ at the distance of $3\si{cm}$. This is most likely caused by the fluctuation of the light level in the room, which is likely caused by the leakage of sunlight through the window blinds. This is also reflected in the gradient calculations, for the slope had a relatively large uncertainty of $12.1\%$, supporting the presence of large random errors. However, the averaging of the data seemed to reduce the effects of the error. The line of best fit passed through all 8 points of the independent variable, and had a very high R-squared value of $0.9995$ and R value of $\sqrt{0.9995} \approx 0.9997$. This shows a high level of correlation in the data. In conclusion, the raw dataset presented in figure \ref{fig:raw} is said to be highly accuracy but less precise, and contains medium amounts of uncertainty.
+The graph (figure \ref{gph:tdata}) consists of noticeable sized error bars that increases as distance increases. This is caused by the small distances used in combination with the moderately uncertain wooden ruler used. However the results are overall relatively precise due to the low percentage uncertainty of the two axis (figure \ref{fig:tdata}, figure \ref{fig:average}). The experiment data is considered to precise but inaccurate.
+
+%TODO: maybe include this, or not
+%The high correlation coefficient showcases the strong inverse squared relationship between the distance to the light source and the illuminance. This is because light waves from a light source radiates outwards in a perfect sphere, with surface area inversely proportional to the distance to its origin squared. As light intensity is measured in power per area, the larger the sphere surface area, the less intensity of the light as the amount of light waves spreads out. This means that the light intensity is also inversely proportional to the distance squared.
+
+%Additionally, the experimental data contains a noticeable amount of uncertainties indicated by the large error bars, particularly at smaller distances. There also exists large random error in the illuminance measurement, as indicated by the high half ranges of the trials of illuminance measurements during averaging (figure \ref{fig:average}) --- sometimes to a degree of $102/1798 \approx 5.7\%$ at the distance of $3\si{cm}$. This is most likely caused by the fluctuation of the light level in the room, which is likely caused by the leakage of sunlight through the window blinds. This is also reflected in the gradient calculations, for the slope had a relatively large uncertainty of $12.1\%$, supporting the presence of large random errors. However, the averaging of the data seemed to reduce the effects of the error. The line of best fit passed through all 8 points of the independent variable, and had a very high R-squared value of $0.9995$ and R value of $\sqrt{0.9995} \approx 0.9997$. This shows a high level of correlation in the data. In conclusion, the raw dataset presented in figure \ref{fig:raw} is said to be highly accuracy but less precise, and contains medium amounts of uncertainty.
 
 \subsection{Implications}
 
-If we were to define the proportionality constant $\eta$ in figure \ref{eq:li} with parameter power, such that:
+%If we were to define the proportionality constant $\eta$ in figure \ref{eq:li} with parameter power, such that:
 
+%\begin{align*}
+%    \eta &= \frac{1}{4\pi A} \si{\ohm} K_{cd} \int_{0}^{\infty} V(\lambda) c(\lambda) \, d\lambda\\
+ %   E_v &= \eta P \frac{1}{s^2},
+%\end{align*}
+
+%where $\eta$ is another constant, I can fulfill my motivation for this experiment. Notice the units of the constant $\eta$ is $(\frac{\si{lx}}{\si{W\per m^2}} = \frac{\si{lm}}{\si{W}})$, is a value that is only depended on the light source used. Therefore, the constant $\eta$ is a measure of the efficacy of the light-bulb used in the amount of luminous power produced per unit power. This is also known as the typical luminous efficacy, one that I can use to compare to other light-bulbs using an online database. Furthermore, the value can be used to compare efficiency of light-bulbs in your daily life, whether that is to save money, or like me, to appreciate how far lighting technology had advanced.
+
+The typical luminous efficacy ($K$) can be calculated by dividing the gradient constant ($k$) by the power dissipated ($P$) (figure \ref{fig:tle}):
+%A division is needed to calculate the luminous efficacy $\eta$:
 \begin{align*}
-    \eta &= \frac{1}{4\pi A} \si{\ohm} K_{cd} \int_{0}^{\infty} V(\lambda) c(\lambda) \, d\lambda\\
-    E_v &= \eta P \frac{1}{s^2},
+    K &= \frac{k}{P} = \frac{1.6 \pm 0.1}{1.94 \pm 0.07}\\
+    &\approx 0.82 \pm 0.08 \si{lm\per W}.
 \end{align*}
 
-where $\eta$ is another constant, I can fulfill my motivation for this experiment. Notice the units of the constant $\eta$ is $(\frac{\si{lx}}{\si{W\per m^2}} = \frac{\si{lm}}{\si{W}})$, is a value that is only depended on the light source used. Therefore, the constant $\eta$ is a measure of the efficacy of the light-bulb used in the amount of luminous power produced per unit power. This is also known as the typical luminous efficacy, one that I can use to compare to other light-bulbs using an online database. Furthermore, the value can be used to compare efficiency of light-bulbs in your daily life, whether that is to save money, or like me, to appreciate how far lighting technology had advanced.
-
-A division is needed to calculate the luminous efficacy $\eta$:
-\begin{align*}
-    \eta &= \frac{k}{P} = \frac{1.6 \pm 0.2}{1.94 \pm 0.07}\\
-    &\approx 0.82 \pm 0.13 \si{lm\per W}.
-\end{align*}
-
-In comparison to the typical values shown in table \ref{tbl:leff}, the lab incandescent 5W light-bulb that I've used, which has a luminous efficacy value of $0.82 \pm 0.13 (\si{lm\per W})$, looks to be as efficient in producing light as a typical fireplace. This is unsurprising, as the outer glass casing of the bulb readily heats up when it is powered, indicating energy loss in the form of thermal energy. A suggestion is to made for the school physics department for a switch to safer (less temperature), and more energy efficient light-bulbs for general experiments.
-
-\begin{table}[H]
+\begin{wrapfigure}{r}{0.45\textwidth}
     \centering
     \begin{tabular}{l|l}
         Category     & Luminous Efficacy (lm/W) \\ \hline
@@ -472,9 +479,14 @@ In comparison to the typical values shown in table \ref{tbl:leff}, the lab incan
         Fluorescent  & 46-104.2                 \\
         LED          & 75-210
     \end{tabular}
-    \caption{List of common luminous efficacy values of light sources \parencite{le_value1} \parencite{le_value2} \parencite{le_value3} \parencite{le_value4}}
+    \caption{List of common luminous efficacy values of light sources\protect\footnotemark}
     \label{tbl:leff}
-\end{table}
+\end{wrapfigure}
+
+\footnotetext{ \parencite{le_value1} \parencite{le_value2}  \parencite{le_value3} \parencite{le_value4}}
+
+
+Comparing to the luminous efficacy values of a set of common light sources in figure \ref{tbl:leff}, the physics lab incandescent 5W light-bulb with a luminous efficacy value of $0.82 (\si{lm\per W})$, looks to be as efficient in producing light as a typical fireplace. This is unsurprising, as the outer glass casing of the bulb readily heats up when it is powered, indicating energy loss in the form of thermal energy. A suggestion is to made for the school physics department for a switch to safer (less glass temperature), and more energy efficient light-bulbs for general experiments.
 
 \subsection{Reflection}
 
@@ -501,7 +513,8 @@ A potentially significant variable. For the wooden ruler have depth, an angled t
 \paragraph{Accuracy of the light sensor}
 A variable that I was the most concerned about. This may be the largest cause of the systematic error. I could follow a lengthy calibration test listed on the manufacture's website against a factory calibrated source, which will decrease the systematic error and increase the accuracy of the data.
 
-\nocite{*}
+%\nocite{*}
+\newpage
 \printbibliography
 
 
