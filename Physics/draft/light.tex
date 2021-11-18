@@ -183,7 +183,7 @@ The value can then be compared to a list of common light sources to determine th
 %For the light sensor I have only measures intensity in lux, the above dive into luminosity serves as a justification for why I think the inverse square root applies to not just radiant intensity, but also to luminous intensity. Because the process of conversion is linear, it seems reasonable to hypothesize that illuminance is proportional to the distance squared.
 
 % how to do it
-To test the inverse square law, I have decided to use a Vernier light sensor against a 5 watt light-bulb sampled from the physics department. The light-bulb is supplied with only 8 volts of the 12 volts power supply, for from past experience, the bulb gets dangerously hot quickly on 12 volts. The dependent variable is the illuminance measurements from the light sensor, which ranges from 0-6000 lux. The independent variable is the distance of the light sensor from the light-bulb, and would be placed from 0.03m to 0.10m with steps of 0.01m, as it provides a wide range of illuminance values from the Vernier light sensor. This is repeated for a total of 5 times, as the light sensor often fluctuates even when held completely still. The repetition can help in reducing the uncertainties of the illuminance measurements.
+To test the inverse square law, I have decided to use a Vernier light sensor against a 5 watt light-bulb sampled from the physics department. The light-bulb is supplied with only 8 volts of the 12 volts power supply, for from past experience, the bulb gets dangerously hot quickly on 12 volts. The dependent variable is the illuminance measurements from the light sensor, which ranges from 0-6000 lux. The independent variable is the distance of the light sensor from the light-bulb, and would be placed from 0.030m to 0.10m with steps of 0.01m, as it provides a wide range of illuminance values from the Vernier light sensor. This is repeated for a total of 5 times, as the light sensor often fluctuates even when held completely still. The repetition can help in reducing the uncertainties of the illuminance measurements.
 
 %To test my hypothesis, I thought to conduct the experiment on the small 5W lab light-bulbs, for they have a tendency to heat up quickly before. Through some preliminary testing, I decided to decrease the supply voltage: the bulb gets dangerously hot on 12V, and placing sensor no closer than 3cm, and no further than 10cm, for at too close the illuminance exceeds the limits of the sensor, and that illuminance quickly drops off from the starting value, bringing no need of longer distances.
 
@@ -238,7 +238,7 @@ The temperature of the bulb filament & For the resistance of a resistor tend to 
 
  \item Align the meter wooden ruler perpendicularly to the light-bulb, position the Vernier light sensor parallel to the ruler at a distance of 3cm to the light-bulb. The final layout should be similar to figure \ref{fig:layout}.
 
- \item Secure down the light sensor at distances from 0.03m to 0.10m, step 0.01m, for a total of 8 distances.
+ \item Secure down the light sensor at distances from 0.030m to 0.10m, step 0.01m, for a total of 8 distances.
 
  \item For each distance, record the readings on the ammeter and voltmeter, retry the measurement if they differ from the last distance. Record the illuminance over 10 seconds in the software, and note down the mean illuminance value as indicated in the software.
 
@@ -318,7 +318,7 @@ Therefore: Power$ = 1.94 \pm 0.07 \si{W}$
 \paragraphnl{Correcting for the ambient illuminance}
 Subtract each illuminance values by the ambient illuminance value.
 
-For example, in trial 1, at distance 0.03m:
+For example, in trial 1, at distance 0.030m:
 \begin{align*}
     \text{Corrected} &= \text{Measured} - \text{Ambient }\\
     &= 1785 - 18 = 1767 \si{lx}
@@ -339,14 +339,21 @@ For example, in trial 1, at distance 0.03m:
 \paragraphnl{Averaging trial illuminances}
 Average the measured illuminance from 5 trials. Figure \ref{fig:average} shows the corrected illuminance values and the averages. Figure \ref{gph:average} plots the averaged illuminance values against the distances.
 
-\textit{Uncertainty using half ranges:} $\absun \text{illum.}_{\text{average}} = \frac{\text{max}(\text{illum}.) - \text{min}(\text{illum}.)}{2}$
-
-For example, at distance 0.03m:
+For example, averaging the illumiance measurements at distance 0.030m:
 \begin{align*}
- \absun \text{illuminance}_{\text{avg}} &= \frac{1940-1737}{2}\\
- &= 102 \,\si{lx}
+ \text{Illuminance}_{\text{average}} &= \frac{\sum \text{Illuminance}}{5}\\
+ &= \frac{1767+1940+1737+1781+1767}{5}\\
+ &= 1798\,\si{lx}
 \end{align*}
 
+\textit{Uncertainty using half ranges:} $\absun \text{Illum.}_{\text{average}} = \frac{\text{max}(\text{Illum}.) - \text{min}(\text{Illum}.)}{2}$
+
+For example, at distance 0.030m:
+\begin{align*}
+ \absun \text{Illuminance}_{\text{average}} &= \frac{1940-1737}{2}\\
+ &= 102 \,\si{lx}\\
+ \text{Illuminance}_{\text{average}} &= 1800 \pm 100 \,\si{lx}
+\end{align*}
 
 \begin{figure}[H]
     \centering
@@ -364,11 +371,24 @@ For example, at distance 0.03m:
 
 
 \paragraphnl{Applying inverse squared transform on distance}
-Figure \ref{gph:average} looks like an inverse squared graph, so I attempted to straighten it with $1/{\text{distance}}^2$ transformation. The transformation data and error is generated with Microsoft Excel (figure \ref{fig:tdata}, graph \ref{gph:tdata}).
+Figure \ref{gph:average} looks like an inverse squared graph, so I attempted to straighten it with $1/{\text{distance}}^2$ transformation on the horizontal axis. The transformation data and error is generated with Microsoft Excel (figure \ref{fig:tdata}, graph \ref{gph:tdata}).
 
-\textit{Uncertainty of the transformed distance}: $\relun 1/{\text{distance}}^2$ = $2 \times \relun \text{distance}$
+For example, at distance 0.030m:
+\begin{align*}
+ \frac{1}{\text{Distance}^2} &= 0.03 ^ {-2}\\
+ &= 1100\,\si{m^-2}\, (2 \tsf)\\
+\end{align*}
 
-% TODO: example
+
+\textit{Uncertainty of the transformed distance}: $\relun 1/{\text{Distance}}^2$ = $2 \times \relun \text{Distance}$
+
+For distance 0.030m:
+\begin{align*}
+ 2 \times \relun \text{Distance} &= 2 \times 0.033 = 0.0667 \,(2 \tsf)\\
+ \frac{1}{\text{Distance}^2} &= 1100\, \si{lx} \pm 6.67\%\\
+ &= 1100 \pm 100 \,\si{lx}
+\end{align*}
+
 
 \begin{figure}[H]
     \centering
@@ -380,7 +400,7 @@ Figure \ref{gph:average} looks like an inverse squared graph, so I attempted to 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{assets/transformgraph.png}
-    \caption{Transformed distance graph}
+    \caption{Inverse squared distance to light source against the illuminance}
     \label{gph:tdata}
 \end{figure}
 
