@@ -70,12 +70,12 @@ While I've been told in class that the temperature of absolute zero is not physi
 
 \subsection{Research Question}
 \begin{quote}
-    What is the relationship between the pressure of a sample of air mixture against its temperature under constant container volume and mixture molecular quantity?
+    What is the relationship between the pressure of a sample of air mixture against its temperature under constant container volume and molecular quantity?
 \end{quote}
 
 \subsection{Background}
 % talk about gases and the ideal gas law
-There exists a wide range of chemical reactions that includes a variety of gases as reactants or products. For the sake of stoichiometric analysis, it is heavily desired to be able to model the behavior of gases. To ease the calculations involved with the millions of individual gas particles at the microscopic level, the field of ``kinetic theory of matter'' created a model of the ideal gas with idealistic assumptions that still often resemble real gases.
+There exists a wide range of chemical reactions that includes a variety of gases as reactants and/or products. For the sake of stoichiometric analysis, it is heavily desired to be able to model the behavior of gases. To ease the calculations involved with the large amount of individual gas particles at the microscopic level, the field of ``kinetic theory of matter'' created a model of the ideal gas with idealistic assumptions that still often resembles real gases.
 
 The five assumptions of an ideal gas are that: (1) the gas molecule collisions are elastic, (2) the volume of the particles is negligible, (3) there exists no intermolecular forces between the particles, (4) the particles of a gas obey Newtonian motion and move with a range of speed and direction \parencite{gas_law}. These assumptions will be helpful in designing my experiment.
 
@@ -99,7 +99,7 @@ The law contains the relationships between the four gaseous state quantities, ea
     \label{fig:pt}
 \end{figure}
 
-The relationship showcases that as the temperature of an ideal gas increases, its pressure also increases. This is because pressure measures the average force per unit area of the moving particles in the gas elastically colliding with the walls of the container. For temperature is a measure of the average kinetic energy of the particles, its increase means overall faster-moving particles, causing an average larger force upon the gas container \parencite{pearson}.
+The relationship shows that as the temperature of an ideal gas increases, its pressure also increases. This is because pressure measures the average force per unit area of the moving particles in the gas elastically colliding with the walls of the container. For temperature is a measure of the average kinetic energy of the particles, its increase means overall faster-moving particles, causing an average larger force upon the gas container \parencite{pearson}.
 
 % For there is a linear relationship between pressure and temperature, in the case of an ideal gas, I should measure a linear trend when graphing the gas pressure against its temperature, with an intercept of zero when the units are standard (Pascals and Kelvin).%
 
@@ -112,9 +112,9 @@ The relationship showcases that as the temperature of an ideal gas increases, it
 \end{wrapfigure}
 
 % its connection to the idea of absolute zero
-By transposing the two axis (so that it is a Temperature against Pressure graph), extrapolating the linear relationship:
+By transposing the two axis (so that it is a Temperature against Pressure expression), extrapolating the linear relationship:
 \[
-    T = \frac{1}{c}P,
+    T = \frac{1}{c}P
 \]
 can display an incredible result. The absolute zero is a theoretical measurement of temperature that sets the lower bound of the temperature scale. At the temperature, the velocities of the gas particles are precisely zero, therefore the gas has zero outwards pressure. So the y-intercept (AZ) of the regression line (figure \ref{fig:az}), should be zero when using a standard unit such as Kelvin, and would measure the value of absolute zero in Celsius when the temperature unit is in Celsius.
 
@@ -125,9 +125,9 @@ can display an incredible result. The absolute zero is a theoretical measurement
 
 % how I would measure it
 % potential source of errors
-To test the theory, I have decided to use a pressure probe containing a sample of air mixture dipped in water within a beaker above a bunsen burner, where the temperature of the water is the independent variable and pressure of the air mixture is the dependent variable. The chosen range of temperature is from $20\si{\celsius}$ to $100\si{\celsius}$, for it ensures the widest possible range of temperatures of water (room temperature to boiling point) for regression.
+To test the theory, I decided to use a pressure probe containing a sample of air mixture dipped in water within a beaker above a bunsen burner, where the temperature of the water is the independent variable and pressure of the air mixture is the dependent variable. The chosen range of temperature is from $20\si{\celsius}$ to $100\si{\celsius}$, for it ensures the widest possible range of temperatures of water (room temperature to boiling point) for regression.
 
-I chose to heat the water up to its boiling point, and waiting for it to cool down to a reasonable temperature of around $65\si{\celsius}$, taking measurements along the way. For the uncertainty of the pressure probe is relatively high, I choose to repeat this experiment a total of 5 times to increase its accuracy.
+I chose to heat the water up to its boiling point, and let it cool down to a reasonable temperature of around $65\si{\celsius}$, taking temperature and pressure measurements along the way. For the uncertainty of the pressure probe is relatively high, I choose to repeat this experiment a total of 5 times to increase its accuracy.
 
 For the air mixture is transparent to my eye, the gas particles are likely to have minimal size. In combination with the large volume of the container (figure \ref{fig:probe}), the air mixture satisfies most of the assumptions and thus can be modeled with the ideal gas law. Therefore I hypothesize a positive correlation between the temperature and the pressure of the mixture, approximating a linear graph to that of figure \ref{fig:az}.
 
@@ -144,13 +144,13 @@ The pressure of the air mixture in PSI. This is measured using a pressure probe 
 \begin{longtable}{P{0.2\textwidth}|P{0.35\textwidth}|P{0.35\textwidth}}
 Controls & Reason & How\\\hline
 
-Submersion depth of pressure probe & The submersion depth of the probe determines the surface area between the glass container with the heated water. The larger the surface area, the faster the heat conducts from the water to the air mixture, causing a lower than measured temperature inside the probe and creating systematic error in the y-intercept of the pressure vs. temperature relationship & Use a constant volume (200ml) of water and a constant size beaker (500ml) for each experiment. The water should submerge the spherical bulb up to the stem, but not too much as to overflow \\
+Submersion depth of pressure probe & The submersion depth of the probe determines the surface area between the glass container against the heated water. Changes in the surface area changes the rate of heat transform between the water and the air mixture, systematically changing the pressure measurements and changes the y-intercept of the pressure vs. temperature relationship & Use a constant volume (200ml) of water and a constant size beaker (500ml) for each experiment. The water should submerge the spherical bulb up to the stem, but not too much as to overflow \\
 
-Interval between measurements & Pressure probe uncertainty means a small change in temperature does not reflect in a change in pressure, frequent measurements will map multiple temperature values to a single pressure value. As temperature rate of change fluctuates throughout the experiment, a random amount of temperature measurements per pressure value. This randomly weights each pressure measurement in the regression process, causing random error in the y-intercept & Use a timer to take measurements every 30 seconds when heating, and every 1 minute when cooling, as to ensure meaningful pressure changes during the intervals \\
+Interval between measurements & Pressure probe uncertainty means a small change in temperature does not reflect in a change in pressure, frequent measurements will map multiple temperature values to a single pressure value. This randomly weights each pressure measurement in the regression process, causing random error in the y-intercept & Use a timer to take measurements every 30 seconds when heating, and every minute when cooling, as to ensure meaningful pressure changes during the intervals \\
 
 Placement of sensors & Contact between the sensors and the beaker will cause systematic error in their measurements & Using clamps to suspend the thermometer and gas pressure probe within the water. (Also avoid direct contact between the sensors) \\
 
-Environmental atmospheric pressure & Changes in the surrounding atmospheric pressure can systemically increase the pressure measurements & Conduct the experiment at the same location for each trial, ideally all within a short time span of a week
+Environmental atmospheric pressure & The surrounding atmospheric pressure can systemically change the pressure measurements & Conduct the experiment at the same location for each trial, ideally all within a short time span of a week
 \\
 
 Method of measurements & Non-direct viewing of the pressure probe will cause parallax error in the pressure measurements. Guessing dim thermometer readings can create random errors & View the pressure probe upright and direct, prepare a backup thermometer to switch in if the current one becomes dim or hard to read \\
@@ -168,11 +168,13 @@ Method of measurements & Non-direct viewing of the pressure probe will cause par
     \item lighter
 \end{itemize}
 
+
+\newpage
 \subsection{Method}
 
 
 \begin{enumerate}
-    \item Connect the bunsen burner to the gas output and place it on top of a heating mat on a table, place the tripod on top of the burner with a gaze mat on the tripod. Place the 500ml glass beaker on top of the gaze mat. Setup the two retort stands by attaching the clamps, then fitting the pressure probe and thermometer to each of the clamp. Slowly lower the sensors so that they are inside the glass beaker. Check the setup matches figure \ref{fig:setup}, or figure \ref{fig:setupdrawn}.
+    \item Connect the bunsen burner to the gas output and place it on top of a heating mat on a table, place the tripod on top of the burner with a gaze mat on the tripod. Place the 500ml glass beaker on top of the gaze mat. Setup the two retort stands by attaching the clamps, then fit the pressure probe and thermometer to each of the clamps. Slowly lower the sensors so that they are inside the glass beaker. Check the setup matches figure \ref{fig:setup}, and figure \ref{fig:setupdrawn}.
     \item Lift the two clamps holding the sensors. Fill the glass beaker with tap water, stop at 200ml using the markings on the beaker. Carefully reinsert the two sensors into the water.
     \item Wait for 1 minute for the sensors to stabilize in readings. Then light the bunsen burner, start the timer, and record the first reading of temperature and pressure.
     \item Record the temperature and pressure every 30 seconds using the timer, stop the bunsen burner when the thermometer reads above 100$\si{\celsius}$. Carefully change the thermometer if the display become hard to read.
@@ -181,14 +183,6 @@ Method of measurements & Non-direct viewing of the pressure probe will cause par
 \end{enumerate}
 
 \subsection{Diagrams}
-
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{assets/setuplabelled.png}
-    \captionof{figure}{The experiment setup, with the bunsen burner ready to be lit}
-    \label{fig:setup}
-\end{figure}
 
 \begin{figure}[H]
     \centering
@@ -205,6 +199,15 @@ Method of measurements & Non-direct viewing of the pressure probe will cause par
         \label{fig:setupdrawn}
     \end{minipage}
 \end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{assets/setuplabelled.png}
+    \captionof{figure}{The experiment setup, with the bunsen burner ready to be lit}
+    \label{fig:setup}
+\end{figure}
+
+
 
 \subsection{Safety}
 Working with pressure and high temperature presents a safety concern, wear eye protection throughout the experiment to protect against explosions.
@@ -235,6 +238,7 @@ To convert between unit psi to kPa, the following conversion equation is used on
 
 \textit{Uncertainties}: $\relun P_{\text{kPa}} = \relun P_{\text{psi}}$
 
+\newpage
 For example, in experiment 1, at temperature 22.5$\si{\celsius}$:
 
 Pressure in kPa = 0.894757 $\times$ 15.00 $\approx$ $\num{1.034e+2}$,
@@ -249,7 +253,6 @@ Therefore: $P_{\text{kPa}} = \num{1.034e+2} \pm \num{1.7} \si{kPa}$
 
 The full processed data tables are in the appendix: (table \ref{fig:pq}, table \ref{fig:upq}).
 
-\newpage
 \subsection{Analysis}
 
 Transpose the pressure and temperature columns, the graph for experiment 1 is shown in figure \ref{fig:t1} --- the remaining graphs of the 4 additional experiments are in the appendix.
@@ -263,7 +266,7 @@ Transpose the pressure and temperature columns, the graph for experiment 1 is sh
 
 \paragraph{Note} The y error bars shows the absolute uncertainties of the thermometer. The x error bars plots the calculated absolute uncertainties of the pressure measurements. The small uncertainty of the thermometer means the y error bars are not visible.
 
-The value of absolute zero for each experiment is reflected in the y-intercept of their regression line. Averaging and calculating the half range for the 5 trials will increase the accuracy of the result (figure \ref{fig:yi}).
+The value of absolute zero for each experiment is reflected in the y-intercept of their regression line. Averaging and calculating the half range for the 5 trials will increase the accuracy of the result (table \ref{fig:yi}).
 
 \begin{figure}[H]
     \centering
@@ -365,14 +368,14 @@ Furthermore, an interesting experiment would be to test the deviation of the ide
 \appendix
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{assets/unitdata.png}
+    \frame{\includegraphics[width=\textwidth]{assets/unitdata.png}}
     \captionof{table}{Processed quantitivative data of 5 experiments, showing the relationship between pressure (kPa) against temperature ($\si{\celsius}$) of the air mixture}
     \label{fig:pq}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{assets/unitdata_unc.png}
+    \frame{\includegraphics[width=\textwidth]{assets/unitdata_unc.png}}
     \captionof{table}{Uncertainty of the processed quantitivative data of 5 experiments}
     \label{fig:upq}
 \end{figure}
@@ -381,7 +384,7 @@ Furthermore, an interesting experiment would be to test the deviation of the ide
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.76\textwidth]{assets/graphs.png}
-    \captionof{figure}{Data graphs of trials 2-5}
+    \captionof{figure}{Data graphs of experiment 2-5}
     \label{fig:dg25}
 \end{figure}
 
