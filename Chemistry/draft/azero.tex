@@ -179,7 +179,7 @@ Method of measurements & Non-direct viewing of the pressure probe will cause par
     \item Wait for 1 minute for the sensors to stabilize in readings. Then light the bunsen burner, start the timer, and record the first reading of temperature and pressure.
     \item Record the temperature and pressure every 30 seconds using the timer, stop the bunsen burner when the thermometer reads above 100$\si{\celsius}$. Carefully change the thermometer if the display become hard to read.
     \item Record the temperature and pressure every minute using the timer as the water cools in the beaker, stop recording when the thermometer reads below around 65$\si{\celsius}$. Carefully remove the beaker and clean it with cold water.
-    \item Repeat step 2-5 for a total of 5 times, noting the pressure and temperature data each time.
+    \item Repeat steps 2-5 for a total of 5 times, noting the pressure and temperature data each time.
 \end{enumerate}
 
 \subsection{Diagrams}
@@ -208,7 +208,6 @@ Method of measurements & Non-direct viewing of the pressure probe will cause par
 \end{figure}
 
 
-
 \subsection{Safety}
 Working with pressure and high temperature presents a safety concern, wear eye protection throughout the experiment to protect against explosions.
 
@@ -219,9 +218,9 @@ Take care in disposing hot water, for it can cause burns. Use a secondary beaker
 \section{Data}
 \subsection{Raw Data}
 \subsubsection*{Qualitative data}
-The endpoint of the heating is determined by the boiling point of water. In few trials, the intense boiling of the water started to shake the retort stands with the sensors, requiring me to end the experiment early in fear of the shaking resonating, causing spills.
+The endpoint of heating is determined by the boiling point of water. In few trials, the intense boiling of the water started to shake the retort stands with the sensors, I ended the experiment early in fear of the shaking resonating, causing spills.
 
-The reason for a backup thermometer is because the high temperature of the water steamed up the display of the digital thermometer. I supposed operating with clamps at a dangerously high temperature is a potential safety hazard, therefore I stopped one of the trials from reaching temperatures higher than 75$\si{\celsius}$.
+The reason for a backup thermometer is because the high temperature of the water steamed up the display of the digital thermometer. As operating with clamps at a dangerously high temperature is a potential safety hazard, I stopped one of the trials from reaching temperatures higher than 75$\si{\celsius}$.
 
 \subsubsection*{Quantitative data}
 \begin{figure}[H]
@@ -231,7 +230,7 @@ The reason for a backup thermometer is because the high temperature of the water
 \end{figure}
 
 \subsection{Processing}
-To convert between unit psi to kPa, the following conversion equation is used on all pressure measurements \parencite{conver_units}:
+To convert between PSI and kPa, the following conversion equation is used on all pressure measurements \parencite{conver_units}:
 \[
     P_{\text{kPa}} \approx 6.89476 \times P_{\text{psi}}.
 \]
@@ -247,7 +246,7 @@ $\absun P_{\text{psi}} = 0.25\si{psi}$
 
 $\relun P_{\text{psi}} = \relun P_{\text{kPa}} =  \frac{0.25}{15.00} \approx 0.017$
 
-$\absun P_{\text{kPa}} = 0.017 \times \num{1.0e+2} \approx \num{1.7} \si{kPa}$
+$\absun P_{\text{kPa}} = 0.017 \times \num{1.034e+2} \approx \num{1.7} \si{kPa}$
 
 Therefore: $P_{\text{kPa}} = \num{1.034e+2} \pm \num{1.7} \si{kPa}$
 
@@ -255,7 +254,7 @@ The full processed data tables are in the appendix: (table \ref{fig:pq}, table \
 
 \subsection{Analysis}
 
-Transpose the pressure and temperature columns, the graph for experiment 1 is shown in figure \ref{fig:t1} --- the remaining graphs of the 4 additional experiments are in the appendix.
+Transpose the pressure and temperature axis, the graph for experiment 1 is shown in figure \ref{fig:t1} --- the graphs of the 4 additional experiments are in the appendix.
 
 \begin{figure}[H]
     \centering
@@ -264,7 +263,7 @@ Transpose the pressure and temperature columns, the graph for experiment 1 is sh
     \label{fig:t1}
 \end{figure}
 
-\paragraph{Note} The y error bars shows the absolute uncertainties of the thermometer. The x error bars plots the calculated absolute uncertainties of the pressure measurements. The small uncertainty of the thermometer means the y error bars are not visible.
+\paragraph{Note} The y error bars shows the absolute uncertainties of the thermometer. The x error bars are the calculated absolute uncertainties of the pressure measurements. The small uncertainty of the thermometer means the y error bars are not visible.
 
 The value of absolute zero for each experiment is reflected in the y-intercept of their regression line. Averaging and calculating the half range for the 5 trials will increase the accuracy of the result (table \ref{fig:yi}).
 
@@ -315,7 +314,7 @@ The value and range of absolute zero computed in both methods contain the true v
 % theory & science involved
 The high correlation coefficients in both methods showcase a strong correlation between the temperature and pressure of a gas mixture at constant volume and amount. Additionally, there were no anomalous results in the 5 trials even when the data is being collected on separate days and times. This strongly confirms my hypothesis of the relationship between gas temperature and pressure, where it is described as:
 \[
-    T = kP + T_{\text{absolute zero}},
+    T = kP + T_{\text{absolute zero}}
 \]
 
 and $k$ is the proportionality constant. This confirms a part of the ideal gas law (figure \ref{fig:igl}), and showcases the validity of the kinetic theory of ideal gases.
@@ -354,7 +353,7 @@ The method relies on the conduction heat transfer between the water to the air m
 In a few trials, the temperature readings as the water boils are seen to increase above $100\si{\celsius}$. This showcases the systematic error of the thermometer, which shifts all points upwards in the transposed graph, resulting in a higher point of absolute zero. However, this is not the case in the experiment, which can be explained through the likely influence of the dipped higher pressure points, overwriting the systematic errors of the temperature sensor. Consider using an additional mercury thermometer alone side the digit one, and average their measurements to increase the accuracy of the final result of absolute zero.
 
 \subsection{Further Investigations}
-To further investigate the ideal gas law and the value of absolute zero, other relations from the equation (figure \ref{fig:igl}) can be used. One can measure the volume of an air mixture against its temperature using an ice bath and a freely moving syringe with air inside. The y-intercept of the volume against temperature graph will be the value of absolute zero as well. This may give a more certain estimation of absolute zero, for the volume readings on syringes may be less uncertain than the pressure probe.
+To further investigate the ideal gas law and the value of absolute zero, other relations from the equation (figure \ref{fig:igl}) can be used. One can measure the volume of an air mixture against its temperature using an ice bath and a freely moving syringe. The y-intercept of the volume against temperature graph will be the value of absolute zero as well. This may give a more certain estimation of absolute zero, for the volume readings on syringes may be less uncertain than the pressure probe.
 
 Furthermore, an interesting experiment would be to test the deviation of the ideal gas law at low temperatures or high pressure. By performing the aforementioned experiments in a freezer or on top of a mountain, it is likely to explain and correct the small but significant systematic errors in this experiment.
 
