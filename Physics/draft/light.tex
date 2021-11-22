@@ -80,7 +80,7 @@ For a light-bulb to produce light, an electrical current in the form of moving e
     \label{eq:work}
 \end{figure}
 
-The energy dissipated in the filament within the light-bulb are converted into thermal energy and electromagnetic waves. These waves are energy disturbances in the air medium traveling in all directions originated from the filament, and the rate of these light waves incidence per unit area on a surface is the intensity of the light source at the location, represented with symbol $I$ and in units watts per meter squared ($\si{W/m^2}$). The light intensity changes over changing distances to the light source following the inverse square law \parencite{isl}:
+The energy dissipated in the filament within the light-bulb are converted into thermal energy and electromagnetic waves. These waves are energy disturbances in the air medium traveling in all directions originated from the filament, and the rate of these light waves incidence per unit area on a surface is the intensity of the light source at the location, represented with symbol $I$ and in unit watts per meter squared ($\si{W/m^2}$). The light intensity changes over changing distances to the light source following the inverse square law \parencite{isl}:
 
 %For it is the emission of light waves/photons that we call ``light'', the density of these photons in an area naturally defines the intensity of light (of units $\si{W\per m^2}$). This relationship is a part of the IB curriculum at topic 4.3, Waves Characteristics, where it states a fundamental property of light intensity --- that the intensity of light is proportional to the inverse distance squared (figure \ref{eq:prop}).
 
@@ -308,12 +308,12 @@ The power is defined as the current times the voltage (figure \ref{eq:work}):
 \end{align*}
 
 \textit{Uncertainty of Power}: $\relun$Power =  $\relun$Current +  $\relun$Voltage
-\begin{alignat*}
-    \relun \si{I} &= \frac{0.01}{0.27},\quad &&\relun \si{V} = \frac{0.01}{7.20}\\
-    \relun \si{W} &= 0.04 \,(1 \tsf), \quad &&\absun \si{W} = 0.07\si{W} \,(1 \tsf)
+\begin{alignat*}{2}
+    \% \text{unc}\, \si{I} &= \frac{0.01}{0.27} = 0.037,\quad &&\relun \si{V} = \frac{0.01}{7.20} = 0.0014\\
+    \relun \si{W} &= 0.037 + 0.0014 = 0.04 \,(1 \tsf), \quad &&\absun \si{W} = 1.94 \times 0.04 = 0.08\si{W} \,(1 \tsf)
 \end{alignat*}
 
-Therefore: $\text{Power} = 1.94 \pm 0.07 \si{W}$
+Therefore: $\text{Power} = 1.94 \pm 0.08 \si{W}$
 
 \subsubsection{Processing Illuminance}
 
@@ -440,9 +440,9 @@ Therefore, the regression line and thus the relationship between illuminance $E_
 There exists a clear and strong inverse squared relationship between the illuminance and the distance to the light-bulb, as shown in the transformed graph in figure \ref{gph:tdata}, and the close to one correlation coefficient $\sqrt{0.9995}=0.9997$. This shows that as the distance to a light source increases, the illuminance decreases relatively rapidly at close distances but relatively less at far distances, and vice versa.
 %Following the data collection and some transformation for linearization, the relationship is summarized in figure \ref{fig:rel}. The data had mostly supported the theory of the inverse square law. From figure \ref{gph:average}, one can see the that the measured illuminance falls rapidly when the distance to source increases. To create a linear curve, the illuminance ($E_v$) is plotted against the inverse square of the distance ($\frac{1}{d^2}$) shown in figure \ref{gph:tdata}. The small variance of the data points from the regression line is a strong evidence to support my hypothesis.
 
-However, the theory of inverse square law also suggests that the relationship curve should have a y-intercept of 0. The non-zero y-intercept of the regression line --- even considering the ranges of uncertainty ($0 \notin [10, 50]$), suggests some systematical error are present. The curve is shifted upwards by a sizable amount, which could be caused by the erroneous reading of the ambient illuminance, parallax error in aligning the ruler, or by a lack of calibration of the light sensor. This indicates that the experiment data was not very accurate.
+However, the theory of inverse square law also suggests that the relationship curve should have a y-intercept of 0. The non-zero y-intercept of the regression line --- even considering the ranges of uncertainty ($0 \notin [10, 50]$), suggests some systematical errors are present. The curve is shifted upwards by a sizable amount, which could be caused by the erroneous reading of the ambient illuminance, parallax error in aligning the ruler, or by a lack of calibration of the light sensor. This indicates that the experiment data was not very accurate.
 
-The graph (figure \ref{gph:tdata}) consists of noticeable sized error bars that increases as distance increases. This is caused by the small distances used in combination with the moderately uncertain wooden ruler used. However the results are overall relatively precise due to the low percentage uncertainty of the two axis (figure \ref{fig:tdata}, figure \ref{fig:average}). The experiment data is considered to precise but inaccurate.
+The graph (figure \ref{gph:tdata}) consists of noticeable sized error bars that increases as distance increases. This is caused by the small distances used in combination with the moderately uncertain wooden ruler used. However the results are overall relatively precise due to the low percentage uncertainty of the two axis (figure \ref{fig:tdata}, figure \ref{fig:average}). The experiment data is considered to be precise but inaccurate.
 
 %TODO: maybe include this, or not
 %The high correlation coefficient showcases the strong inverse squared relationship between the distance to the light source and the illuminance. This is because light waves from a light source radiates outwards in a perfect sphere, with surface area inversely proportional to the distance to its origin squared. As light intensity is measured in power per area, the larger the sphere surface area, the less intensity of the light as the amount of light waves spreads out. This means that the light intensity is also inversely proportional to the distance squared.
@@ -464,7 +464,7 @@ The typical luminous efficacy $K$ can be calculated by dividing the gradient con
 %A division is needed to calculate the luminous efficacy $\eta$:
 \begin{align*}
     K &= \frac{k}{P} = \frac{1.6 \pm 0.1}{1.94 \pm 0.07}\\
-    &\approx 0.82 \pm 0.08 \si{lm\per W}.
+    &= 0.82 \pm 0.08\,\si{lm\per W}\,(2\, \tsf)
 \end{align*}
 
 \begin{wrapfigure}{r}{0.45\textwidth}
@@ -512,7 +512,7 @@ A potentially significant variable. For the wooden ruler have depth, an angled t
 A variable that I was the most concerned about. This may be the largest cause of the systematic error. I could follow a lengthy calibration test listed on the manufacture's website against a factory calibrated source, which will decrease the systematic error and increase the accuracy of the data.
 
 \subsection{Further Investigations}
-Consider repeating the experiment with several other household lighting sources and compare their typical luminous efficacy. This will reduce the impacts of the systematic errors in the method during comparison as all light sources are measured equally.
+Consider repeating the experiment with several other household lighting sources --- LED, halogen, or fluorescent light-bulbs, and compare their typical luminous efficacy. The information can be used to determine the efficiency of different types of light sources to help the physics department to choose more efficient light-bulbs.
 
 %\nocite{*}
 \newpage
