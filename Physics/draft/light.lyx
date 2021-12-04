@@ -1,0 +1,3586 @@
+#LyX file created by tex2lyx 2.3
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin E:/Folder2021/IAProjects/Physics/draft/
+\textclass article
+\begin_preamble
+
+
+% science
+\usepackage{array}
+\usepackage{siunitx}
+
+
+% layout
+\usepackage{parskip}
+\usepackage{circuitikz}
+
+
+
+% referencing
+
+
+
+% table centering
+\renewcommand{\arraystretch}{1.3}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\tptt}{$\times\,$}
+
+% figures labelings
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
+
+% uncertainty
+\newcommand{\absun}{\Delta \text{unc}\,}
+\newcommand{\relun}{\% \text{unc}\,}
+\newcommand{\tsf}{\,\text{sf}}
+
+\newcommand{\paragraphnl}[1]{\textbf{#1}\\\\}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+\title{Empirically finding the typical luminous efficacy of an incandescent light-bulb through the inverse square law}
+
+% no author or date
+\author{}
+\date{\vspace{-8ex}}
+
+
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding utf8
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks 0
+\pdf_bookmarksnumbered 0
+\pdf_bookmarksopen 0
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks 0
+\pdf_pdfborder 0
+\pdf_colorlinks 0
+\pdf_backref section
+\pdf_pdfusetitle 0
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine biblatex
+\cite_engine_type authoryear
+\biblio_style plainnat
+\use_bibtopic false
+\biblatex_bibstyle apa
+\biblatex_citestyle apa
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\footskip 0.25in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+maketitle
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Design
+\end_layout
+
+\begin_layout Subsection
+Introduction
+\end_layout
+
+\begin_layout Standard
+I watched a video online discussing the historical usage of electrical light sources to illuminate the streets, where it focused on a 
+\begin_inset Quotes eld
+\end_inset
+
+Moonlight tower
+\begin_inset Quotes erd
+\end_inset
+
+ in San Jose, California that lights up an entire city through a single light source 
+\begin_inset CommandInset citation
+LatexCommand citep
+after ""
+before ""
+key "tower"
+literal "false"
+
+\end_inset
+
+. The video considered it to be a joke of an invention for the very little light it gave out for pedestrians, as comparable to the actual moon — hence the name 
+\begin_inset Quotes eld
+\end_inset
+
+Moonlight
+\begin_inset Quotes erd
+\end_inset
+
+. While it is common sense that the further you are from a light source, the less bright it seems. I was fascinated by how quickly the brightness had decreased, so much so that a sun-like light-bulb can be so dim only 100 meters away. I want to test how the light intensity changes with the distance to the light source.
+\end_layout
+
+\begin_layout Standard
+Additionally, the relationship between light intensity and distance to the light source can reveal the efficiency of the light source: known as the typical luminous efficacy and measured in 
+\begin_inset Quotes eld
+\end_inset
+
+amount
+\begin_inset Quotes erd
+\end_inset
+
+ of light waves per unit power, or lumens per watt. I decided to select one of the light-bulbs from the school's physics department and test its efficiency, because the class have been exclusively using them in learning the topic of electricity. I am curious in finding out how the efficiency of this light-bulb compares to a list of common light sources.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%During the examination of a potential IA idea on the intensity of a refracted light-beam, I struggled with modeling a realistic light due to a lack of understanding and care towards the decrease in intensity of the light with respect to the distance. Because the glass cube I was working with had significant length, the decrease in intensity of the light-beam within the glass damaged my data and exponentially increased the difficulty in linearization. Therefore, I wanted to empirically see how the difference in distances will affect the measurement of light intensity. Additionally, I found the labs bulbs are prone to extreme heat even with little power and on duration. Thus, I thought to use this experiment to find the luminous efficacy of an incandescent lab light-bulb to confirm my suspicion.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Research Question
+\end_layout
+
+\begin_layout Quote
+What is the relationship between the measured illuminance against the distance to an incandescent light-bulb? 
+\end_layout
+
+\begin_layout Subsection
+Background
+\end_layout
+
+\begin_layout Standard
+For a light-bulb to produce light, an electrical current in the form of moving electrical charges must pass through a light emitting electrical resistor. This experiment will use an incandescent light-bulb as the light source, which functions by heating a wire filament to a temperature that emits light. For light waves are forms of energy, the amount of light produced is depended on the energy per second dissipated within the filament, known as power and represented with symbol 
+\begin_inset Formula $P$
+\end_inset
+
+. Power is defined as the voltage 
+\begin_inset Formula $V$
+\end_inset
+
+ across the resistor times the current 
+\begin_inset Formula $I$
+\end_inset
+
+ through the resistor, shown in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:work"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+. The higher the power dissipated within the light-bulb, the brighter the light-bulb is.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%While there exists difference in the efficiency of such resistors --- modern light emitting diodes (LED) are much more energetically efficient comparing to an incandescent light-bulb, the physical result: needed to illuminate a room through the emission of light waves in the visible spectrum, does not differ. Therefore, the theoretical definition of the rate of work, $P$, is only depended upon the level of electrical current (the flow rate of charges), and voltage (the work potential of charges), shown in figure 
+\backslash
+ref{eq:work}.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset Formula \[
+    P = IV
+    \]
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The electrical relationship of power
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:work"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The energy dissipated in the filament within the light-bulb are converted into thermal energy and electromagnetic waves. These waves are energy disturbances in the air medium traveling in all directions originated from the filament, and the rate of these light waves incidence per unit area on a surface is the intensity of the light source at the location, represented with symbol 
+\begin_inset Formula $I$
+\end_inset
+
+ and in unit watts per meter squared (
+\begin_inset Formula $\si{W/m^2}$
+\end_inset
+
+). The light intensity changes over changing distances to the light source following the inverse square law 
+\begin_inset CommandInset citation
+LatexCommand citep
+after ""
+before ""
+key "isl"
+literal "false"
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%For it is the emission of light waves/photons that we call ``light'', the density of these photons in an area naturally defines the intensity of light (of units $
+\backslash
+si{W
+\backslash
+per m^2}$). This relationship is a part of the IB curriculum at topic 4.3, Waves Characteristics, where it states a fundamental property of light intensity --- that the intensity of light is proportional to the inverse distance squared (figure 
+\backslash
+ref{eq:prop}).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+begin{figure}[h!]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%    
+\backslash
+[
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%    I 
+\backslash
+propto 
+\backslash
+frac{1}{s^2}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%    
+\backslash
+]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%    
+\backslash
+caption{The inverse square relation}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%    
+\backslash
+label{eq:prop}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+end{figure}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%Furthermore, if we consider the emission of these photons to be a perfect sphere around the light source, the density of photons at a given distance is simply represented via the surface area of the sphere with a radius of the distance.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%images
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%Using the unit definition of intensity, we can derive using the equation of the surface area of a sphere, the full intensity equation in figure 
+\backslash
+ref{eq:isl}:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+placement h!
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset Formula \[
+    I \propto \frac{P}{d^2}
+    \]
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The inverse square law
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:isl"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $I$
+\end_inset
+
+ is the light intensity, 
+\begin_inset Formula $d$
+\end_inset
+
+ is the distance to the light source, and 
+\begin_inset Formula $P$
+\end_inset
+
+ is the power dissipated within the light source. The inverse square law states that light intensity is inversely proportional to the square of the distance from the source, and is proportional to the source power.
+\end_layout
+
+\begin_layout Standard
+However, the light sensor I used instead measures light intensity in illuminance with unit lux. This is because the human eye does not perceive each wavelength of the electromagnetic spectrum equally — red light appears dimmer than green light at the same intensity, and the unit illuminance takes this into consideration by weighting each wavelength differently. Illuminance is defined through the following equation, where 
+\begin_inset Formula $d$
+\end_inset
+
+ is the distance to the source, 
+\begin_inset Formula $y(\lambda)$
+\end_inset
+
+ as the weighting function of a wavelength, and 
+\begin_inset Formula $P$
+\end_inset
+
+ as the power of the light source.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+placement h!
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula \begin{align*}
+        E_v &= \frac{1}{4\pi d^2} \times 683 \int_{0}^{\infty} y(\lambda) P \, d\lambda
+    \end{align*}
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The Illuminance equation
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:dti"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+By rearranging the illuminance equation in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:dti"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, it can be shown that illuminance also obeys the inverse square law. This means that illuminance is simply another measurement of light intensity:
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{align*}
+ E_v &=  \frac{P}{d^2} \frac{1}{4\pi} \times 683 \int_{0}^{\infty} y(\lambda) \, d\lambda\\
+ E_v &\propto \frac{P}{d^2}
+\end{align*}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+By plotting the illuminance measurements against the distance, an inverse square graph to the likes of figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:relation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is to be expected, with illuminance decreasing at a decreasing rate as distance to source is increased.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename assets/relationship.png
+	width 37text%
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Graph of Illuminance against Distance
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:relation"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The efficiency of the incandescent light-bulb can then be calculated using the proportionality constant 
+\begin_inset Formula $k$
+\end_inset
+
+ of the illuminance vs. 
+\begin_inset Formula $1/\text{distance}^2$
+\end_inset
+
+ relationship:
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \[
+E_v = k \frac{1}{d^2}
+\]
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The typical luminous efficacy 
+\begin_inset Formula $K$
+\end_inset
+
+ of a light source is a measurement of the amount of light waves produced per watt, in unit 
+\begin_inset Formula $\frac{\si{lm}}{W}$
+\end_inset
+
+. As the proportionality constant 
+\begin_inset Formula $k$
+\end_inset
+
+ have unit 
+\begin_inset Formula $\si{lm}$
+\end_inset
+
+, the typical luminous efficacy is the proportionality constant divided by the source power 
+\begin_inset Formula $P$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset Formula \[
+    K = \frac{k}{P}
+    \]
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The typical luminous efficacy formula
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tle"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%However, the human eyes does not perceive the intensity of light uniformly through the wavelengths 
+\backslash
+parencite{candela}. Under conditions for photopic vision --- the vision of the eye in a well lit area, we perceive light in the green wavelength (555 $
+\backslash
+si{nm}$) the most intensely. Therefore there is a need for a unit that displays the normalized intensity of different wavelengths of light --- the unit Candela and the photopic luminosity function 
+\backslash
+parencite{si_candela}.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% talk about the relationship between
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%The intensity derived from the inverse square law (figure 
+\backslash
+ref{eq:isl}) is more formally known as the 
+\backslash
+textit{radiant intensity} 
+\backslash
+parencite{candela}, represented as a function of wavelength: $I_v(
+\backslash
+lambda)$. By taking the incomplete integral on the weighted radiant intensity split into frequencies for all frequencies, we come to the definition of the 
+\backslash
+textit{luminous intensity} $I_v$, shown in figure 
+\backslash
+ref{eq:li}.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+begin{figure}[h!]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%    
+\backslash
+[
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%     I_v = K_{cd} 
+\backslash
+int_{0}^{
+\backslash
+infty} V(
+\backslash
+lambda) %I_e(
+\backslash
+lambda) 
+\backslash
+, d
+\backslash
+lambda
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%    
+\backslash
+]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%   
+\backslash
+caption{The definition of Luminous Intensity}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%   
+\backslash
+label{eq:li}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+end{figure}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%Combining the notion of luminous intensity with the 3D generalized angle quantity, steradian ($
+\backslash
+si{
+\backslash
+ohm}$), we can derive the total luminous power ($
+\backslash
+Phi_v$) created by the source, measured in unit lumen ($
+\backslash
+si{lm}$),
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+[
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%  
+\backslash
+Phi_v = 
+\backslash
+si{
+\backslash
+ohm} I_v,
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%of which we can use to define the amount of luminous power incident on a surface through the quantity of illuminance, measured in units lux ($
+\backslash
+si{lm
+\backslash
+per m^2}$). The finalized relation is summarized in figure 
+\backslash
+ref{eq:dti}, 
+\backslash
+parencite{intensityLuminous_se}:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+begin{figure}[h!]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+centering
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+begin{align*}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% I_e(
+\backslash
+lambda) &= c(
+\backslash
+lambda) 
+\backslash
+frac{P}{4
+\backslash
+pi s^2}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%  E_v &= 
+\backslash
+frac{1}{4
+\backslash
+pi s^2 A} 
+\backslash
+si{
+\backslash
+ohm} P K_{cd} 
+\backslash
+int_{0}^{
+\backslash
+infty} V(
+\backslash
+lambda) c(
+\backslash
+lambda) 
+\backslash
+, d
+\backslash
+lambda
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%  E_v & 
+\backslash
+propto P
+\backslash
+frac{1}{s^2}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+end{align*}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+caption{The complete distance to illuminance %relationship}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+label{eq:dti}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+end{figure}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%For the light sensor I have only measures intensity in lux, the above dive into luminosity serves as a justification for why I think the inverse square root applies to not just radiant intensity, but also to luminous intensity. Because the process of conversion is linear, it seems reasonable to hypothesize that illuminance is proportional to the distance squared.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% how to do it
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+To test the inverse square law, I decided to use a light sensor against a 5 watt light-bulb taken from the physics department. The light-bulb is supplied with only 8 volts out of the 12 volts power supply, as from past experience the bulb gets dangerously hot quickly on 12 volts. The dependent variable is the illuminance measurements from the light sensor, which ranges from 0-6000 lux. The independent variable is the distance of the light sensor from the light-bulb, ranging from 0.030m to 0.10m with steps of 0.01m, as this range provides a wide range of illuminance values from the specific light sensor. This is repeated for a total of 5 times because the light sensor often fluctuates even when held completely still. The repetition can help in reducing the uncertainties of the illuminance measurements.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%To test my hypothesis, I thought to conduct the experiment on the small 5W lab light-bulbs, for they have a tendency to heat up quickly before. Through some preliminary testing, I decided to decrease the supply voltage: the bulb gets dangerously hot on 12V, and placing sensor no closer than 3cm, and no further than 10cm, for at too close the illuminance exceeds the limits of the sensor, and that illuminance quickly drops off from the starting value, bringing no need of longer distances.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Additionally, I decided to connect a voltmeter along side an ammeter, because I have observed that the voltage provided by the supply always decreases when a component is connected to it. This is likely due to the internal resistance within the power supply. Therefore the voltmeter ensures a more accurate voltage measurement than the knob value on the power supply.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%This is to measure the power of the light source, but the voltmeter is significant in that I do not trust the supply voltage of the power supply. The power value can then be used to derive
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Variables
+\end_layout
+
+\begin_layout Paragraph
+Independent Variable
+\end_layout
+
+\begin_layout Standard
+The distance, measured in meters, the Vernier light sensor is from the 5W light-bulb.
+\end_layout
+
+\begin_layout Paragraph
+Dependent Variable
+\end_layout
+
+\begin_layout Standard
+The illuminance of the area measured by the Vernier light sensor in unit lux.
+\end_layout
+
+\begin_layout Subsection
+Control Variables
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Tabular 
+<lyxtabular version="3" rows="6" columns="3">
+<features rotate="0" islongtable="true">
+<column alignment="none" valignment="top" special="P{0.2\textwidth}">
+<column alignment="none" valignment="top" special="P{0.35\textwidth}">
+<column alignment="none" valignment="top" special="P{0.35\textwidth}">
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Controls 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="none" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Reason 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="none" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+How
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Ambient light intensity 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="none" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Systematically increase the illuminance measurements from the light-bulb at all distances 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="none" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Conduct the experiment in a dark location, and record the ambient illuminance of the room 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+The sensitivity of the light sensor 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="none" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Light sensors are sensitive to angular tilts, and a disturbed sensor due to shaky hands most likely will produce random errors throughout the experiment 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="none" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Use strong tape to clamp down the light sensor at the given distance
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Fluctuation of the outside light intensity 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="none" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Environmental lighting leaking through the lab windows fluctuating can randomly change the illuminance measurements at all distances 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="none" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Conduct the experiment early in the morning, or late at night to minimize the effects from the sun 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+The power supplied to the light-bulb 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="none" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+A change in the supplied power will change measured illuminance at all distances, causing systematic errors 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="none" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Assert the connected ammeter and voltmeter readings are unchanged after changing the independent variable, the distance
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+The temperature of the bulb filament 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="none" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+For the resistance of a resistor tends to increase at higher temperatures, the electrical current may decrease, decreasing the power supplied, creating systematic errors 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="none" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+It is best to conduct the experiment quickly — in a span of an hour, as to minimize the extent of the heating of the light-bulb — the physics light-bulbs heats up very quickly.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Materials
+\end_layout
+
+\begin_layout Itemize
+Vernier light sensor (
+\begin_inset Formula $\pm 2\si{lx}$
+\end_inset
+
+) 
+\begin_inset CommandInset citation
+LatexCommand citep
+after ""
+before ""
+key "vernier_manual"
+literal "false"
+
+\end_inset
+
+ & connection hub 
+\end_layout
+
+\begin_layout Itemize
+laptop with Vernier Data Logger software 
+\end_layout
+
+\begin_layout Itemize
+5W light-bulb 
+\end_layout
+
+\begin_layout Itemize
+12V power supply 
+\end_layout
+
+\begin_layout Itemize
+digital ammeter (
+\begin_inset Formula $\pm 0.01\si{A}$
+\end_inset
+
+) and voltmeter (
+\begin_inset Formula $\pm 0.01\si{V}$
+\end_inset
+
+) 
+\end_layout
+
+\begin_layout Itemize
+one meter long ruler (
+\begin_inset Formula $\pm 0.001\si{m}$
+\end_inset
+
+) 
+\end_layout
+
+\begin_layout Itemize
+duct tape 
+\end_layout
+
+\begin_layout Subsection
+Method
+\end_layout
+
+\begin_layout Enumerate
+Choose a location with the least amount of ambient light, preferably at a darkened room.
+\end_layout
+
+\begin_layout Enumerate
+Connect the Vernier light sensor to the laptop, set light sensor's range to (0–6000 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+si
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+lx
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+). Enable 
+\begin_inset Quotes eld
+\end_inset
+
+Statistics
+\begin_inset Quotes erd
+\end_inset
+
+ in the Vernier logger lite software by clicking 
+\begin_inset Quotes eld
+\end_inset
+
+Stats
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Set up the electrical circuit as shown in diagram 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:cd"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, set the power supply voltage to 8V, with a digital ammeter and voltmeter.
+\end_layout
+
+\begin_layout Enumerate
+Place the 1 meter ruler pointing towards the light-bulb, position the Vernier light sensor parallel to the ruler at a distance of 0.030m to the light-bulb. The final layout should be similar to figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:layout"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Secure down the light sensor at distances from 0.030m to 0.100m, step 0.010m, for a total of 8 distances.
+\end_layout
+
+\begin_layout Enumerate
+For each distance, record the readings on the ammeter and voltmeter, retry the measurement if they differ from the last distance. Record the illuminance over 10 seconds in the software, and note down the mean illuminance value as indicated in the software.
+\end_layout
+
+\begin_layout Enumerate
+Repeat steps 5-6 for a total of five times. 
+\end_layout
+
+\begin_layout Subsection
+Diagrams
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% circuit
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+begin{circuitikz}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+draw
+\end_layout
+
+\end_inset
+
+ (0,3) to[battery,a=8V] (5,3) – (5,0) to[lamp,a=5W] (0,0) to[rmeter, t=A] (0,3) (1,0) – (1,-1.5) to[rmeter, t=V] (4,-1.5) – (4,0) ; 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+end{circuitikz}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The circuit diagram of the setup
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:cd"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% diagram
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% annotated picture, & a software screen
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename assets/setuppic.png
+	width 100text%
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The experiment layout
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:layout"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Safety
+\end_layout
+
+\begin_layout Standard
+Avoid direct contact with exposed parts of the wires, additionally ensure a dry hand during the experiment. This will reduce the chance of an electrical accident.
+\end_layout
+
+\begin_layout Standard
+Avoid touching the light-bulb throughout the experiment. The light-bulb got very hot during the experiment and direct skin contract may incur burns.
+\end_layout
+
+\begin_layout Section
+Data
+\end_layout
+
+\begin_layout Subsection
+Raw data
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+subsubsection*{Qualitative Data}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%As I conducted the experiment in a partially dark room, I noticed the ambient room light level occasionally changed in between the trials. I attempted to reduce this factor of error by setting up the experiment where my body was blocking the sun light.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%The screen light from my laptop had affected some initial measurements --- of which I had to re-measure. This led me to turn all devices off when measuring the illuminance values.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Quantitative Data
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename assets/rawdata.png
+	width 100text%
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Raw quantitative experimental data
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:raw"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Processing
+\end_layout
+
+\begin_layout Paragraph
+Notation
+\end_layout
+
+\begin_layout Standard
+Uncertainty: unc, Absolute uncertainty: 
+\begin_inset Formula $\Delta$
+\end_inset
+
+unc, Relative uncertainty: %unc
+\end_layout
+
+\begin_layout Subsubsection
+Processing Power
+\end_layout
+
+\begin_layout Standard
+The power is defined as the current times the voltage (figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:work"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+): 
+\begin_inset Formula \begin{align*}
+\text{Power} &= \text{Current} \times \text{Voltage}\\
+        &= 0.27\si{A} \times 7.20\si{V} = 1.94 \si{W} \,(3 \tsf)
+\end{align*}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+Uncertainty of Power
+\shape default
+: 
+\begin_inset Formula $\relun$
+\end_inset
+
+Power = 
+\begin_inset Formula $\relun$
+\end_inset
+
+Current + 
+\begin_inset Formula $\relun$
+\end_inset
+
+Voltage 
+\begin_inset Formula \begin{alignat*}{2}
+    \% \text{unc}\, \si{I} &= \frac{0.01}{0.27} = 0.037,\quad &&\relun \si{V} = \frac{0.01}{7.20} = 0.0014\\
+    \relun \si{W} &= 0.037 + 0.0014 = 0.04 \,(1 \tsf), \quad &&\absun \si{W} = 1.94 \times 0.04 = 0.08\si{W} \,(1 \tsf)
+\end{alignat*}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Therefore: 
+\begin_inset Formula $\text{Power} = 1.94 \pm 0.08 \si{W}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Processing Illuminance
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+paragraphnl{
+\end_layout
+
+\end_inset
+
+Correcting for the ambient illuminance
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+ Subtract each illuminance values by the ambient illuminance value.
+\end_layout
+
+\begin_layout Standard
+For example, in trial 1, at distance 0.030m: 
+\begin_inset Formula \begin{align*}
+    \text{Corrected} &= \text{Measured} - \text{Ambient }\\
+    &= 1785 - 18 = 1767 \si{lx}
+\end{align*}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+Uncertainty of corrected illuminance
+\shape default
+: 
+\begin_inset Formula $\absun$
+\end_inset
+
+Corrected = 
+\begin_inset Formula $\absun$
+\end_inset
+
+Measured + 
+\begin_inset Formula $\absun$
+\end_inset
+
+Ambient 
+\begin_inset Formula \begin{align*}
+     \absun \text{Corrected} = 2 + 2 = 4\si{lx}
+\end{align*}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+begin{figure}[H]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%   
+\backslash
+centering
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%   
+\backslash
+includegraphics[scale=0.5]{assets/correcteddata.png}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%   
+\backslash
+caption{Corrected illuminance values}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%   
+\backslash
+label{fig:corrected}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+end{figure}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+paragraphnl{
+\end_layout
+
+\end_inset
+
+Averaging trial illuminances
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+ Average the measured illuminance from 5 trials. Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:average"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the corrected illuminance values and the averages. Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "gph:average"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ plots the averaged illuminance values against the distances.
+\end_layout
+
+\begin_layout Standard
+For example, averaging the illuminance measurements at distance 0.030m: 
+\begin_inset Formula \begin{align*}
+ \text{Illuminance}_{\text{average}} &= \frac{\sum \text{Illuminance}}{5}\\
+ &= \frac{1767+1940+1737+1781+1767}{5}\\
+ &= 1798\,\si{lx}
+\end{align*}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+Uncertainty using half ranges:
+\shape default
+ 
+\begin_inset Formula $\absun \text{Illum.}_{\text{average}} = \frac{\text{max}(\text{Illum}.) - \text{min}(\text{Illum}.)}{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For example, at distance 0.030m: 
+\begin_inset Formula \begin{align*}
+ \absun \text{Illuminance}_{\text{average}} &= \frac{1940-1737}{2}\\
+ &= 102 \,\si{lx}\\
+ \text{Illuminance}_{\text{average}} &= 1800 \pm 100 \,\si{lx}
+\end{align*}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename assets/averagedata.png
+	width 100text%
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The averaged and corrected illuminance values
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:average"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename assets/averagegraph.png
+	width 100text%
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Graph of the corrected and averaged illuminance values
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "gph:average"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+paragraphnl{
+\end_layout
+
+\end_inset
+
+Applying inverse squared transform on distance
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+ As figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "gph:average"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ looks like an inverse squared graph, thus apply 
+\begin_inset Formula $1/{\text{distance}}^2$
+\end_inset
+
+ transformation on the horizontal axis to straighten the graph. The transformation data and error is generated with Microsoft Excel (dataset: figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tdata"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, graph: figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "gph:tdata"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+For example, at distance 0.030m: 
+\begin_inset Formula \begin{align*}
+ \frac{1}{\text{Distance}^2} &= 0.030 ^ {-2}\\
+ &= 1110\,\si{m^{-2}}\, (3 \tsf)\\
+\end{align*}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+Uncertainty of the transformed distance
+\shape default
+: 
+\begin_inset Formula $\relun 1/{\text{Distance}}^2$
+\end_inset
+
+ = 
+\begin_inset Formula $2 \times \relun \text{Distance}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For distance 0.030m: 
+\begin_inset Formula \begin{align*}
+ \relun 1/{\text{Distance}}^2 = 2 \times \relun \text{Distance} &= 2 \times 0.0333\\ &= 0.0667 \,(3 \tsf)\\
+ \frac{1}{\text{Distance}^2} &= 1110\, \si{lx} \pm 6.67\%\\
+ &= 1110 \pm 70 \,\si{lx}
+\end{align*}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename assets/transformdata.png
+	width 100text%
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Transformed distance values and errors
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tdata"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename assets/transformgraph.png
+	width 100text%
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Inverse squared distance to light source against the illuminance
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "gph:tdata"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+paragraphnl{
+\end_layout
+
+\end_inset
+
+Gradient and Errors
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "gph:tdata"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ also displays the regression line and its equation (top equation), and the two lines of worst fits for error calculations (middle and lower equation). The 
+\begin_inset Formula $1/\text{Distance}^2$
+\end_inset
+
+ horizontal error bars are used for plotting the line of worst fits as they are larger in size then the illuminance/vertical errors. The uncertainty of the gradient and y-intercept of the regression line are calculated using the half range of values in the line of worst fits.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%The justification for the horizontal error line of worst fits in figure 
+\backslash
+ref{gph:tdata} resides in the accuracy of the measuring devices: the percentage errors of the ruler are (for all values) larger than the percentage error of the light sensor, as indicated by the size of the error bars.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Regression line gradient, y-intercept: 1.59, 34.2 (
+\begin_inset Formula $3 \tsf$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+
+\shape italic
+Uncertainty of gradient using half range
+\shape default
+:
+\begin_inset Newline newline
+\end_inset
+
+ Highest gradient error line gradient, y-intercept: 1.72, 12.9 (
+\begin_inset Formula $3 \tsf$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Lowest gradient error line gradient, y-intercept: 1.48, 47.1 (
+\begin_inset Formula $3 \tsf$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Gradient uncertainty: 
+\begin_inset Formula $\frac{1.72-1.48}{2} = 0.120$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+y-intercept uncertainty: 
+\begin_inset Formula $\frac{47.1-12.9}{2} = 17.1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Therefore, the regression line and thus the relationship between illuminance 
+\begin_inset Formula $E_v$
+\end_inset
+
+ against the distance 
+\begin_inset Formula $d$
+\end_inset
+
+ is:
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%Therefore, the relationship is summarized as in figure 
+\backslash
+ref{fig:rel}:
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement h!
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset Formula \[
+       E_v = (1.6 \pm 0.1) \frac{1}{d^2} + (30 \pm 20)
+    \]
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Experimental relationship between illuminance against distance from source
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:rel"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% TODO: compare with actual data
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Conclusions
+\end_layout
+
+\begin_layout Subsection
+Result
+\end_layout
+
+\begin_layout Standard
+There exists a clear and strong inverse squared relationship between the illuminance and the distance to the light-bulb, as shown in the transformed graph in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "gph:tdata"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, and the close to one correlation coefficient 
+\begin_inset Formula $\sqrt{0.9995}=0.9997$
+\end_inset
+
+. This shows that as the distance to a light source increases, the illuminance decreases relatively rapidly at close distances but relatively less at far distances, and vice versa. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%Following the data collection and some transformation for linearization, the relationship is summarized in figure 
+\backslash
+ref{fig:rel}. The data had mostly supported the theory of the inverse square law. From figure 
+\backslash
+ref{gph:average}, one can see the that the measured illuminance falls rapidly when the distance to source increases. To create a linear curve, the illuminance ($E_v$) is plotted against the inverse square of the distance ($
+\backslash
+frac{1}{d^2}$) shown in figure 
+\backslash
+ref{gph:tdata}. The small variance of the data points from the regression line is a strong evidence to support my hypothesis.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+However, the theory of inverse square law also suggests that the relationship curve should have a y-intercept of 0. The non-zero y-intercept of the regression line — even considering the ranges of uncertainty (
+\begin_inset Formula $0 \notin [10, 50]$
+\end_inset
+
+), suggests some systematical errors are present. The curve is shifted upwards by a sizable amount, which could be caused by the erroneous reading of the ambient illuminance, parallax error in aligning the ruler, or by a lack of calibration of the light sensor. This indicates that the experiment data was not very accurate.
+\end_layout
+
+\begin_layout Standard
+The graph (figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "gph:tdata"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) consists of noticeable sized error bars that increases as distance increases. This is caused by the small distances used in combination with the moderately uncertain wooden ruler used. However the results are overall relatively precise due to the low percentage uncertainty of the two axis (figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tdata"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:average"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+). The experiment data is considered to be precise but inaccurate.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%TODO: maybe include this, or not
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%The high correlation coefficient showcases the strong inverse squared relationship between the distance to the light source and the illuminance. This is because light waves from a light source radiates outwards in a perfect sphere, with surface area inversely proportional to the distance to its origin squared. As light intensity is measured in power per area, the larger the sphere surface area, the less intensity of the light as the amount of light waves spreads out. This means that the light intensity is also inversely proportional to the distance squared.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%Additionally, the experimental data contains a noticeable amount of uncertainties indicated by the large error bars, particularly at smaller distances. There also exists large random error in the illuminance measurement, as indicated by the high half ranges of the trials of illuminance measurements during averaging (figure 
+\backslash
+ref{fig:average}) --- sometimes to a degree of $102/1798 
+\backslash
+approx 5.7
+\backslash
+%$ at the distance of $3
+\backslash
+si{cm}$. This is most likely caused by the fluctuation of the light level in the room, which is likely caused by the leakage of sunlight through the window blinds. This is also reflected in the gradient calculations, for the slope had a relatively large uncertainty of $12.1
+\backslash
+%$, supporting the presence of large random errors. However, the averaging of the data seemed to reduce the effects of the error. The line of best fit passed through all 8 points of the independent variable, and had a very high R-squared value of $0.9995$ and R value of $
+\backslash
+sqrt{0.9995} 
+\backslash
+approx 0.9997$. This shows a high level of correlation in the data. In conclusion, the raw dataset presented in figure 
+\backslash
+ref{fig:raw} is said to be highly accuracy but less precise, and contains medium amounts of uncertainty.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Implications
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%If we were to define the proportionality constant $
+\backslash
+eta$ in figure 
+\backslash
+ref{eq:li} with parameter power, such that:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+begin{align*}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%    
+\backslash
+eta &= 
+\backslash
+frac{1}{4
+\backslash
+pi A} 
+\backslash
+si{
+\backslash
+ohm} K_{cd} 
+\backslash
+int_{0}^{
+\backslash
+infty} V(
+\backslash
+lambda) c(
+\backslash
+lambda) 
+\backslash
+, d
+\backslash
+lambda
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%   E_v &= 
+\backslash
+eta P 
+\backslash
+frac{1}{s^2},
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+end{align*}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%where $
+\backslash
+eta$ is another constant, I can fulfill my motivation for this experiment. Notice the units of the constant $
+\backslash
+eta$ is $(
+\backslash
+frac{
+\backslash
+si{lx}}{
+\backslash
+si{W
+\backslash
+per m^2}} = 
+\backslash
+frac{
+\backslash
+si{lm}}{
+\backslash
+si{W}})$, is a value that is only depended on the light source used. Therefore, the constant $
+\backslash
+eta$ is a measure of the efficacy of the light-bulb used in the amount of luminous power produced per unit power. This is also known as the typical luminous efficacy, one that I can use to compare to other light-bulbs using an online database. Furthermore, the value can be used to compare efficiency of light-bulbs in your daily life, whether that is to save money, or like me, to appreciate how far lighting technology had advanced.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The typical luminous efficacy 
+\begin_inset Formula $K$
+\end_inset
+
+ can be calculated by dividing the gradient constant 
+\begin_inset Formula $k$
+\end_inset
+
+ by the power dissipated 
+\begin_inset Formula $P$
+\end_inset
+
+ (figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tle"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+): 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%A division is needed to calculate the luminous efficacy $
+\backslash
+eta$:
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula \begin{align*}
+    K &= \frac{k}{P} = \frac{1.6 \pm 0.1}{1.94 \pm 0.07}\\
+    &= 0.82 \pm 0.08\,\si{lm\per W}\,(2\, \tsf)
+\end{align*}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Wrap figure
+lines 0
+placement r
+overhang 0col%
+width 45text%
+status open
+
+
+\begin_layout Standard
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Tabular 
+<lyxtabular version="3" rows="6" columns="2">
+<features rotate="0" tabularvalignment="middle" tabularwidth="0pt">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<row>
+<cell alignment="left" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Category 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Luminous Efficacy (lm/W) 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Combustion 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+1-2 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Incandescent 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+5-17.5 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Halogen 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+16.7-35 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+Fluorescent 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+46-104.2 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+LED 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Standard
+75-210 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+List of common luminous efficacy values of light sources
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+protect
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+footnotemark
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "tbl:leff"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+footnotetext{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+after ""
+before ""
+key "le_value1"
+literal "false"
+
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+after ""
+before ""
+key "le_value2"
+literal "false"
+
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+after ""
+before ""
+key "le_value3"
+literal "false"
+
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+after ""
+before ""
+key "le_value4"
+literal "false"
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Comparing to the luminous efficacy values of a set of common light sources in figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tbl:leff"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the physics lab incandescent 5W light-bulb with a luminous efficacy value of 
+\begin_inset Formula $0.82 (\si{lm\per W})$
+\end_inset
+
+, looks to be as efficient in producing light as a typical fireplace. This is unsurprising, as the outer glass casing of the bulb readily heats up when it is powered, indicating energy loss in the form of thermal energy. A suggestion is to made for the school physics department for a switch to safer (less glass temperature), and more energy efficient light-bulbs for general experiments.
+\end_layout
+
+\begin_layout Subsection
+Reflection
+\end_layout
+
+\begin_layout Standard
+Here is a list on the handling of the controlled variables/potential error factors, and future improvements to be made.
+\end_layout
+
+\begin_layout Subsubsection
+Random Errors
+\end_layout
+
+\begin_layout Paragraph
+Fluctuation of the outside light level
+\end_layout
+
+\begin_layout Standard
+This is potentially a significant factor in creating a large uncertainty and low precision in the raw illuminance data. The advice would be to conduct the experiment at night, or in a totally blackout room without light pollution. This will increase the precision of the experiment and decrease the uncertainty on the luminous efficacy.
+\end_layout
+
+\begin_layout Paragraph
+The sensitivity of the light sensor
+\end_layout
+
+\begin_layout Standard
+Insignificant, for the equipment is properly taped down, removing the problem of a shaky hand.
+\end_layout
+
+\begin_layout Paragraph
+The power supplied to the light-bulb
+\end_layout
+
+\begin_layout Standard
+Insignificant, for the power held stable during the experiment.
+\end_layout
+
+\begin_layout Subsubsection
+Systematic Errors
+\end_layout
+
+\begin_layout Paragraph
+Environmental room intensity
+\end_layout
+
+\begin_layout Standard
+A potentially significant variable. The small but existent systematic error is likely to be caused by the erroneous measure of the ambient room light level. Performing the experiment in a blackout room or at night is likely to reduce the effects of the ambient room intensity and increase the accuracy of the dataset, possibility creating a curve that intercepts closer to 0 on the y axis.
+\end_layout
+
+\begin_layout Paragraph
+The temperature of the bulb filament
+\end_layout
+
+\begin_layout Standard
+Insignificant, for the power is kept below the operating power limit and a lack of systematic decreasing illuminance during trials.
+\end_layout
+
+\begin_layout Paragraph
+Parallax placements of the ruler
+\end_layout
+
+\begin_layout Standard
+A potentially significant variable. For the wooden ruler have depth, an angled top-down view to place the ruler is likely to result in parallax errors, thus systematically displacing the measured distances. It may be wise to have used a paper with beforehand markings of the distances, which is likely in reducing the systematic error shown in the curve, and potentially help bring the intercept closer to point (0,0).
+\end_layout
+
+\begin_layout Paragraph
+Accuracy of the light sensor
+\end_layout
+
+\begin_layout Standard
+A variable that I was the most concerned about. This may be the largest cause of the systematic error. I could follow a lengthy calibration test listed on the manufacture's website against a factory calibrated source, which will decrease the systematic error and increase the accuracy of the data.
+\end_layout
+
+\begin_layout Subsection
+Further Investigations
+\end_layout
+
+\begin_layout Standard
+Consider repeating the experiment with several other household lighting sources — LED, halogen, or fluorescent light-bulbs, and compare their typical luminous efficacy. The information can be used to determine the efficiency of different types of light sources to help the physics department to choose more efficient light-bulbs.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%
+\backslash
+nocite{*}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "light"
+options ""
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
