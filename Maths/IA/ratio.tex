@@ -63,7 +63,6 @@
 % referencing
 \usepackage[style=apa]{biblatex}
 \addbibresource{ratio.bib}
-\usepackage{hyperref}
 
 % table centering
 \renewcommand{\arraystretch}{1.3}
@@ -78,10 +77,27 @@
 \usepackage{subcaption}
 \usepackage{wrapfig}
 
-\title{Estimating the quality of YouTube videos based on its likes and dislikes}
+% fancy page numbers
+\usepackage{fancyhdr}
+% bottom right
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[R]{Page \thepage}
+\fancypagestyle{plain}{%
+    \renewcommand{\headrulewidth}{0pt}%
+    \fancyhf{}%
+    \fancyfoot[R]{Page \thepage}%
+}
+%go
+\renewcommand{\headrulewidth}{0pt}
 
-\author{}
-\date{\vspace{-8ex}}
+\usepackage{hyperref}
+
+\title{\vspace{-8ex}Estimating the quality of YouTube videos based on its likes and dislikes}
+
+\author{Terry Qi}
+\date{}
+%\date{\vspace{-8ex}}
 
 \begin{document}
 
@@ -209,7 +225,7 @@ Therefore the naive likeability definition is uninclusive of all information but
         & Video A & Video B & Video C & Video D & Video E \\
         \hline
         \hline
-        Naive Likeability & 1.000 & 1.000 & 0.872 & 1.000 & 0.997
+        Naive Likeability (3dp) & 1.000 & 1.000 & 0.872 & 1.000 & 0.997
     \end{tabular}
     \captionof{table}{}
     \label{tbl:naive}
@@ -275,7 +291,7 @@ Finally I decided to plot this relationship between \pythoninline{occurence} aga
 %\newpage
 
 \begin{wrapfigure}{r}{0.47\textwidth}
-    \includegraphics[width=0.42\textwidth,right]{assets/sim_ratings_v1.png}
+    \includegraphics[width=0.44\textwidth,right]{assets/sim_ratings_v1.png}
     \caption{}
     \label{fig:sim_ratings_v1}
 \end{wrapfigure}
@@ -284,19 +300,19 @@ To see the output, I ran the program with the parameters of 6 likes and 1 dislik
 
 The blue dots in figure \ref{fig:sim_ratings_v1} represents the simulated occurence of the video ratings out of 1000 samples of a chosen likeability (the likeabilities are selected with steps of 0.05 for clarity). The red vertical line graphs the mean likeability.
 
-The graph was both an expected and unexpected turnout. The simulation placed the likeability of video at 0.77, this is expected for there are certainly very little information available in only 7 ratings, but unexpected in size of the difference ($0.857-0.77=0.087$) against the naive likeability of 0.857. This shows that the naive likeability greatly overvalued the true likeability of the video.
+The graph was both an expected and unexpected turnout. The simulation placed the likeability of video at $0.776$, this is expected for there are certainly very little information available in only 7 ratings, but unexpected in size of the difference ($0.857-0.776=0.081$) against the naive likeability of 0.857. This shows that the naive likeability greatly overvalued the true likeability of the video.
 
 \begin{wrapfigure}{r}{0.47\textwidth}
-    \includegraphics[width=0.42\textwidth,right]{assets/sim_ratings_v2.png}
+    \includegraphics[width=0.44\textwidth,right]{assets/sim_ratings_v2.png}
     \caption{}
     \label{fig:sim_ratings_v2}
 \end{wrapfigure}
 
 
 By running the program with the parameters of the second video with 23 likes and 4 dislikes,
-we obtain a mean of 0.83 and figure \ref{fig:sim_ratings_v2}.
+we obtain a mean of $0.828$ and figure \ref{fig:sim_ratings_v2}.
 
-In comparison with its naive likeability, video two is less affected by the lack of information for the simulated likeability has much smaller difference ($0.851-0.83=0.021$) than we've seen in video one. This maybe imply (appendix table) that the naive likeability increases in accuracy the more information we have, which presents an extra requirement for our analytic solution later on.
+In comparison with its naive likeability, video two is less affected by the lack of information for the simulated likeability has much smaller difference ($0.851-0.828=0.023$) than we've seen in video one. This maybe imply (appendix table) that the naive likeability increases in accuracy the more information we have, which presents an extra requirement for our analytic solution later on.
 
 The shape of the graphs, or more formally, distributions of the likeabilities are also worth noting. They very much resemble a hill shaped curve that has a peek at only one likeability, and slopes increasing shallower the further away from the peek. Interestingly, the chosen metric of the statistical mean does not reflect the peek of the curve --- the red line does not intersect at the top of the curve. I believe this has to do with the long tail of zero occurrences at lower likeabilities, for they decreases the statistical mean in calculations.
 
@@ -309,7 +325,7 @@ Therefore the simulation approach had prove to be helpful in framing the questio
         & Video A & Video B & Video C & Video D & Video E \\
         \hline
         \hline
-        Simulated Likeability & 0.828 & 0.958 &  0.853 & 0.937 & 0.987
+        Simulated Likeability (3dp) & 0.828 & 0.958 &  0.853 & 0.937 & 0.987
     \end{tabular}
     \captionof{table}{}
     \label{tbl:simulation}
@@ -318,15 +334,143 @@ Therefore the simulation approach had prove to be helpful in framing the questio
 \section{Statistical}
 
 % what are distributions
-To search for a analytic (of symbols and operations) equation of the likeability metric, we must expand the idea of distributions that was touched on during simulations.
+To search for a analytic (of symbols and operations) equation of the likeability metric, we must expand the idea of distributions that was touched on during simulations. Remember that the simulation was used to compute the occurrences of a given rating for all ranges of likeabilities, and the statistical mean of the curve it creates is the simulated likeability of the video. It may be helpful to define this curve more mathematically without the element of chance.
 
 % examples of distributions
+Firstly, the likeability of a video can be thought of as a \textbf{random variable} of symbol $L$. A statistical random variable represents uncertainty in a measurement of its domains --- the range of values the random variable could be.
+
+\begin{wrapfigure}{r}{0.45\textwidth}
+    \includegraphics[width=0.43\textwidth,right]{assets/discrete_uniform_pdfs.png}
+    \caption{}
+    \label{fig:discrete_uniform}
+\end{wrapfigure}
+
+Consider rolling a regular six sided dice. The side facing up after a roll can take the values from 1 to 6, inclusive, represented by a random variable say $X$. Notice that unless the dice was biased, there is no reason to assume that one value is more probable than the other. In other words, each value of the range of possible values have equal probability of occurrence, precisely $\frac{1}{6}$. The probability can be represented as a distribution as in figure \ref{fig:discrete_uniform}.
+
+The probability distribution of the random variable $X$ can also be denoted as a discrete uniform distribution. Discrete meaning the domain is of countable size; uniform meaning that all possible values have the same probability.
+
+More formally, the distribution is also defined by its probability function, which is a function mapping a possible value to its chance of occurence. For our random variable $X$, its probability function $f(X_i)$ is simply:
+
+\[
+    f(X_i) = \frac{1}{6}
+\]
+
+%But our random variable of likeability does not have a finite domain, I hear you say. The random variable $L$ has infinite values it could take, ranging from zero to one. Thankfully, we can extend our discrete distribution to a continuous distribution.
+
+To extend from a discrete distribution to a continuous distribution, consider a viewer's opinion on a video before they've seen the ratings. The likeability $L$ of the video will range continuously from zero to one, but unless the viewer has had a bad day, there is no reason to prefer a range of likeabilities to another. That is, chance of a specific likeability value is the same as any other value.
+
+\begin{wrapfigure}{r}{0.45\textwidth}
+    \includegraphics[width=0.43\textwidth,right]{assets/uniform_pdfs.png}
+    \caption{}
+    \label{fig:uniform}
+\end{wrapfigure}
+
+However, the y-axis of probabilities must be switched to probably densities, because it is no longer accurate to talk about a specific value's probability --- we must now consider the probability of a range of values instead. The area under the probability distribution must also be of value one for normalization. Therefore, the initial probability distribution is displayed in figure \ref{fig:uniform}, with a probability density function $f(L)$ of:
+
+\[
+    f(L) = 1
+\]
+
+The concept of continuous distribution restricts the probability distribution of our likeability metric. It can be defined as a probability density function $f(L)$, with an area of one.
 
 % the binominal
+Using the ratings of video one as an example (6 likes and 1 dislike), consider a single likeability value from the domain of the random likeability variable $L$, say 0.5. What is the probability we see the ratings of video one with a true likeability of 50\%? Another distribution models this kind of scenario.
 
-% blah
+\begin{wrapfigure}{r}{0.45\textwidth}
+    \includegraphics[width=0.43\textwidth,right]{assets/bino_pdfs.png}
+    \caption{}
+    \label{fig:bino}
+\end{wrapfigure}
+
+The binomial distribution is a probability distribution that summarizes the likelihood that a value will take one of two independent values under a given success chance and assumptions (modified citation). In short, the distribution will model the distribution of the number of likes in a sample of ratings given a true likeability. It is a discrete distribution, and its discrete probability distribution function $f(x)$ is of the form:
+\[
+    f(x) = {n \choose x} p^x (1-p)^{n-x},
+\]
+where $n$ is the amount of ratings, and $p$ is the true likeability of the video. When graphed using the parameters of video one, the distribution resembles to that of figure \ref{fig:bino}.
+
+While the distribution displays all the possible likes/dislikes combinations, the value that is of interest is colored in red. The figure describes the probability of getting 6 likes in 7 ratings as about 0.05, or 5\%. Or as a single calculation:
+\[
+    f(6) = {7 \choose 6} (0.5)^6 (1-0.5)^{7-6} \approx 0.05
+\]
+Therefore for each likeability of our random variable $L$, its probability is $f(6)$ with the variable $p$ replaced by the likeability. Therefore I was able to guess the probability density function $G(l)$ of our random variable as so (where $l$ are the range of likeabilities):
+\[
+    G(l) = {n \choose x} l^x (1-l)^{n-x} = {7 \choose 6} l^6 (1-l) ^{7-1}
+\]
+When graphed on a software, the likeability distribution looks like the left graph of figure \ref{fig:beta}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{assets/beta_pdfs.png}
+    \caption{}
+    \label{fig:beta}
+\end{figure}
+
+The curve plotted by $G(l)$ has a tail towards the left, with a singular peek near the value $0.85$. But the figure shows that it has an area of only $0.12$, which does not fit the requirement of a probability density function (of area one). I attempted to normalize this distribution by dividing it by its area $A$, that is:
+\begin{align*}
+    A &= \int_{0}^{1} G(l) \, dl\\
+    &= \int_{0}^{1} {n \choose x} l^x (1-l)^{n-x} \, dl\\
+    &\approx 0.12
+\end{align*}
+Thus I was able to construct the normalized probability density function $K(l)$ for the likeability random variable (shown by the right graph of figure \ref{fig:beta}):
+\begin{align*}
+    K(l) &= \frac{G(l)}{A}\\
+    &= \frac{ {n \choose x} l^x (1-l)^{n-x}} {\int_{0}^{1} {n \choose x} l^x (1-l)^{n-x} \, dl}
+\end{align*}
+We are now able to take the statistical mean $\mu$ of this function, which would be the statistical solution of the estimated likeability of the video. Notice that we can restrict the integral bounds for the probability density function is only defined between 0 to 1:
+\begin{align*}
+    \mu &= \int_{-\infty}^{\infty} l K(l) \, dl\\
+    &=\int_{0}^{1} l K(l) \, dl\\
+    &=\int_{0}^{1} l \frac{ {n \choose x} l^x (1-l)^{n-x}} {\int_{0}^{1} {n \choose x} l^x (1-l)^{n-x} \, dl} \, dl
+\end{align*}
+While I was able to reduce the complexity of this integral by canceling the choose function and combining the exponents, the remain integral seems unsolvable to any integration method I know:
+\begin{align*}
+    \mu &=\int_{0}^{1} \frac{ l^{x+1} (1-l)^{n-x}} {\int_{0}^{1} l^x (1-l)^{n-x} \, dl} \, dl\\
+    &= \frac{1}{\int_{0}^{1} l^x (1-l)^{n-x} \, dl} \int_{0}^{1}  l^{x+1} (1-l)^{n-x} \, dl
+\end{align*}
+Thankfully, the internet was able to provide me a solution via a special function named the Beta function $B(x,y)$ and its relative the Gamma function $\Gamma(z)$(citation, wikipedia), which are defined as:
+\begin{align*}
+    B(x, y) &= \int_{0}^{1} l^{x-1} (1-l)^{y-1} dl\\
+    \Gamma(z) &= \int_{0}^{\infty} x^{z-1} e^{-x} \, dx
+\end{align*}
+To put it simply, the Gamma function is a analytic continuation of the factorial operation --- meaning that it generalizes the factorial operation outside the positive integers. It has two relevant identities. The first stating its relation with the factorial operation, the second showing its identity with the Beta function.
+\begin{align*}
+    \Gamma(z) &= (z-1)!\\
+    B(x, y) &= \frac{\Gamma(x) \Gamma(y)}{\Gamma(x + y)}
+\end{align*}
+I was able to simplify the formula for the statistical mean using the Beta function, which can be converted to a series of Gamma functions and therefore factorials:
+\begin{align*}
+    \mu &= \frac{1}{B(x+2, n-x+1)}B(x+1, n-x+1)\\
+    &= \frac{\frac{\Gamma(x+2)\Gamma(n-x+1)}{\Gamma(n+3)}}{\frac{\Gamma(x+1)\Gamma(n-x+1)}{\Gamma(n+2)}} =  \frac{\frac{(x+1)!(n-x)!}{(n+2)!}}{\frac{x!(n-x)!}{(n+1)!}}\\
+    &= \frac{x+1}{n+2} = \frac{6+1}{7+2} \approx 0.778
+\end{align*}
+It was surprising how neat the final solution was given the complexity that is the integral before. Furthermore, this shows that the statistical likeability of the video can be calculated by dividing the amount of likes plus one over the amount of ratings plus two, under the assumption that the initial likeability distribution was uniform.
+
+The small differences between the statistical method and the simulation method ($|0.776 - 0.778| = 0.002 \approx 2.58\%$) showcases both the correctness of our solution, but it also illustrates the power of simulations --- I did not have to do any maths to get an approximate answer. Additionally, the neat solution explains the validity of the naive method at large rating numbers, for the pluses become insignificant as their operands increases.
+
+Overall, the statistical method required a reasonable amount of statistical knowledge, and I was greatly assisted by the use of a computer program in checking the equalities between each simplifying step. However, it produced a tidy result that is easy to remember and fast to compute. Table \ref{tbl:stat} lists the five videos ranked by their statistical likeability.
+
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{c|c|c|c|c|c}
+        & Video A & Video B & Video C & Video D & Video E \\
+        \hline
+        \hline
+        Statistical Likeability (3dp) & 0.833 & 0.926 & 0.854 & 0.941 & 0.994
+    \end{tabular}
+    \captionof{table}{}
+    \label{tbl:stat}
+\end{figure}
 
 \section{Bayesian}
+
+The premise of this section was hinted upon within the statistical analysis of the probability distribution of the likeability random variable. While it is often reasonable to accept a perfectly uniform distribution as the initial distribution of the likeability before seeing the rating, it may not be desirable in ranking the videos YouTube recommended to me, for they are very unlikely to be of low likeability before I even see their ratings. While these external factors are difficult to capture in traditional statistical distribution analysis, it is the core idea in a branch of statistics, Bayesian statistics.
+
+% frequenist, bayesian
+The core principles in the two branches of statistics differs in their interpretations of probabilities. The frequentists define the probability by the its percentage of occurrence as the sample size increases to infinity, with the manipulations of random variables being convolutions; the Bayesians perceive probabilities as a belief of the next event, which updates as new data are seen. The method of combining binomial and uniform distributions fits the frequentists view, but the Bayesian view perfectly fits my requirement of a changeable initial belief.
+
+% set up, definitions
+Consider the random variable likeability $L$ of the video. Its probability density function $f(l)$ represents a belief of the likeability of the video given all the current data available. Before seeing any new ratings, this function is called the \textbf{Prior}.
+% blah blah blah
 
 \section{Conclusion}
 
