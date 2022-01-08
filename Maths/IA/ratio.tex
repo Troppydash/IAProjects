@@ -469,10 +469,193 @@ The premise of this section was hinted upon within the statistical analysis of t
 The core principles in the two branches of statistics differs in their interpretations of probabilities. The frequentists define the probability by the its percentage of occurrence as the sample size increases to infinity, with the manipulations of random variables being convolutions; the Bayesians perceive probabilities as a belief of the next event, which updates as new data are seen. The method of combining binomial and uniform distributions fits the frequentists view, but the Bayesian view perfectly fits my requirement of a changeable initial belief.
 
 % set up, definitions
-Consider the random variable likeability $L$ of the video. Its probability density function $f(l)$ represents a belief of the likeability of the video given all the current data available. Before seeing any new ratings, this function is called the \textbf{Prior}.
-% blah blah blah
+Consider the random variable likeability $L$ of the video. Its probability density function $P(l)$ represents a belief of the likeability of the video given all data available. Before seeing any new data, this function is called the \textbf{Prior}. The arrival of new data is denoted by the symbol $D$, and the updated likeability upon seeing the new data is denoted by $P(l | D)$ --- the probability density function of the likeability \textit{given} the new data. This updated likeability is called the \textbf{Posterior}. In context with the video ratings, the prior probability will denote my initial belief on the likeabilities of the video, to which I can update my prior upon every new rating I see. The Bayesian likeability will be the statistical mean of the prior.
+
+To find the relations between the prior and posterior probabilities, we can use the example of a medical test of a common illness.
+
+\begin{wrapfigure}{r}{0.45\textwidth}
+    \includegraphics[width=0.43\textwidth,right]{assets/medical_scenario.png}
+    \caption{}
+    \label{fig:medical}
+\end{wrapfigure}
+
+Assuming we are faced with a patient showing no symptoms, but had taken a test of the common illness (0.1 probability of occurrence) which is positive with a sensitivity of 0.4 and a specificity of 0.9 --- meaning that there is a 40\% chance the test is positive if the patient actually has the illness, and a 90\% chance that the test is negative if the patient actually lacks the illness. Our prior beliefs before seeing the test result relies on the average chance that a random person in the area has the illness, or 10\%. The situation is shown in figure \ref{fig:medical}.
+
+For the posterior is our beliefs after seeing the positive test result, it is calculated by the probability of the patient being ill and having a positive test result, divided against the probability the probability of a person being positive no matter their situation. This can be expressed by a formula:
+\[
+    \text{Posterior} = \frac{P(\text{Ill} \,\text{and}\, \text{Positive})}{P(\text{Whatever and Positive})}
+\]
+
+The notation of the probability of $A$ and $B$ is defined by the probability of $A$ times the probability of $B$ given $A$ is true. And by substituting for the symbols $P(x)$ for probability of illness, we have found Bayes Theorem:
+
+\begin{align*}
+    P(x|D) &= \frac{P(D|x) P(x)}{\sum P(D|x_i) P(x_i) }\\
+     &= \frac{P(D|x)P(x)}{P(D|x)P(x) + P(D|\neg x)P(\neg x)}
+\end{align*}
+
+More specifically, the probability of illness $P(x)$ is simply the prior of illness, which is $0.1$; the probability of a positive test result given the illness $P(D|x)$ is the sensitivity of the test, or $0.4$; and the probability of a positive test result is the sum of having and not having the illness, multiplied by their respective chance of testing positive, or $0.4 \times 0.1 + (1- 0.9) \times (1-0.1)$. In our medical example, the updated belief on the probability of illness upon seeing a positive test result is therefore:
+\begin{align*}
+    P(x|D) &= \frac{0.4 \times 0.1}{0.4 \times 0.1 + (1-0.9) (1-0.1)}\\
+    &\approx 0.308
+\end{align*}
+Our belief of the probability of illness of the patient had been updated from $0.01$ to $0.308$. While it is reasonable that a positive test result conveys a higher chance of illness, it still really surprised me when I first saw it. How is it that we can only be 31\% sure of the illness if the test has an accuracy of 40\%? This discrepancy with naive solutions is also present in the naive likeability method, which may be a warning that special care is needed to tread in the field of statistics --- especially if one may be diagnosing a patient wrongly.
+
+% actual attempt
+To extend this method to our likeability random variable, it will be helpful to first solve for a uniform prior as to check the validity of the solution comparing to other methods.
+
+With the random variable likeability $L$, the initial prior $P(l)$ of the likeability is a continuous uniform distribution:
+\[
+    P(l) = 1
+\]
+Let's consider the likeability posterior $P(l|D)$ given the new data $D$ of seeing a like on the video. By Bayes Theorem, the likeability distribution after seeing a like on the video is:
+\begin{align*}
+    P(l|D) &= \frac{P(D|l) P(l)}{\sum P(D|l_i) P(x_i) }
+\end{align*}
+
+For we are now dealing with a functional prior and posterior (of parameter likeability), all of the probabilities in the equation will be functions and the summation must be switched to integrals. Therefore I was able to rewrite the discrete Bayes Theorem into a continuous version (the $\theta$ symbol is used as to differentiate between the function parameter and the likeability random variable ):
+\[
+    P(l|D)(\theta) = \frac{P(D|l)(\theta) \times P(l)(\theta)}{\int_{0}^{1} P(D|l)(\theta) \times P(l)(\theta) \, d\theta},
+\]
+note the integral on the denominator has bounds zero to one, inclusive, for that is the domain of the likeability random variable.
+
+The probability of seeing a like given a specific likeability is the likeability par definition:
+\[
+    P(D|l)(\theta) = \theta
+\]
+
+Therefore after substitution, the equation simplifies and can be solved:
+\begin{align*}
+    P(l|D)(\theta) &= \frac{\theta \times 1}{\int_{0}^{1} \theta \times 1 \, d\theta}\\
+    &= \frac{\theta}{\int_0^1 \theta \, d\theta}\\
+    &= \frac{\theta}{[\frac{\theta^2}{2}]^1_0}\\
+    &= 2\theta
+\end{align*}
+
+The posterior probability density function of the likeability of a video is $2\theta$ given a prior uniform distribution of $1$. The statistical mean $\mu$ of this function can also be calculated:
+\begin{align*}
+    \mu &= \int_0^1 \theta P(l|D)(\theta) \, d\theta\\
+    &= \int_0^1 2\theta^2 \, d\theta\\
+    &= [\frac{2\theta^3}{3}]^1_0\\
+    &= \frac{2}{3}
+\end{align*}
+
+The statistical mean of a video with 1 like and no dislikes by the statistical method also agree to this value, showing the validity of the Bayesian method for the first like.
+\begin{align*}
+    \mu &= \frac{x+1}{n+2}\\
+        &= \frac{2}{3}
+\end{align*}
+
+I thought to generalize this by seeing what happens as the prior is updated $n$ times with $n$ likes only. Consider a prior probability density function at the $n$th like of form:
+\[
+    P(l)(\theta) = A \theta^B,
+\]
+where $A$ and $B$ are constants. Our initial prior is achieved by setting $A=1$ and $B=0$.
+
+Therefore:
+\begin{align*}
+    P(D|l) &= \theta\\
+    P(D) &= \int_0^1 \theta A\theta^B \, d\theta\\
+    P(\theta|D) &= \frac{\theta A\theta^B}{\int_0^1 \theta A\theta^B \, d\theta}\\
+    &= \frac{\theta^{B+1}}{\int_0^1 \theta^{B+1} \, d\theta}\\
+    &= \frac{\theta^{B+1}}{[\frac{\theta^{B+2}}{B+2}]^1_0}\\
+    &= (B+2) \theta^{B+1}
+\end{align*}
+
+For the posterior is of the same form as the prior, the cycle can continue where $A_1 = B+2$ and $B_1 = B+1$, and so $B_n$ denotes the nth like received, and $A_n$ is the increment of $B_n$. The statistical mean $\mu$ of each posterior $B_n$ are:
+\begin{align*}
+    \mu &= \int_0^1 \theta A_n \theta^{B_n} \, d\theta\\
+    &= \int_0^1 A_n \theta^{B_n + 1} \, d\theta\\
+    &= A_n [\frac{\theta^{B_n+2}}{B_n+2}]^1_0\\
+    &= \frac{A_n}{B_n+2}\\
+    &= \frac{B_n+1}{B_n+2} = \frac{n+1}{n+2}
+\end{align*}
+
+Once again, this generalization states the bayesian likeability is the increment of the amount of likes divided by the total amount of ratings plus two. This matches the result from the statistical method, albeit with a very different perspective on probabilities and new information. I believe this updating of priors is appreciated when graphed --- figure \ref{fig:up} showcases the priors of three consecutive likes on a video.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{assets/updating_priors.png}
+    \caption{}
+    \label{fig:up}
+\end{figure}
+
+To generalize the likeability solution to both likes and dislikes, consider the variable $R$ to be the event of seeing $X$ likes and $Y$ dislikes on a video. The posterior originating from a uniform prior is:
+\[
+    P(l|R)(\theta) = \frac{P(R|l)(\theta) P(l)(\theta)}{\int_0^1 P(R|l)(\theta) P(l)(\theta) \, d\theta}
+\]
+
+The probability of seeing $X$ likes and $Y$ dislikes given a likeability $\theta$ is determined by the binomial distribution:
+\[
+    P(R|l)(\theta) = {X+Y \choose X} \theta^X (1-\theta)^Y
+\]
+
+Therefore by substitution, we see a familiar form of the posterior:
+\begin{align*}
+    P(l|R)(\theta) &= \frac{1}{\int_0^1 {X+Y \choose X} \theta^X (1-\theta)^Y P(l)(\theta)\,d\theta}{X+Y \choose X} \theta^X (1-\theta)^Y P(l)(\theta)\\
+    &= \frac{1}{\int_0^1 \theta^X (1-\theta)^Y \,d\theta} \theta^X (1-\theta)^Y
+\end{align*}
+
+By letting the variable $n=X+Y$ and $x=X$, this is the exact probability density function from the statistical method. As that method has shown using Beta and Gamma functions, the statistical mean $\mu$ of the posterior probability density function is of the form:
+\begin{align*}
+    \mu &= \frac{x+1}{n+2}\\
+    &= \frac{X+1}{(X+1) + (Y+1)}
+\end{align*}
+
+More importantly, we can also see the Bayesian likeability of a uniform prior can be computed by the naive method of percentages, but adding one to the amount of likes and dislikes. It presents an even more handy rule to calculate the mean likeability --- use the naive method with the amount of likes plus one and the amount of dislikes plus one. The tables of video A to E are not displayed here for the values are the same as the statistical method.
+
+Because of the Bayesian method, we are now freely able to switch out the prior probability density function. As the five videos I've sampled are from the recommendations of YouTube, and they are of a topic which I enjoy --- about mathematics, my initial prior ideally should be higher in probability with higher likeabilities, and has a statistical mean higher than 0.5, as well as fitting all attributes of a statistical distribution.
+
+There is a function I've encountered in class when learning about inverse functions, the absolute of the square root of $x$, $|\sqrt{x}|$. The function is the positive values of the inverse function $x^2$ restricted by the domain from zero to one, inclusive, which from now would simply be referred to as the square root function. It is shown on the left graph in figure \ref{fig:sqrt_per}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{assets/sqrt_per.png}
+    \caption{}
+    \label{fig:sqrt_per}
+\end{figure}
+
+The function has a positive slope throughout the domain, making it an ideal starting point of my prior distribution. However, it needs to be normalized $\text{nsqrt}(x)$ for the area it encloses is less than one (normalized shown on the right side of figure \ref{fig:sqrt_per}):
+\begin{align*}
+    A &= \int_0^1 \sqrt{x} \, dx\\
+    &= [\frac{x^{\frac{3}{2}}}{\frac{3}{2}}]^1_0\\
+    &= \frac{2}{3}
+\end{align*}
+
+\begin{align*}
+     \text{nsqrt}(x) &= \frac{\sqrt{x}}{A}\\
+    &= \frac{3}{2} \sqrt{x}
+\end{align*}
+
+The statistical mean $\mu$ of the normalized square root function also plays nicely, for it is above 0.5:
+\begin{align*}
+    \mu &= \int_0^1 x \frac{3}{2} \sqrt{x} \, dx\\
+    &= \frac{3}{2} \int_0^1 x^{\frac{3}{2}} \, dx\\
+    &= \frac{3}{2} [\frac{x^{\frac{5}{2}}}{\frac{5}{2}}]^1_0\\
+    &= \frac{3}{5} = 0.6
+\end{align*}
+
+Using the normalized square root function as the prior, the posterior probability density function $P(l|R)$ for event $R$ of $X$ likes and $Y$ dislikes is computed by:
+\begin{align*}
+    P(l|R) &= \frac{1}{\int_0^1 \text{nsqrt}(\theta) \theta^X (1-\theta)^Y } \text{nsqrt}(\theta) \theta^X (1-\theta)^Y
+\end{align*}
+
+This integral is extremely difficult to compute analytically, for there is a non-constant term inside the Beta function, but I was able to simulate it and generate a numeric solution. Figure \ref{fig:up_nsqrt} is how the prior updates for three consecutive likes on a video.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{assets/nsqrt_updating_priors.png}
+    \caption{}
+    \label{fig:up_nsqrt}
+\end{figure}
+
+Furthermore, I was able to simulate ...
+% two line graph depicting the same final solution
+
+% conclude, and table
 
 \section{Conclusion}
+
+% FINALLY, blah
 
 % bib
 
