@@ -639,7 +639,7 @@ Using the normalized square root function as the prior, the posterior probabilit
     P(l|R) &= \frac{1}{\int_0^1 \text{nsqrt}(\theta) \theta^X (1-\theta)^Y } \text{nsqrt}(\theta) \theta^X (1-\theta)^Y
 \end{align*}
 
-This integral is extremely difficult to compute analytically, for there is a non-constant term inside the Beta function, but I was able to simulate it and generate a numeric solution. Figure \ref{fig:up_nsqrt} is how the prior updates for three consecutive likes on a video.
+This integral is extremely difficult to compute analytically, for there is a non-constant term inside the Beta function, but I was able to simulate it and generate a numeric solution. Figure \ref{fig:up_nsqrt} is how the nsqrt prior updates for three consecutive likes on a video.
 
 \begin{figure}[H]
     \centering
@@ -648,16 +648,61 @@ This integral is extremely difficult to compute analytically, for there is a non
     \label{fig:up_nsqrt}
 \end{figure}
 
-Furthermore, I was able to simulate ...
-% two line graph depicting the same final solution
+Therefore the Bayesian likeability of video one is numerically computed to be $\approx 0.789$. This is slightly higher than the statistical likeability of $0.778$, for I had initial high expectations expressed by the nsqrt prior probability density function.
+
+Furthermore, it seems that not only there is no difference between treating the event seeing $X$ likes and $Y$ dislikes as one event $R$, or as multiple updates of events $D$ of one like or dislike, the order of likes and dislikes when sequentially updating also does not impact the final Bayesian likeability. This is shown in figure \ref{fig:nsqrt_incre} where the mean likeability is plotted against the nth rating for three ways of achieving the ratings of video one (6 likes and 1 dislike).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{assets/nsqrt_incre.png}
+    \caption{}
+    \label{fig:nsqrt_incre}
+\end{figure}
 
 % conclude, and table
+At last, the ability to plug in any prior distribution is the main advantage of the Bayesian method, as it may provide a more accurate measurement of likeability for each individual. However, it lacks the neatness of a solution provided by the statistical method, and requires a computer to compute the successive priors. Thankfully, the algorithm (appendix) scales in linear time, making it applicable as the number of likes and dislikes increase. Table \ref{tbl:baye} shows the Bayesian likeability of a nqsrt prior on the five videos.
+
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{c|c|c|c|c|c}
+        & Video A & Video B & Video C & Video D & Video E \\
+        \hline
+        \hline
+        Bayesian Likeability (nsqrt) (3dp) & 0.846 & 0.964 & 0.855 & 0.943 & 0.996
+    \end{tabular}
+    \captionof{table}{}
+    \label{tbl:baye}
+\end{figure}
 
 \section{Conclusion}
+In this exploration, I investigated a total of five different methods of finding a solution to my problem. Three of the methods have analytic solutions, while two required computers to crunch integrals or random numbers. Because of the variety of the methods, each of them have their pros and cons and usages. While the analytic solutions are the cleanest and easiest to apply with little mental effort, they require the use of algebra manipulations and calculus understandings to derive, and lack some freedom the numerical solution contains. The simulations and the Bayesian method are both computationally intensive, especially at large rating amounts, but does not require much previous knowledge and offers a lot of flexibility in choosing priors, in that order.
 
-% FINALLY, blah
+Ultimately, I would choose to use the Bayesian likeability with my nsqrt prior as rankings when watching the SoME1 videos. This is because it both accounts for the amount of information available on a video, and fits my prior expectations of the videos. My watching ordering will therefore be: Video E, Video B, Video D, Video C, and Video A. Nevertheless, table \ref{tbl:all} summaries the likeabilities of the five videos with all methods shown in this exploration.
+
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{c|c|c|c|c|c}
+        & Video A & Video B & Video C & Video D & Video E \\
+        \hline
+        \hline
+         Naive Likeability (3dp) & 1.000 & 1.000 & 0.872 & 1.000 & 0.997\\ \hline
+         Simulated Likeability (3dp) & 0.828 & 0.958 &  0.853 & 0.937 & 0.987\\ \hline
+         Statistical (Bayesian) Likeability (3dp) & 0.833 & 0.926 & 0.854 & 0.941 & 0.994\\ \hline
+        Bayesian Likeability (nsqrt) (3dp) & 0.846 & 0.964 & 0.855 & 0.943 & 0.996
+    \end{tabular}
+    \captionof{table}{}
+    \label{tbl:all}
+\end{figure}
+
+This project has been both entertaining to research, and also applicable in a lot of areas that I will be facing in the future for my generalizations. Whether it is finding the best book online given the ratings, or to select the most favorable bowling place given user reviews, the five methods offers me a spectrum of techniques to statistically analyze the problem. This has been a worthwhile exploration.
 
 % bib
+\nocite{*}
+\printbibliography
+
+
+\newpage
+\section*{Appendix}
 
 
 \end{document}
