@@ -3,6 +3,7 @@
 *.log
 *.pdf
 *.synctex.gz
+*.toc
 
 # bibtext files
 *.bbl
