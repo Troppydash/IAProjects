@@ -1,6 +1,6 @@
 \documentclass[a4paper,12pt]{article}
-\usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
 \usepackage[utf8]{inputenc}
+\usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
 
 % science
 \usepackage{amsmath}
@@ -126,7 +126,7 @@
 
 \title{The Optimization of Air Movements within a Video Game Jump Action}
 
-\author{Word Count: < 4000}
+\author{Word Count: $<$ 4000}
 \date{}
 
 \begin{document}
@@ -189,7 +189,7 @@ The problem can be formally defined as so:
 \subsection{Source mechanics}
 While the problem may look simple in the context of kinematics and projectile motions, the ``quirks'' in the source engine will increase its complexity. Therefore it is necessary to explore the specifics of the physics engine.
 
-The player's position and velocities are represented by $\tp$ and $\tv$ in the engine, of which they are updated every frame by the player controllable acceleration $\ta$. Commonly, the source engine runs at an integer number of frames per second (citation), $64$ will be used from now. Let $\tau$ be the time between frames (also know as $\Delta t$) and it has a value of $\tau = \frac{1}{64} \approx 0.0156 \si{s}$. For every $\tau$ seconds after $t=0$, the velocity is updated as so (citations):
+The engine time unit is in seconds; the engine distance unit is in hammerunits (hu), which are to be implied during all following calculations. The player's position and velocities are represented by $\tp$ and $\tv$ in the engine, of which they are updated every frame by the player controllable acceleration $\ta$. Commonly, the source engine runs at an integer number of frames per second (citation), $64$ will be used from now. Let $\tau$ be the time between frames (also know as $\Delta t$) and it has a value of $\tau = \frac{1}{64} \approx 0.0156 \si{s}$. For every $\tau$ seconds after $t=0$, the velocity is updated as so (citations):
 \begin{enumerate}
     \item Apply gravitational acceleration
     \item Apply friction onto velocity
@@ -209,7 +209,7 @@ Because the updates reflect the kinematic equations of a projectile with constan
 
 \paragraph{Step 2} Let $\lambda(\tv)$ be the friction function. For the player is in the air, no friction will be applied and we can set $\lambda(\tv) = \tv$.
 
-\paragraph{Step 3} The source engine limits the velocity through an engine constant \verb|sv_maxspeed| ($L$) set to $30$ in air. However, the speed is limited by the projection of the velocity vector $\tv$ onto the acceleration vector $\ta$, with the player having control of $\ta$ at all times.
+\paragraph{Step 3} The source engine limits the velocity through an engine constant \verb|sv_maxspeed| ($L$) set to $30$ in air. However, the speed is limited by the projection of the velocity vector $\tv$ onto the acceleration vector $\ta$, with the player having control of $\ta$ at all times (picture).
 
 Let $w$ be the magnitude of the applicable acceleration this frame. It can be defined as a piecewise function as
 \[
@@ -239,12 +239,25 @@ with the position being updated without interpolation ($\tp'$):
     \tp' = \tp + \tv' \tau.
 \]
 
-% summarize
+% jumping mechanics
+% took 45 frames, v0 = 284hu/s, 60fps
+Additionally, the mechanics of initiating a jump action can also be modelled mathematically. By recording myself jumping ingame at 60 frames per second (picture), I've obtained that a jump is represented by an impulse applied on the player, setting its z-axis velocity to around $+284$ the frame after jumping. The player then takes around $45$ video frames to land, meaning an airtime of $45 / 60 =0.75 \si{s}$. Therefore the initial velocity is restricted by $\tv_z = 284$.
 
+% summarize
+To summarize, every $\tau$ seconds after $t=0$ the velocity is updated by gravity in the z-axis, and by the player's movement acceleration in the x,y-axis. The latter is limited so that the projection of the new velocity never exceeds the engine constant \verb|sv_maxspeed| of 30 in air. Therefore for some time $t$, the velocity next frame $\tv(t+\tau)$ is
+\begin{align*}
+    \tv(t+\tau) &= \tang{\lambda(\tv_x(t)) + w \tunit{a}_x, \lambda(\tv_y(t)) + w\tunit{a}_y,\tv_z(t) + g\tau}\\
+    \tp(t+\tau) &= \tang{\tp_x(t) + \tv(t+\tau)_x \tau, \tp_y(t) + \tv(t+\tau)_y \tau, \tp_z(t) + \tv_z(t)\tau + \frac{1}{2}g\tau^2}.
+\end{align*}
+
+The velocity update can be represented in code for simulation, shown in appendix (citation).
 
 \section{Straight Jumping}
-
 % main is with straight jumping
+I will consider and evaluate multiple models to maximize the displacement jumped, this will include the modeling of the player motions as an differential equation assuming continuous time, then going discrete and maximize the displacement frame by frame.
+
+\subsection{Vertical motion}
+Firstly notice that the z-axis motion is separated from the x,y-axis motion, meaning that it can be computed on its own and is unchanged 
 
 \section{Displacement Jumping with angle}
 % extension is displacement given angle.
