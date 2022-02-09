@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
 
@@ -102,11 +102,11 @@
 % bottom right
 \pagestyle{fancy}
 \fancyhf{}
-\fancyfoot[R]{Page \thepage}
+\fancyfoot[R]{\thepage}
 \fancypagestyle{plain}{%
     \renewcommand{\headrulewidth}{0pt}%
     \fancyhf{}%
-    \fancyfoot[R]{Page \thepage}%
+    \fancyfoot[R]{\thepage}%
 }
 %go
 \renewcommand{\headrulewidth}{0pt}
@@ -119,6 +119,10 @@
 \newcommand{\ta}{\tvec{a}}
 \newcommand{\tv}{\tvec{v}}
 \newcommand{\tp}{\tvec{p}}
+\newcommand{\tpar}[2]{\begin{bmatrix}#1\\#2 \end{bmatrix}}
+\newcommand{\tpars}[3]{\begin{bmatrix} #1\\#2\\#3 \end{bmatrix}}
+
+
 
 \linespread{1.25}
 
@@ -163,9 +167,9 @@ their magnitudes, or length are denoted by two double vertical lines, with the c
     \tmag{\tvec{v}} = \sqrt{v_x^2 + v_y^2 + v_z^2}.
 \]
 
-The vector can also be expanded into its components, and is written with angled brackets:
+The vector can also be expanded into its components, and is written with angled brackets or with parenthesis:
 \[
-    \tvec{v} = \tang{v_x, v_y, v_z}.
+    \tvec{v} = \tang{v_x, v_y, v_z} = \tpars{v_x}{v_y}{v_z}.
 \]
 
 The unit vectors are vectors scaled down by their magnitudes, resulting in a magnitude of 1, and is written with a hat on top:
@@ -199,10 +203,10 @@ The engine time unit is in seconds; the engine distance unit is in hammerunits (
 
 % took 45 frames, v0 = 284hu/s, 60fps
 \paragraph{Step 1} Let $g$ be the gravitational acceleration on the $z$ axis, it is set by an engine constant \verb|sv_gravity| (citations) --- set to $800$ within the game in question. Using a method called leapfrog interpolation, and let $\tv'$, $\tp'$ be the new velocity, position next frame of frame time $\tau$, the operation is (assuming $g$ is negative)
-\begin{align*}
-    \tv'_z &= \tv_z + g\tau\\
-    \tp'_z &= \tp_z + \tv_z\tau + \frac{1}{2}g\tau^2.
-\end{align*}
+\begin{align}
+    \tv'_z &= \tv_z + g\tau \label{eq:gv}\\
+    \tp'_z &= \tp_z + \tv_z\tau + \frac{1}{2}g\tau^2 \label{eq:gp}.
+\end{align}
 
 Because the updates reflect the kinematic equations of a projectile with constant acceleration, it can be treated with assumptions of continuous time and will be evaluated separate to the $x$ and $y$ motions.
 
@@ -241,7 +245,7 @@ with the position being updated without interpolation ($\tp'$):
 
 % jumping mechanics
 % took 45 frames, v0 = 284hu/s, 60fps
-Additionally, the mechanics of initiating a jump action can also be modelled mathematically. By recording myself jumping ingame at 60 frames per second (picture), I've obtained that a jump is represented by an impulse applied on the player, setting its z-axis velocity to around $+284$ the frame after jumping. The player then takes around $45$ video frames to land, meaning an airtime of $45 / 60 =0.75 \si{s}$. Therefore the initial velocity is restricted by $\tv_z = 284$.
+Additionally, the mechanics of initiating a jump action can also be modelled mathematically. By recording myself jumping ingame at 60 frames per second (picture), I've obtained that a jump is represented by an impulse applied on the player, setting its z-axis velocity to around $+280\pm10$ the frame after jumping. The player then takes around $45 + \pm1$ video frames to land, meaning an airtime of $45\pm1 / 60 =0.75\pm 0.02\si{s}$. Therefore the initial velocity is restricted by $\tv_z = 280\pm10$.
 
 % summarize
 To summarize, every $\tau$ seconds after $t=0$ the velocity is updated by gravity in the z-axis, and by the player's movement acceleration in the x,y-axis. The latter is limited so that the projection of the new velocity never exceeds the engine constant \verb|sv_maxspeed| of 30 in air. Therefore for some time $t$, the velocity next frame $\tv(t+\tau)$ is
@@ -252,12 +256,86 @@ To summarize, every $\tau$ seconds after $t=0$ the velocity is updated by gravit
 
 The velocity update can be represented in code for simulation, shown in appendix (citation).
 
+\section{Vertical motion}
+Universal across the various metrics are the vertical motion of the player. Firstly notice that the z-axis motion is separated from the x,y-axis motion, meaning that it can be computed on its own.
+
+Let $p$, $v$, $a$ be the z-axis position, velocity, and acceleration as a function of time $t$ and engine constants $S$, also define $p_0$, $v_0$ to be the initial conditions. Because of the velocity update in equation \ref{eq:gv}:
+\[
+    \frac{\Delta v}{\tau} = g,
+\]
+because $\tau$ is very small, it can be assumed that:
+\[
+    v' = g.
+\]
+Similarly, the position update can also be assumed to be continuous (equation \ref{eq:gp}):
+\begin{align*}
+ \frac{\Delta p}{\tau} &= v(t+\tau)\\
+ p' &= v.
+\end{align*}
+Therefore it is possible to compute the airtime of the player upon a jump action. For the acceleration of gravity is constant, the kinematic equations may be used (citation).
+\begin{align*}
+    s &= s_0 + ut + \frac{1}{2} a t^2\\
+    0 &= 0 + v_0 t + \frac{1}{2} g t^2\\
+    \text{therefore:}&\\
+    t &= \frac{-v_0 \pm \sqrt{v_0^2}}{g}\\
+    &= \frac{-2v_0}{g} \,\, \text{or} \,\, 0.
+\end{align*}
+Because $t=0$ is the first frame when the player executes the jump action, the airtime is the first root of the quadratic, and therefore:
+\begin{align*}
+    t &= -2 \frac{v_0}{g}\\
+    &= -2 \times \frac{280\pm 10}{-800}\\
+    &= 0.70 \pm 0.03 \si{s}
+\end{align*}
+
+The result is very similar to the recorded airtime of $0.75\pm 0.02$ with their uncertainty overlapping, the assumption of a small $\tau$ may also contribute to the difference between the observed with the calculated time. This airtime will be denoted by the symbol $t_f$.
+
+Therefore if the initial displacement at $t=0$ ($\tp(0)$) has a length of zero, the total displacement as a result of the jump is $\tmag{\tp(t_f)}$.
+
 \section{Straight Jumping}
 % main is with straight jumping
 I will consider and evaluate multiple models to maximize the displacement jumped, this will include the modeling of the player motions as an differential equation assuming continuous time, then going discrete and maximize the displacement frame by frame.
 
-\subsection{Vertical motion}
-Firstly notice that the z-axis motion is separated from the x,y-axis motion, meaning that it can be computed on its own and is unchanged 
+\subsection{Differential equations}
+First let us construct the differential equations that govern the player motion, maybe the answer is as simple as an optimization problem. Let $\ta$, $\tv$, and $\tp$ be the two dimensional acceleration, velocity, and position. It is assumed that player can perfectly control $\ta$ at all time $t \in [0, t_f]$ via their keyboard and mouse --- the time period $t\in[0,t_f]$ will be assumed for all functions in this section.
+
+Initially consider the case without any maximum velocity restrictions (with scalar $w=\gamma_1$ for all considered time), the acceleration is:
+\begin{align*}
+ \ta = w\tunit{a} = w\tpar{x(t)}{y(t)},
+\end{align*}
+where $x(t)$ and $y(t)$ are functions of time and is a unit vector where
+\[
+    x^2 + y^2 = 1.
+\]
+
+The velocity at any point is the time integral of the acceleration, which can be expanded into the x,y components like so:
+\begin{align*}
+    \tv &= \int w\tunit{a} \,dt + c\\
+    &= \tpar{\int w x(t) \,dt}{ \int w y(t) \,dt} + \tpar{c_x}{c_y}\\
+    &= w\tpar{X(t)}{Y(t)} + \tpar{c_x}{c_y},
+\end{align*}
+where $X(t)$ and $Y(t)$ are the time integrals of $x(t)$ and $y(t)$.
+
+The constants ($c_0$,$c_1$) can be found by plugging in $t=0$, for we can define the constants in terms of the initial velocities:
+\begin{align*}
+    v_0 &= w \tpar{X(0)}{Y(0)} + \tpar{c_x}{c_y}\\
+    c_x &= -wX(0)\\
+    c_y &= -wY(0).
+\end{align*}
+
+The displacement $\tp$ is the time integral of the velocity:
+\[
+    \tp =
+\]
+
+
+
+
+
+
+
+
+
+
 
 \section{Displacement Jumping with angle}
 % extension is displacement given angle.
