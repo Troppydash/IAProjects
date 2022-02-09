@@ -121,7 +121,8 @@
 \newcommand{\tp}{\tvec{p}}
 \newcommand{\tpar}[2]{\begin{bmatrix}#1\\#2 \end{bmatrix}}
 \newcommand{\tpars}[3]{\begin{bmatrix} #1\\#2\\#3 \end{bmatrix}}
-
+\newcommand{\tfx}{\mathcal{X}}
+\newcommand{\tfy}{\mathcal{Y}}
 
 
 \linespread{1.25}
@@ -291,14 +292,14 @@ The result is very similar to the recorded airtime of $0.75\pm 0.02$ with their 
 
 Therefore if the initial displacement at $t=0$ ($\tp(0)$) has a length of zero, the total displacement as a result of the jump is $\tmag{\tp(t_f)}$.
 
-\section{Straight Jumping}
+\section{Jumping motion}
 % main is with straight jumping
 I will consider and evaluate multiple models to maximize the displacement jumped, this will include the modeling of the player motions as an differential equation assuming continuous time, then going discrete and maximize the displacement frame by frame.
 
-\subsection{Differential equations}
+\subsection{Equations of motion}
 First let us construct the differential equations that govern the player motion, maybe the answer is as simple as an optimization problem. Let $\ta$, $\tv$, and $\tp$ be the two dimensional acceleration, velocity, and position. It is assumed that player can perfectly control $\ta$ at all time $t \in [0, t_f]$ via their keyboard and mouse --- the time period $t\in[0,t_f]$ will be assumed for all functions in this section.
 
-Initially consider the case without any maximum velocity restrictions (with scalar $w=\gamma_1$ for all considered time), the acceleration is:
+Initially consider the case without any maximum velocity restrictions (with scalar $w$ being constant for all considered time), the acceleration is:
 \begin{align*}
  \ta = w\tunit{a} = w\tpar{x(t)}{y(t)},
 \end{align*}
@@ -323,9 +324,62 @@ The constants ($c_0$,$c_1$) can be found by plugging in $t=0$, for we can define
 \end{align*}
 
 The displacement $\tp$ is the time integral of the velocity:
-\[
-    \tp =
-\]
+\begin{align*}
+    \tp &= \int \tv \, dt + k\\
+    &= w \tpar{\int X(t) \, dt + tc_x}{\int Y(t) \, dt + tc_y} + \tpar{k_x}{k_y}\\
+    &= w \tpar {\tfx(t) + tc_x}{\tfy(t) + tc_y} + \tpar{k_x}{k_y},
+\end{align*}
+where $\tfx$ and $\tfy$ are the time integral of $X$ and $Y$.
+
+The constants $k_x$ and $k_y$ can be found by evaluating at $t=0$:
+\begin{align*}
+    \tp_0 &= w \tpar{\tfx(0)}{\tfy(0)} + \tpar{k_x}{k_y} = \tpar{0}{0}\\
+    k_x &= -w\tfx(0)\\
+    k_y &= -w\tfy(0).
+\end{align*}
+
+Therefore, the position of the player, when $L >> 0$, at all time $t$ in the respective domain is (notice that $\tfx'(t) = X(t)$ and $\tfy'(t) = Y(t)$):
+\begin{align*}
+ \tp(t)_x &= w(\tfx(t) - w\tfx'(0)t) - w\tfx(0)\\
+ \tp(t)_y &= w(\tfy(t) - w\tfy'(0)t) - w\tfy(0).
+\end{align*}
+
+\subsection{Restrictions}
+Step 3 states that the velocity is limited through the projection of the current velocity onto the player acceleration. I thought to define the restrictions so that maximum acceleration magnitudes are achieved at all time.
+
+The maximum magnitudes of velocity after every frame is achieved when $L- v \cdot \tunit{a} \ge LA\tau$, for then $\gamma_2 \ge \gamma_1$ and $w = \gamma_1$, for this ensures that acceleration is at a maximum. Additionally, we can see that both the $x$ and $y$ position are positively correlated to $w$, meaning that its maximization will result in higher overall displacement. However, I wonder if this is accurate for the new velocity $\tv'$ is the sum of current velocity with the acceleration, the angle between $\tunit{a}$ and $\tv$ dictates the magnitude of the updated velocity --- could it sometimes be worth it to forgo maximum acceleration to decrease the angle, resulting in a higher updated velocity?
+
+For now, consider the restriction so that acceleration will be maximized at all $t$ in the time domain:
+\begin{align*}
+    L - v \cdot \tunit{a} &\ge LA\tau\\
+    L - (v_x \tunit{a}_x + v_y \tunit{a}_y) &\ge LA\tau.
+\end{align*}
+
+Notice that $\tunit{a}_x = x(t)$ and $\tunit{a}_y = y(t)$ and:
+\begin{align*}
+    v_x &= wX(t) + c_x\\
+    v_y &= wY(t) + c_y,
+\end{align*}
+therefore:
+\begin{align*}
+ L - x(t)(wX(t)+c_x) - y(t)(wY(t)+c_y) &\ge LA\tau\\
+    L - LA\tau &\ge x(t)(wX(t)+c_x) + y(t)(wY(t)+c_y)\\
+    L - LA\tau &\ge x(t)(wX(t)-wX(0)) + y(t)(w(Y)-wY(0))\\
+    \frac{L - LA\tau}{w} &\ge X'(t)(X(t)-X(0)) + Y'(t)(Y(t)-Y(0))\\
+    \frac{1}{A\tau} - 1 &\ge X'(t)(X(t)-X(0)) + Y'(t)(Y(t)-Y(0)),
+\end{align*}
+because $w=\gamma_1=LA\tau$.
+
+This restriction shows that for acceleration each frame to be maximized, the RHS must be less than the LHS constant for all $t \in [0, t_f]$.
+
+\section{Models}
+With the question defined, the equations of motion derived, we can now consider the different models to achieve maximum displacement from a single jump.
+
+\subsection{Do nothing}
+
+
+
+
 
 
 
