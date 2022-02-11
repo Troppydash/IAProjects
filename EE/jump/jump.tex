@@ -319,15 +319,15 @@ where $X(t)$ and $Y(t)$ are the time integrals of $x(t)$ and $y(t)$.
 The constants ($c_0$,$c_1$) can be found by plugging in $t=0$, for we can define the constants in terms of the initial velocities:
 \begin{align*}
     v_0 &= w \tpar{X(0)}{Y(0)} + \tpar{c_x}{c_y}\\
-    c_x &= -wX(0)\\
-    c_y &= -wY(0).
+    c_x &= v_{0x} -wX(0)\\
+    c_y &= v_{0y} -wY(0).
 \end{align*}
 
 The displacement $\tp$ is the time integral of the velocity:
 \begin{align*}
     \tp &= \int \tv \, dt + k\\
-    &= w \tpar{\int X(t) \, dt + tc_x}{\int Y(t) \, dt + tc_y} + \tpar{k_x}{k_y}\\
-    &= w \tpar {\tfx(t) + tc_x}{\tfy(t) + tc_y} + \tpar{k_x}{k_y},
+    &= w \tpar{\int X(t) \, dt}{\int Y(t) \, dt} + \tpar{tc_x}{tc_y} + \tpar{k_x}{k_y}\\
+    &= w \tpar {\tfx(t)}{\tfy(t)}  + t\tpar{c_x}{c_y}  + \tpar{k_x}{k_y},
 \end{align*}
 where $\tfx$ and $\tfy$ are the time integral of $X$ and $Y$.
 
@@ -340,8 +340,8 @@ The constants $k_x$ and $k_y$ can be found by evaluating at $t=0$:
 
 Therefore, the position of the player, when $L >> 0$, at all time $t$ in the respective domain is (notice that $\tfx'(t) = X(t)$ and $\tfy'(t) = Y(t)$):
 \begin{align*}
- \tp(t)_x &= w(\tfx(t) - w\tfx'(0)t) - w\tfx(0)\\
- \tp(t)_y &= w(\tfy(t) - w\tfy'(0)t) - w\tfy(0).
+ \tp(t)_x &= w\tfx(t) + t(v_{0x} - w\tfx'(0)) - w\tfx(0)\\
+ \tp(t)_y &= w\tfy(t) + t(v_{0y} - w\tfy'(0)) - w\tfy(0).
 \end{align*}
 
 \subsection{Restrictions}
@@ -364,11 +364,11 @@ therefore:
 \begin{align*}
  L - x(t)(wX(t)+c_x) - y(t)(wY(t)+c_y) &\ge LA\tau\\
     L - LA\tau &\ge x(t)(wX(t)+c_x) + y(t)(wY(t)+c_y)\\
-    L - LA\tau &\ge x(t)(wX(t)-wX(0)) + y(t)(w(Y)-wY(0))\\
-    \frac{L - LA\tau}{w} &\ge X'(t)(X(t)-X(0)) + Y'(t)(Y(t)-Y(0))\\
-    \frac{1}{A\tau} - 1 &\ge X'(t)(X(t)-X(0)) + Y'(t)(Y(t)-Y(0)),
+    L - LA\tau &\ge x(t)(wX(t) + v_{0x} -wX(0)) + y(t)(w(Y) + v_{0y} -wY(0))\\
+    \frac{L - LA\tau}{w} &\ge X'(t)(X(t) + \frac{v_{0x}}{w} - X(0)) + Y'(t)(Y(t) + \frac{v_{0y}}{w} -Y(0))\\
+    \frac{1}{A\tau} - 1 &\ge X'(t)(X(t) + \frac{v_{0x}}{w} - X(0)) + Y'(t)(Y(t) + \frac{v_{0y}}{w} -Y(0)),
 \end{align*}
-because $w=\gamma_1=LA\tau$.
+because $w=\gamma_1=LA\tau$, and $x(t) = X'(t), \quad y(t) = Y'(t)$.
 
 This restriction shows that for acceleration each frame to be maximized, the RHS must be less than the LHS constant for all $t \in [0, t_f]$.
 
@@ -376,7 +376,8 @@ This restriction shows that for acceleration each frame to be maximized, the RHS
 With the question defined, the equations of motion derived, we can now consider the different models to achieve maximum displacement from a single jump.
 
 \subsection{Do nothing}
-
+% where you do nothing
+We all know the fastest route from point $A$ to point $B$ is a straight line connecting $A$ to $B$, because a line minimizes
 
 
 
