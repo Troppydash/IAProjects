@@ -1,0 +1,34 @@
+\section{Vertical motion}
+Universal across the various metrics are the vertical motion of the player. Firstly notice that the z-axis motion is separated from the x,y-axis motion, meaning that it can be computed on its own.
+
+Let $p$, $v$, $a$ be the z-axis position, velocity, and acceleration as a function of time $t$ and engine constants $S$, also define $p_0$, $v_0$ to be the initial conditions. Because of the velocity update in equation \ref{eq:gv}:
+\[
+\frac{\Delta v}{\tau} = g,
+\]
+because $\tau$ is very small, it can be assumed that:
+\[
+v' = g.
+\]
+Similarly, the position update can also be assumed to be continuous (equation \ref{eq:gp}):
+\begin{align*}
+    \frac{\Delta p}{\tau} &= v(t+\tau)\\
+    p' &= v.
+\end{align*}
+Therefore it is possible to compute the airtime of the player upon a jump action. For the acceleration of gravity is constant, the kinematic equations may be used (citation).
+\begin{align*}
+    s &= s_0 + ut + \frac{1}{2} a t^2\\
+    0 &= 0 + v_0 t + \frac{1}{2} g t^2\\
+    \text{therefore:}&\\
+    t &= \frac{-v_0 \pm \sqrt{v_0^2}}{g}\\
+    &= \frac{-2v_0}{g} \,\, \text{or} \,\, 0.
+\end{align*}
+Because $t=0$ is the first frame when the player executes the jump action, the airtime is the first root of the quadratic, and therefore:
+\begin{align*}
+    t &= -2 \frac{v_0}{g}\\
+    &= -2 \times \frac{280\pm 10}{-800}\\
+    &= 0.70 \pm 0.03 \si{s}
+\end{align*}
+
+The result is very similar to the recorded airtime of $0.75\pm 0.02$ with their uncertainty overlapping, the assumption of a small $\tau$ may also contribute to the difference between the observed with the calculated time. This airtime will be denoted by the symbol $t_f$.
+
+Therefore if the initial displacement at $t=0$ ($\tp(0)$) has a length of zero, the total displacement as a result of the jump is $\tmag{\tp(t_f)}$.
