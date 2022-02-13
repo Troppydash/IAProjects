@@ -39,10 +39,71 @@ for common knowledge tells me that a faster initial speed in the direction where
 
 We can first look at the case without the max speed constraint. By running a simulation with the engine constants discussed before, I got a result of $\approx 933.84$ hammer units in a jump. Predictably, this model will have the player traveling in a straight line (figure \ref{fig:straight_nothing_1}).
 
-\begin{wrapfigure}{r}{0.5\textwidth}
-    \includegraphics[width=0.48\textwidth,right]{assets/straight_nothing_1.png}
+\begin{wrapfigure}{r}{0.48\textwidth}
+    \includegraphics[width=0.45\textwidth,right]{assets/straight_nothing_1.png}
     \caption{}
     \label{fig:straight_nothing_1}
 \end{wrapfigure}
 
-I can comfortably say that this jumping distance would never be possible to achieve in game, for this model can be proven to be the most optimal jumping path if there are no speed limits (appendix, using EL equation). This number of around $900$ hammer units serves to be the upper-bound of our optimization, and the lower-bound being its inverse of
+I can comfortably say that this jumping distance would never be possible to achieve in game, for this model can be proven to be the most optimal jumping path if there are no speed limits (appendix, using EL equation). This number of around $900$ hammer units serves to be the upper-bound output of our optimization, and the lower-bound being its negative of around $-900$ (if you wish to accelerate directly backwards with negative initial velocity).
+
+Additionally we can also utilize the equation derived in the last section (equations \ref{eq:jumping}).
+
+Using the acceleration function, we can define $x(t)$ and $y(t)$ as:
+\[
+    x(t) = 0, \quad y(t) = 1.
+\]
+
+Their first and second order indefinite integrals can be obtained using calculus:
+\begin{alignat*}{3}
+    X(t) &= \int x(t) \, dx = 0, \quad
+    &&\tfx(t) &&= \int X(t) \, dx = 0\\
+    Y(t) &= \int y(t) \, dx = t, \quad
+    &&\tfy(t) &&= \int Y(t) \, dx = \frac{1}{2} t^2,
+\end{alignat*}
+notice that the constants during integration are omitted as we've incorporated them into the derivation of the jumping motion equations as $c_1$, and $c_2$.
+
+Therefore the $x$ position after $t_f$ seconds assuming no speed limit is:
+\begin{align*}
+    p_x &= p(t_f)_x = w\tfx(t_f) + t_f(v_{0x} - w\tfx'(0)) - w\tfx(0)\\
+    &= w \times 0 + t_f(0 - w \times 0) - w \times 0\\
+    &= 0,
+\end{align*}
+and the respective $y$ position is:
+\begin{align*}
+    p_y &= p(t_f)_y = w\tfy(t_f) + t_f(v_{0y} - w\tfy'(0)) - w\tfy(0)\\
+    &= w \frac{1}{2} t_f^2 + t_f(v_{0y} - w v_{0y} \times 0) - w \times 0\\
+    &= (12 \times 250) \frac{1}{2} (0.7)^2 + 0.7 \times 250\\
+    &= 910.
+\end{align*}
+
+% TODO: change A to 10
+
+The jumping motion differential equations resulted in a similar sized jumping distance of $910$ is comparison to the engine simulated $\approx934$. I believe that a $\frac{|910-934|}{934} \approx 2.57\%$ error is a very well approximation of this continuous method for future modeling.
+
+\begin{wrapfigure}{r}{0.48\textwidth}
+    \includegraphics[width=0.45\textwidth,right]{assets/straight_constraint_inequality.png}
+    \caption{}
+    \label{fig:straight_constraint_inequality}
+\end{wrapfigure}
+
+But the game analyzed does have the constraint of a speed limit so players cannot accelerate infinitely, traveling across the map in two-to-three seconds. The graphing of the constraint (equation \ref{eq:constraint}) shows the problems (figure \ref{fig:straight_constraint_inequality}).
+
+
+
+Blah blah blah one line is higher then the other,
+
+% TODO: calculated the restricted line, maximum 250 words,
+
+% TODO: conclude this: max 100 words
+
+% TODO Have around 1500 words
+
+% Do the machine learning one
+
+% Do the step by step one
+
+% Do the euler-lagrange one
+
+% Extension, find the optimal angle for each
+

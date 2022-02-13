@@ -57,11 +57,18 @@ The constants $k_x$ and $k_y$ can be found by evaluating at $t=0$:
     k_y &= -w\tfy(0).
 \end{align*}
 
-Therefore, the position of the player, when $L >> 0$, at all time $t$ in the respective domain is (notice that $\tfx'(t) = X(t)$ and $\tfy'(t) = Y(t)$):
-\begin{align*}
-    \tp(t)_x &= w\tfx(t) + t(v_{0x} - w\tfx'(0)) - w\tfx(0)\\
-    \tp(t)_y &= w\tfy(t) + t(v_{0y} - w\tfy'(0)) - w\tfy(0).
-\end{align*}
+Therefore, the position of the player, when $L >> 0$, at all time $t$ in the respective domain is show in figure \ref{eq:jumping} (notice that $\tfx'(t) = X(t)$ and $\tfy'(t) = Y(t)$):
+
+\begin{figure}[H]
+    \centering
+    \begin{align*}
+        \tp(t)_x &= w\tfx(t) + t(v_{0x} - w\tfx'(0)) - w\tfx(0)\\
+        \tp(t)_y &= w\tfy(t) + t(v_{0y} - w\tfy'(0)) - w\tfy(0).
+    \end{align*}
+    \caption{The Jumping Motion equations}
+    \label{eq:jumping}
+\end{figure}
+
 
 \subsection{Restrictions}
 Step 3 states that the velocity is limited through the projection of the current velocity onto the player acceleration. I thought to define the restrictions so that maximum acceleration magnitudes are achieved at all time.
@@ -84,9 +91,21 @@ therefore:
     LA\tau\ &\le L - x(t)(wX(t)+c_x) - y(t)(wY(t)+c_y)\\
     L - LA\tau &\ge x(t)(wX(t)+c_x) + y(t)(wY(t)+c_y)\\
     L - LA\tau &\ge x(t)(wX(t) + v_{0x} -wX(0)) + y(t)(w(Y) + v_{0y} -wY(0))\\
-    \frac{L - LA\tau}{w} &\ge X'(t)(X(t) + \frac{v_{0x}}{w} - X(0)) + Y'(t)(Y(t) + \frac{v_{0y}}{w} -Y(0))\\
-    \frac{1}{A\tau} - 1 &\ge X'(t)(X(t) + \frac{v_{0x}}{w} - X(0)) + Y'(t)(Y(t) + \frac{v_{0y}}{w} -Y(0)),
+    \frac{L - LA\tau}{w} &\ge X'(t)(X(t) + \frac{v_{0x}}{w} - X(0)) + Y'(t)(Y(t) + \frac{v_{0y}}{w} -Y(0)),
 \end{align*}
-because $w=\gamma_1=LA\tau$, and $x(t) = X'(t), \quad y(t) = Y'(t)$.
+because $w=\gamma_1=LA\tau$, and $x(t) = X'(t), \quad y(t) = Y'(t)$, the simplified constraint of the jumping motion equations is displayed in figure \ref{eq:constraint}.
+\begin{figure}[H]
+    \centering
+    \[
+        \frac{1}{A\tau} - 1 \ge X'(t)(X(t) + \frac{v_{0x}}{w} - X(0)) + Y'(t)(Y(t) + \frac{v_{0y}}{w} -Y(0))
+    \]
+    \caption{The Constraint Equation}
+    \label{eq:constraint}
+\end{figure}
 
 This restriction shows that for acceleration each frame to be maximized, the RHS must be less than the LHS constant for all $t \in [0, t_f]$.
+
+\subsection{Motion with restrictions}
+To simulate the continuous motion described here, one can take advantages of the absolute function and its derivatives and integrals, along with computers to simulate definite and indefinite integrals.
+
+% TODO: make this in program, or not, doesnt matter.
