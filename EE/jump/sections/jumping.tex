@@ -17,15 +17,21 @@ x^2 + y^2 = 1.
 The value of $w$ is different under continuous assumptions, albeit still reminding constant throughout. We will define $w$ by the maximized acceleration of the player divided by the change in time, that is: $w = \frac{\gamma_1}{\tau}$. The justification is that the discrete scalar $w$ can be considered as a tiny change in velocity, which can be rearranged (notice that this uses equation \ref{eq:dis_vel} where $w=\gamma_1$):
 \begin{align*}
     d\tv &=  \tv' - \tv\\
-    &= (\tv + \gamma_1 \tunit{a}) - \tv\\
-    &= \gamma_1 \tunit{a}\\
+    &= (\tv + w \tunit{a}) - \tv\\
+    &= w \tunit{a}\\
     \text{therefore:}&\\
-    \frac{d\tv}{\tau} &= \frac{\gamma_1}{\tau} \tunit{a},
+    \frac{d\tv}{\tau} &= \frac{w}{\tau} \tunit{a},
 \end{align*}
-and as $\tau \to 0$, the equation will approach the time derivative of the velocity (acceleration) of the player, where the constant scalar $w$ is now defined by:
-\[
-w = \frac{\gamma_1}{\tau} = LA.
-\]
+and as $\tau \to 0$, the equation will approach the time derivative of the velocity (acceleration) of the player, where the constant scalar $w=\frac{\gamma_1}{\tau} = LA$. This will result in the  differential equation in figure
+
+\begin{figure}[H]
+ \centering
+ \[
+    \frac{d\tv}{dt} = \frac{w}{\tau} \tunit{a}
+ \]
+ \caption{The unconstrainted differential equation of motion}
+ \label{eq:un_diff}
+\end{figure}
 
 Now notice that the velocity at any point is the time integral of the acceleration, which can be expanded into the x,y components like so:
 \begin{align*}
@@ -106,6 +112,8 @@ because $w=\gamma_1=LA\tau$, and $x(t) = X'(t), \quad y(t) = Y'(t)$, the simplif
 This restriction shows that for acceleration each frame to be maximized, the RHS must be less than the LHS constant for all $t \in [0, t_f]$.
 
 \subsection{Motion with restrictions}
-To simulate the continuous motion described here, one can take advantages of the absolute function and its derivatives and integrals, along with computers to simulate definite and indefinite integrals.
+To simulate the continuous motion described here, one can take advantages of the absolute function and its derivatives and integrals, along with computers to simulate differential equations using Euler's approximation.
+
+
 
 % TODO: make this in program, or not, doesnt matter.
