@@ -114,6 +114,81 @@ This restriction shows that for acceleration each frame to be maximized, the RHS
 \subsection{Motion with restrictions}
 To simulate the continuous motion described here, one can take advantages of the absolute function and its derivatives and integrals, along with computers to simulate differential equations using Euler's approximation.
 
+Although the acceleration constant $w$ is defined piecewise on $\gamma_1$ and $\gamma_2$ at each frame, of which are functions of velocity $\tv$, I've devised a method to encode it using standard arithmetic operations and an additional absolute $|x|$ operator only. The purpose of this approach is that the absolute function is differentiable and integratable --- perhaps we can write our restrictive jumping motion as a single differential equation and solve it?
+
+Firstly we need to derive the required fundamental functions. The absolute operator can be defined as a piecewise function itself, the absolute value of $0$ will be ignored for it makes the derived operators undefined:
+\[
+    |x| = \begin{cases}
+        x & x > 0\\
+        -x & x < 0
+    \end{cases}.
+\]
+
+We can define a sign function that is $+1$ when the value is positive, and $-1$ when it is negative:
+\[
+    \text{sign}(x) = \frac{|x|}{x} = \begin{cases}
+        +1 & x > 0\\
+        -1 & x < 0
+    \end{cases},
+\]
+and define a positive function that is similar to the sign function, but returns $0$ when it is negative:
+\[
+    \text{pos}(x) = \frac{\text{sign}(x) + 1}{2} = \begin{cases}
+        +1 & x > 0\\
+        0 & x < 0
+    \end{cases}.
+\]
+
+We also need a minimum function, because scalar $w$ is the minimum of $\gamma_1$ and $\gamma_2$ when $\gamma_2$ is positive (Step 3, \autoref{sec:source}, \nameref{sec:source}) --- this function is also not define if $a$ equals $b$,
+\[
+    \text{min}(a, b) = b \text{pos}(a - b) + a \text{pos}(b - a) = \begin{cases}
+        a & b > a\\
+        b & a > b
+    \end{cases}.
+\]
+
+Now consider the piecewise scalar $w$, it is defined as
+\[
+    w = \begin{cases}
+        \min(\gamma_1, \gamma_2) & \gamma_2 > 0\\
+        0 & \gamma_2 \le 0
+    \end{cases},
+\]
+we want to model a function that is zero when $\gamma_2$ is negative, and the minimum function otherwise. I've come up with this equation:
+\[
+    w = \text{pos}(\gamma_2)\min(\gamma_1, \gamma_2).
+\]
+
+Furthermore, the equation can now be substituted by the definition of the minimum function:
+\[
+    w = \text{pos}(\gamma_2 \text{pos}(\gamma_1 - \gamma_2) + \gamma_1 \text{pos}(\gamma_2 - \gamma_1)).
+\]
+
+By replacing the variable $w$ in the differential equation of equation \ref{eq:un_diff} with the above equality, the restrictive jumping motion is now a first order differential equation (equation \ref{eq:reom}).
+
+\begin{figure}[H]
+    \centering
+    \[
+        \frac{d\tv}{dt} = \text{pos}(\gamma_2(\tv, \tunit{a}) \text{pos}(\gamma_1 - \gamma_2(\tv, \tunit{a})) + \gamma_1 \text{pos}(\gamma_2(\tv, \tunit{a}) - \gamma_1)) \tunit{a}
+    \]
+    \caption{The restricted equation of motion}
+    \label{eq:reom}
+\end{figure}
+
+The first order differential equation can be simulated with Euler's method. Recall that for step size $h$, updating function $f(t_n, \tv_n) = \frac{d\tv}{dt}$, the velocity at the $n$th step can be computed recursively such that:
+\[
+    \tv_{n+1} = \tv_{n} + h f(t_n + \tv_n).
+\]
+
+Since the displacement is simply the integral of the velocity, we can represent the discrete values of $\tv_{n}$ with a summation weighted by the step size $h$. This will result in the restricted jumping equation in equation \ref{eq:rje}. I will be using this method to compute the continuous restricted jumping distance by approximating $h \to 0$, and simulating the source engine by setting $h = \tau$.
+
+\begin{figure}[H]
+    \centering
+    \[
+        \tp(t) = \lim_{h \to 0} \sum_{n=0}^{\ceil*{\frac{t}{h}}} v_{n} h
+    \]
+    \caption{The restricted jumping equation}
+    \label{eq:rje}
+\end{figure}
 
 
-% TODO: make this in program, or not, doesnt matter.

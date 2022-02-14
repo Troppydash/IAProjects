@@ -46,6 +46,7 @@ The problem can be formally defined as so:
 \end{quote}
 
 \subsection{Source mechanics}
+\label{sec:source}
 While the problem may look simple in the context of kinematics and projectile motions, the ``quirks'' in the source engine will increase its complexity. Therefore it is necessary to explore the specifics of the physics engine.
 
 The engine time unit is in seconds; the engine distance unit is in hammerunits (hu), which are to be implied during all following calculations. The player's position and velocities are represented by $\tp$ and $\tv$ in the engine, of which they are updated every frame by the player controllable acceleration $\ta$. Commonly, the source engine runs at an integer number of frames per second (citation), $64$ will be used from now. Let $\tau$ be the time between frames (also know as $\Delta t$) and it has a value of $\tau = \frac{1}{64} \approx 0.0156 \si{s}$. For every $\tau$ seconds after $t=0$, the velocity is updated as so (citations):
