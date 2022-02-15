@@ -9,7 +9,7 @@ There are 4 of them:
 \begin{itemize}
     \item \verb|sv_gravity| ($g$), set to 800
     \item \verb|sv_maxspeed| ($L$), set to 250
-    \item \verb|sv_airaccelerate| ($A$), set to 12
+    \item \verb|sv_airaccelerate| ($A$), set to 10
     \item \verb|tickrate| ($n$), set to 64, or $\tau=\frac{1}{64}$
 \end{itemize}
 
@@ -37,7 +37,7 @@ Notice that player acceleration is constant in this model, and which can be achi
 \]
 for common knowledge tells me that a faster initial speed in the direction where I am going will result in higher overall travel distance. Overall, there exists four metrics for each model, each worth evaluating.
 
-We can first look at the case without the max speed constraint. By running a simulation with the engine constants discussed before, I got a result of $\approx 933.84$ hammer units in a jump. Predictably, this model will have the player traveling in a straight line (figure \ref{fig:straight_nothing_1}).
+We can first look at the case without the max speed constraint. By running a simulation with the engine constants discussed before, I got a result of $\approx 807.5$ hammer units in a jump. Predictably, this model will have the player traveling in a straight line (figure \ref{fig:straight_nothing_1}).
 
 \begin{wrapfigure}{r}{0.48\textwidth}
     \includegraphics[width=0.45\textwidth,right]{assets/straight_nothing_1.png}
@@ -45,7 +45,7 @@ We can first look at the case without the max speed constraint. By running a sim
     \label{fig:straight_nothing_1}
 \end{wrapfigure}
 
-I can comfortably say that this jumping distance would never be possible to achieve in game, for this model can be proven to be the most optimal jumping path if there are no speed limits (appendix, using EL equation). This number of around $900$ hammer units serves to be the upper-bound output of our optimization, and the lower-bound being its negative of around $-900$ (if you wish to accelerate directly backwards with negative initial velocity).
+I can comfortably say that this jumping distance would never be possible to achieve in game, for this model can be proven to be the most optimal jumping path if there are no speed limits (appendix, using EL equation). This number of around $800$ hammer units serves to be the upper-bound output of our optimization, and the lower-bound being its negative of around $-800$ (if you wish to accelerate directly backwards with negative initial velocity).
 
 Additionally we can also utilize the equation derived in the last section (equations \ref{eq:jumping}).
 
@@ -73,13 +73,13 @@ and the respective $y$ position is:
 \begin{align*}
     p_y &= p(t_f)_y = w\tfy(t_f) + t_f(v_{0y} - w\tfy'(0)) - w\tfy(0)\\
     &= w \frac{1}{2} t_f^2 + t_f(v_{0y} - w v_{0y} \times 0) - w \times 0\\
-    &= (12 \times 250) \frac{1}{2} (0.7)^2 + 0.7 \times 250\\
-    &= 910.
+    &= (10 \times 250) \frac{1}{2} (0.7)^2 + 0.7 \times 250\\
+    &= 787.5
 \end{align*}
 
 % TODO: change A to 10
 
-The jumping motion differential equations resulted in a similar sized jumping distance of $910$ is comparison to the engine simulated $\approx934$. I believe that a $\frac{|910-934|}{934} \approx 2.57\%$ error is a very well approximation of this continuous method for future modeling.
+The jumping motion differential equations resulted in a similar sized jumping distance in comparison to the engine simulated $\approx807.5$. I believe that a $\frac{|787.5-807.5|}{807.5} \approx 2.48\%$ error is a very well approximation of this continuous method for future modeling.
 
 \begin{wrapfigure}{r}{0.48\textwidth}
     \includegraphics[width=0.45\textwidth,right]{assets/straight_constraint_inequality.png}
@@ -93,6 +93,8 @@ It is obvious that the RHS (top line) is higher than the constraint LHS (bottom 
 
 
 Blah blah blah one line is higher then the other,
+% TODO: Add pictures & fix values TODAY
+
 
 % TODO: calculated the restricted line,
 
@@ -104,11 +106,11 @@ Blah blah blah one line is higher then the other,
 
 % 500 for conclusion
 
-% Do the machine learning one
+Do the machine learning one
 
-% Do the step by step one
+Do the step by step one
 
-% Do the euler-lagrange one
+Do the euler-lagrange one
 
-% Extension, find the optimal angle for each
+Extension, find the optimal angle for each
 

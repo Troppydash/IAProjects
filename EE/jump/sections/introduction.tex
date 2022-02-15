@@ -5,13 +5,13 @@
     To what extent can a player travel in distance/displacement through a jump action in optimistic conditions of vanilla settings, within the games made with the source engine?
 \end{quote}
 
-The problem originated my personal curiosity within the limitations of the video game ``Counter Strike'' that occupies a large part of my life. It came about as I was getting into the community of counter-strike long jumping --- a community aiming to exploit the video game's physics to achieve the longest jumping distance. Therefore I want to explore this optimization problem with various methods in an extended essay and to further improve my knowledge within this ``niche`` community by exploring the various forms of this question.
+The problem originated from my personal curiosity within the limitations of the video game ``Counter Strike'' that occupies a large part of my life. It came about as I was getting into the community of counter-strike long jumping --- a community aiming to exploit the video game's physics to achieve the longest jumping distance. Therefore I want to explore this optimization problem with various methods in an extended essay to further improve my knowledge within this ``niche`` community.
 
 \subsection{Defining the problem}
-The ``source'' engine (citation) is the base of plenty of popular videos games in terms of handling the players, their surroundings, and their respective physical interactions. It allows freedom in setting various engine constants that fit each video game's playstyle --- with the constants of ``Counter Strike - Source`` being used as a measure throughout this exploration. I will attempt to define the problem mathematically here.
+The ``source'' game engine (citation) is the engine of plenty of popular videos games in terms of handling the players, their surroundings, and their respective physical interactions. It allows freedom in setting various engine constants that fit each video game's playstyle --- with the constants of ``Counter Strike - Source`` being used as a reference throughout this exploration. I will attempt to define the problem mathematically in this section.
 
 % from p0 to p1, and to finishing this essay
-\paragraph{Notations} Firstly, the notation used in the analysis are as follow:
+Firstly, here is a run down of all the notations used in this analysis:
 
 All n-dimensional vectors are represented in bold styles like
 \[
@@ -22,7 +22,7 @@ their magnitudes, or length are denoted by two double vertical lines, with the c
 \tmag{\tvec{v}} = \sqrt{v_x^2 + v_y^2 + v_z^2}.
 \]
 
-The vector can also be expanded into its components, and is written with angled brackets or with parenthesis:
+The vector can also be expanded into its components, and is written with angled brackets or with square brackets:
 \[
 \tvec{v} = \tang{v_x, v_y, v_z} = \tpars{v_x}{v_y}{v_z}.
 \]
@@ -34,9 +34,13 @@ The unit vectors are vectors scaled down by their magnitudes, resulting in a mag
 
 The dot product between two vectors $\tvec{v}$ and $\tvec{w}$ is defined by
 \[
-\tvec{v} \cdot \tvec{w} = v_x w_x + v_y w_y + v_z w_z + \ldots,
+\tvec{v} \cdot \tvec{w} = v_x w_x + v_y w_y + v_z w_z + \ldots.
 \]
-but their cross product will not be used as it only applies in the third dimension.
+
+In addition, the absolute, floor, and ceiling piecewise functions are represented with
+\[
+    |x|, \floor*{x}, \ceil*{x}.
+\]
 
 Due to the nature of the source engine, the problem may be represented and optimized differently because of the use of discrete time frames rather than continuous time. But experimentally the differences are small and insignificant --- this will be shown later. Both approaches will thus be used, sometimes interchangeably.
 
@@ -49,7 +53,7 @@ The problem can be formally defined as so:
 \label{sec:source}
 While the problem may look simple in the context of kinematics and projectile motions, the ``quirks'' in the source engine will increase its complexity. Therefore it is necessary to explore the specifics of the physics engine.
 
-The engine time unit is in seconds; the engine distance unit is in hammerunits (hu), which are to be implied during all following calculations. The player's position and velocities are represented by $\tp$ and $\tv$ in the engine, of which they are updated every frame by the player controllable acceleration $\ta$. Commonly, the source engine runs at an integer number of frames per second (citation), $64$ will be used from now. Let $\tau$ be the time between frames (also know as $\Delta t$) and it has a value of $\tau = \frac{1}{64} \approx 0.0156 \si{s}$. For every $\tau$ seconds after $t=0$, the velocity is updated as so (citations):
+The engine time unit is in seconds; the engine distance unit is in hammerunits (hu), which are to be implied for the rest of the analysis. The player's position and velocities are represented by 3-vectors $\tp$ and $\tv$ in the engine, which are updated every frame by the player controllable acceleration 2-vector $\ta$. Commonly, the source engine runs at an integer number of frames per second (citation), the number $64$ will be used from now. Let $\tau$ be the time between frames (also know as $\Delta t$) and it has a value of $\tau = \frac{1}{64} \approx 0.0156 \si{s}$. For every $\tau$ seconds after $t=0$, the velocity is updated in the following sequence (citations):
 \begin{enumerate}
     \item Apply gravitational acceleration
     \item Apply friction onto velocity
@@ -58,37 +62,45 @@ The engine time unit is in seconds; the engine distance unit is in hammerunits (
 \end{enumerate}
 
 % took 45 frames, v0 = 284hu/s, 60fps
-\paragraph{Step 1} Let $g$ be the gravitational acceleration on the $z$ axis, it is set by an engine constant \verb|sv_gravity| (citations) --- set to $800$ within the game in question. Using a method called leapfrog interpolation, and let $\tv'$, $\tp'$ be the new velocity, position next frame of frame time $\tau$, the operation is (assuming $g$ is negative)
+\paragraph{Step 1} Let $g$ be the gravitational acceleration on the $z$ axis, it is set by an engine constant \verb|sv_gravity| (citations) --- represented by variable $-g$ set to $800$ within the game in question. Using a method called leapfrog interpolation, and let $\tv'$, $\tp'$ be the new velocity, position next frame, the operation is (assuming $g$ is negative)
 \begin{align}
     \tv'_z &= \tv_z + g\tau \label{eq:gv}\\
     \tp'_z &= \tp_z + \tv_z\tau + \frac{1}{2}g\tau^2 \label{eq:gp}.
 \end{align}
 
-Because the updates reflect the kinematic equations of a projectile with constant acceleration, it can be treated with assumptions of continuous time and will be evaluated separate to the $x$ and $y$ motions.
+Because the updates reflect the kinematic equations of a projectile with constant acceleration, it can be treated with assumption of continuous time and will be evaluated separately against the $x$ and $y$ motions.
 
 
-\paragraph{Step 2} Let $\lambda(\tv)$ be the friction function. For the player is in the air, no friction will be applied and we can set $\lambda(\tv) = \tv$.
+\paragraph{Step 2} Let $\lambda(\tv)$ be the friction function. For the player is in the air, no friction will be applied and we can set $\lambda(\tv) = \tv$. After this section, the $\lambda$ function will be omitted as we are only considering air motions.
 
-\paragraph{Step 3} The source engine limits the velocity through an engine constant \verb|sv_maxspeed| ($L$) set to $30$ in air. However, the speed is limited by the projection of the velocity vector $\tv$ onto the acceleration vector $\ta$, with the player having control of $\ta$ at all times (picture).
+\paragraph{Step 3} The source engine limits the player velocity through an engine constant \verb|sv_maxspeed| ($L$) set to $30$ in air. However, the speed is limited by the projection of the velocity vector $\tv$ onto the acceleration vector $\ta$, with the player having control of $\ta$ at all times (figure \ref{fig:speedlimit}).
+
+\begin{wrapfigure}{r}{0.45\textwidth}
+    \includegraphics[width=0.43\textwidth,right]{assets/speedlimit.png}
+    \caption{The speed limit}
+    \label{fig:speedlimit}
+\end{wrapfigure}
 
 Let $w$ be the magnitude of the applicable acceleration this frame. It can be defined as a piecewise function as
 \[
 w = \begin{cases}
     \gamma_1 & \gamma_2 \ge \gamma_1\\
     \gamma_2 & \gamma_1 > \gamma_2 > 0\\
-    0 & 0 \ge \gamma_2
+    0 & 0 \ge \gamma_2,
 \end{cases}
 \]
-where $\gamma_1$ represents the upper-bound of acceleration and is proportional to the engine constant \verb|sv_airacclerate| ($A$), and \verb|sv_maxspeed| ($L$); $\gamma_2$ represents signed the difference between $L$ and the projected velocity.
-
-When $\gamma_2$ is negative, meaning the projected velocity is larger than the max speed, no acceleration will occur and $w=0$; when $\gamma_2$ is positive but below $\gamma_1$, meaning that adding the full acceleration will overshoot the max speed, only the difference between the max speed and the current projected velocity is applied, bringing the player to the speed limit on the next frame and $w=\gamma_2$; when $\gamma_2$ is larger than $\gamma_1$, only the upper-bound acceleration is applied and $w=\gamma_1$.
-
-The definition of $\gamma_1$ and $\gamma_2$ are:
+where the definition of $\gamma_1$ and $\gamma_2$ are:
 \begin{align*}
     \gamma_1 &= LA\tau\\
     \gamma_2 &= L - \tv \cdot \tunit{\ta},
 \end{align*}
-where the dot product $\tv \cdot \tunit{\ta}$ with the unit acceleration vector represents the projection of velocity.
+where the dot product $\tv \cdot \tunit{\ta}$ with the unit acceleration vector represents the projection of velocity onto the acceleration vector.
+
+The variable $\gamma_1$ is a constant represents the highest acceleration and is proportional to the engine constant \verb|sv_airacclerate| ($A$), and \verb|sv_maxspeed| ($L$); variable $\gamma_2$ is a function of $\tv$ representing the signed the difference between $L$ and the projected velocity.
+
+When $\gamma_2$ is negative, meaning the projected velocity is larger than the max speed, no acceleration will occur and $w=0$; when $\gamma_2$ is positive but below $\gamma_1$, meaning that adding the full acceleration will overshoot the max speed, only the difference between the max speed and the current projected velocity is applied, bringing the player to the speed limit on the next frame and $w=\gamma_2$; when $\gamma_2$ is larger than $\gamma_1$, only the upper-bound acceleration is applied and $w=\gamma_1$.
+
+
 
 \paragraph{Step 4} The new velocity on the next frame $\tv'$ (note that we assume step 1 has already been applied this frame) is the combination between the friction and movement acceleration:
 \begin{align}
@@ -101,13 +113,11 @@ with the position being updated without interpolation ($\tp'$):
 
 % jumping mechanics
 % took 45 frames, v0 = 284hu/s, 60fps
-Additionally, the mechanics of initiating a jump action can also be modelled mathematically. By recording myself jumping ingame at 60 frames per second (picture), I've obtained that a jump is represented by an impulse applied on the player, setting its z-axis velocity $v_{0z}$ to around $+280\pm10$ the frame after jumping. The player then takes around $45 + \pm1$ video frames to land, meaning an airtime of $45\pm1 / 60 =0.75\pm 0.02\si{s}$. Therefore the initial velocity is restricted by $\tv_z = 280\pm10$.
+Additionally, the mechanics of initiating a jump action can also be modelled mathematically. By recording myself jumping ingame at 60 frames per second (picture), I've obtained that a jump is represented by an impulse applied on the player, setting its z-axis velocity $v_{0z}$ to around $+280\pm10$ the frame after jumping. The player then takes around $45 \pm1$ video frames to land, meaning an airtime of $45 / 60 =0.75\pm 0.02\si{s}$. Therefore the initial velocity is restricted by $\tv_z = 280\pm10$.
 
 % summarize
 To summarize, every $\tau$ seconds after $t=0$ the velocity is updated by gravity in the z-axis, and by the player's movement acceleration in the x,y-axis. The latter is limited so that the projection of the new velocity never exceeds the engine constant \verb|sv_maxspeed| of 30 in air. Therefore for some time $t$, the velocity next frame $\tv(t+\tau)$ is
 \begin{align*}
-    \tv(t+\tau) &= \tang{\lambda(\tv_x(t)) + w \tunit{a}_x, \lambda(\tv_y(t)) + w\tunit{a}_y,\tv_z(t) + g\tau}\\
+    \tv(t+\tau) &= \tang{\tv_x(t) + w \tunit{a}_x, \tv_y(t) + w\tunit{a}_y,\tv_z(t) + g\tau}\\
     \tp(t+\tau) &= \tang{\tp_x(t) + \tv(t+\tau)_x \tau, \tp_y(t) + \tv(t+\tau)_y \tau, \tp_z(t) + \tv_z(t)\tau + \frac{1}{2}g\tau^2}.
 \end{align*}
-
-The velocity update can be represented in code for simulation, shown in appendix (citation).
