@@ -201,11 +201,11 @@ Therefore within this exploration, I will be finding an equation relating the nu
 \end{figure}
 
 
-\section{Keywords}
+\section{Basic concepts}
 
 First, we have to define some keywords which are used from this point onward. All YouTube videos are referred to as videos; the \textbf{ratings} of a video are its likes and dislikes, which are both positive integers; the \textbf{likeability} is the metric used to convey the quality of a video, and is defined as a probability between 0 and 1, representing the mean probability of a viewer rating the video to select ``like''. (For example, a likeability of $0.5$ means that on average, a person rating the video is pressing the like button 50\% of the time) The focus would be to find a mathematical definition of this likeability.
 
-To showcase an initial attempt at defining this value, consider the two following videos:
+To showcase my initial attempt at formulate this value, consider the two following videos:
 
 % the two videos
 \begin{figure}[H]
@@ -222,18 +222,18 @@ To showcase an initial attempt at defining this value, consider the two followin
     \label{fig:vid2}
 \end{figure}
 
-Figure \ref{fig:vid1} is a video with 6 likes and 1 dislike. Figure \ref{fig:vid2} is a video with 23 likes and 4 dislikes. Naively, it is tempting to calculate the likeabilities ($L_n$) of the two videos by dividing the number of likes ($x$) against the total amount of ratings ($n$). This will be called as the \textbf{naive likeability}, and is defined by:
-
+Figure \ref{fig:vid1} is a video with 6 likes and 1 dislike. Figure \ref{fig:vid2} is a video with 23 likes and 4 dislikes. I found it tempting to define the likeability by the percentage of the likes received on a video. This is because the likeability increases as the number of likes increase, and it decreases as the number of dislike increases. I called it the \textbf{naive likeability}, and defined it as:
 \[
-L_n = \frac{x}{n}.
+L_n = \frac{x}{n},
 \]
+where $L_n$ is the naive likeability, $x$ is the amount of likes, and $n$ is the amount of ratings.
 
 The naive likeabilities of video one ($L_1$) and video two ($L_2$) are thus as follow:
 \begin{align*}
     L_{1} &= \frac{6}{6+1} \approx 0.857, \,\, L_{2} = \frac{23}{23 + 4} \approx 0.851.
 \end{align*}
 
-If we assume this naive mathematical definition of the likeabilities represents our language definition, then we can rate the first video higher than the second because it has a higher likeability ($0.857 > 0.851$). So we should watch video one first, right?
+If we assume this naive mathematical definition of the likeabilities represents our language definition, then we can rate the first video higher than the second because it has a higher likeability ($0.857 > 0.851$). So I should watch video one first, right?
 
 However, the calculations are unlikely to match our proper definitions of likeability, simply because they failed to take the total amount of ratings into consideration. While video one has a higher like to dislike ratio than video two, there are fundamentally fewer overall ratings available. Thus our method also needs to factor in the amount of information we can see, to include a factor of certainty, almost.
 
@@ -798,7 +798,6 @@ def likeability(rolls, prior):
     \captionof{table}{Increase in accuracy of naive method as information size increases}
     \label{apd:acc}
 \end{figure}
-
 
 
 \end{document}

@@ -89,11 +89,34 @@ The jumping motion differential equations resulted in a similar sized jumping di
 
 But the game analyzed does have the constraint of a speed limit so players cannot accelerate infinitely, traveling across the map in two-to-three seconds. The graphing of the constraint (equation \ref{eq:constraint}) shows the problems (figure \ref{fig:straight_constraint_inequality}).
 
-It is obvious that the RHS (top line) is higher than the constraint LHS (bottom shaded area). This indicates that the player exceeds the speed limit for every time within the considered time domain, which will undoubtedly massively decrease the restricted displacement. It is surprising that the RHS seems linear.
+It is obvious that the RHS (top line) is higher than the constraint LHS (bottom shaded area). This indicates that the player exceeds the speed limit for every time within the considered time domain, which will undoubtedly massively decrease the restricted displacement. The inequality of the RHS can be represented symbolically by substitution of the player acceleration function into equation \ref{eq:constraint}:
+\[
+    5.4 \ge t + \frac{v_{0y}}{w}.
+\]
 
+Because the variable $\frac{v_{0y}}{w} = 6.4$, the inequality will only hold in negative $t$, which is not in the time domain considered. Only when the initial y-axis velocity is below $\frac{5.4 w}{v_{0y}}$ would there be acceleration on the first frame.
 
-Blah blah blah one line is higher then the other,
-% TODO: Add pictures & fix values TODAY
+Therefore the restricted player motion would be without any acceleration at any time. The continuous displacement of the player at time $t_f$ can be computed by setting the variable $w=0$, or:
+\begin{align*}
+ \tp(t)_x &= t v_{0x} = 0\\
+ \tp(t)_y &= t v_{0y}\\
+ \tp(t_f)_y &= 0.7 \times 250 = 175.
+\end{align*}
+
+The discrete engine simulation shows similar results of $175$ hammerunits, the 
+
+% conclusion
+
+\subsection{Machine learning}
+To kick start the optimization step, I decided to utilize the computing power I have access to to run a machine learning model on this problem. The result of which can potentially be graphed and fitted a model against, which could potentially be optimized further.
+
+From my previous experience in strafing sub-optimally, I hypothesize that
+
+% state the steps of this
+
+\subsection{Step by step}
+
+\subsection{Euler-Lagrange optimization}
 
 
 % TODO: calculated the restricted line,
