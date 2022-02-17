@@ -103,18 +103,28 @@ Therefore the restricted player motion would be without any acceleration at any 
  \tp(t_f)_y &= 0.7 \times 250 = 175.
 \end{align*}
 
-The discrete engine simulation shows similar results of $175$ hammerunits, the 
+The discrete restricted jumping equation using Euler's method (figure \ref{eq:rje}) resulted in a similar distance of $175.78$, using constant $h=\tau$. Furthermore I've noticed that the displacement/time graph (figure \ref{fig:straight_constraint}) have displacements equality spaced in the y-axis --- in contrast with the ever expanding dots in the unrestricted case (figure \ref{fig:straight_nothing_1}). I believe that this indicates a lack of acceleration, which greatly reduced the result of this baseline model. Furthermore, the lack of acceleration means that this model can also be achieved with no player inputs, as the minimum value of acceleration $w$ is zero.
+
+\begin{wrapfigure}{r}{0.48\textwidth}
+    \includegraphics[width=0.45\textwidth,right]{assets/straight_constraint.png}
+    \caption{}
+    \label{fig:straight_constraint}
+\end{wrapfigure}
+
+Overall, the straight-line model establishes the baseline of my analysis. Using this strategy, the player has traveled an average distance in a jump of around $175$ hammerunits, which is well below what I can achieve in-game. The method has the benefit of requiring no input from the player, and can be performed consistently every  time. This makes the method the best model to conserve human energy by minimizing the amount of effort. But we can do better.
 
 % conclusion
 
-\subsection{Machine learning}
-To kick start the optimization step, I decided to utilize the computing power I have access to to run a machine learning model on this problem. The result of which can potentially be graphed and fitted a model against, which could potentially be optimized further.
+% Do not have enough words for this machine learning step
+%\subsection{Machine learning}
+%To kick start the optimization step, I decided to utilize the computing power I have access to to run a machine learning model on this problem. The result of which can potentially be graphed and fitted a model against, which could potentially be optimized further.
 
-From my previous experience in strafing sub-optimally, I hypothesize that
+%From my previous experience in strafing sub-optimally, I hypothesize that
 
 % state the steps of this
 
 \subsection{Step by step}
+
 
 \subsection{Euler-Lagrange optimization}
 
@@ -128,8 +138,6 @@ From my previous experience in strafing sub-optimally, I hypothesize that
 % 500 words each for each method
 
 % 500 for conclusion
-
-Do the machine learning one
 
 Do the step by step one
 

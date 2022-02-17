@@ -1,6 +1,6 @@
 \section{Jumping motion}
 % main is with straight jumping
-I will consider and evaluate multiple models to maximize the displacement jumped, this will include the modeling of the player motions as an differential equation assuming continuous time, then going discrete and maximize the displacement frame by frame.
+I will consider and evaluate multiple models to maximize the displacement jumped, this will include the modeling of the player motions as an differential equation assuming continuous time, and combine the engine mechanics into a singular discrete equation.
 
 \subsection{Equations of motion}
 First let us construct the differential equations that govern the player motion, maybe the answer is as simple as an optimization problem. Let $\ta$, $\tv$, and $\tp$ be the two dimensional acceleration, velocity, and position. It is assumed that player can perfectly control $\ta$ at all time $t \in [0, t_f]$ via their keyboard and mouse --- the time period $t\in[0,t_f]$ will be assumed for all functions in this section.
@@ -116,7 +116,7 @@ To simulate the continuous motion described here, one can take advantages of the
 
 Although the acceleration constant $w$ is defined piecewise on $\gamma_1$ and $\gamma_2$ at each frame, of which are functions of velocity $\tv$, I've devised a method to encode it using standard arithmetic operations and an additional absolute $|x|$ operator only. The purpose of this approach is that the absolute function is differentiable and integratable --- perhaps we can write our restrictive jumping motion as a single differential equation and solve it?
 
-Firstly we need to derive the required fundamental functions. The absolute operator can be defined as a piecewise function itself, the absolute value of $0$ will be ignored for it makes the derived operators undefined:
+Firstly we need to derive the required fundamental functions. The absolute operator can be defined as a piecewise function itself, the absolute value of $0$ will be ignored here as my method does not encode the scenario when $x=0$ (though this can be fixed during computation by adding a tiny epilson of $0.00001$ to $x$):
 \[
     |x| = \begin{cases}
         x & x > 0\\
@@ -156,12 +156,13 @@ Now consider the piecewise scalar $w$, it is defined as
 \]
 we want to model a function that is zero when $\gamma_2$ is negative, and the minimum function otherwise. I've come up with this equation:
 \[
-    w = \text{pos}(\gamma_2)\min(\gamma_1, \gamma_2).
+    w = \text{pos}(\gamma_2)\min(\gamma_1, \gamma_2),
 \]
+notice that the $\text{pos}(\gamma_2)$ will be zero when $\gamma_2$ is negative, and $1$ otherwise. This is equivalent to the piecewise definition.
 
 Furthermore, the equation can now be substituted by the definition of the minimum function:
 \[
-    w = \text{pos}(\gamma_2 \text{pos}(\gamma_1 - \gamma_2) + \gamma_1 \text{pos}(\gamma_2 - \gamma_1)).
+    w = \text{pos}(\gamma_2)(\gamma_2 \text{pos}(\gamma_1 - \gamma_2) + \gamma_1 \text{pos}(\gamma_2 - \gamma_1)).
 \]
 
 By replacing the variable $w$ in the differential equation of equation \ref{eq:un_diff} with the above equality, the restrictive jumping motion is now a first order differential equation (equation \ref{eq:reom}).
@@ -169,7 +170,7 @@ By replacing the variable $w$ in the differential equation of equation \ref{eq:u
 \begin{figure}[H]
     \centering
     \[
-        \frac{d\tv}{dt} = \text{pos}(\gamma_2(\tv, \tunit{a}) \text{pos}(\gamma_1 - \gamma_2(\tv, \tunit{a})) + \gamma_1 \text{pos}(\gamma_2(\tv, \tunit{a}) - \gamma_1)) \tunit{a}
+        \frac{d\tv}{dt} = \frac{\text{pos}(\gamma_2) (\gamma_2\text{pos}(\gamma_1 - \gamma_2) + \gamma_1 \text{pos}(\gamma_2 - \gamma_1))}{\tau} \tunit{a}
     \]
     \caption{The restricted equation of motion}
     \label{eq:reom}
@@ -177,7 +178,7 @@ By replacing the variable $w$ in the differential equation of equation \ref{eq:u
 
 The first order differential equation can be simulated with Euler's method. Recall that for step size $h$, updating function $f(t_n, \tv_n) = \frac{d\tv}{dt}$, the velocity at the $n$th step can be computed recursively such that:
 \[
-    \tv_{n+1} = \tv_{n} + h f(t_n + \tv_n).
+    \tv_{n+1} = \tv_{n} + h f(t_n, \tv_n).
 \]
 
 Since the displacement is simply the integral of the velocity, we can represent the discrete values of $\tv_{n}$ with a summation weighted by the step size $h$. This will result in the restricted jumping equation in equation \ref{eq:rje}. I will be using this method to compute the continuous restricted jumping distance by approximating $h \to 0$, and simulating the source engine by setting $h = \tau$.
