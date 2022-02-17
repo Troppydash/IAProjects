@@ -74,7 +74,6 @@
 \usepackage{float}
 \usepackage{parskip}
 \usepackage{graphicx}
-\usepackage{circuitikz}
 \usepackage{longtable}
 \usepackage{hyperref}
 \usepackage[export]{adjustbox}
@@ -115,11 +114,11 @@
 
 \usepackage{hyperref}
 
-\title{\vspace{-8ex}Estimating the quality of YouTube videos based on its likes and dislikes}
+\title{\vspace{-8ex}Estimating the quality of YouTube videos based on its number of likes and dislikes}
 
-\author{Terry Qi}
-\date{}
-%\date{\vspace{-8ex}}
+\author{}
+%\date{}
+\date{\vspace{-8ex}}
 
 \begin{document}
 
@@ -134,27 +133,26 @@
 
 
 
-
 \maketitle
 
 \section{Introduction}
 
-\begin{wrapfigure}{r}{0.45\textwidth}
+\begin{wrapfigure}{r}{0.50\textwidth}
     \centering
-    \includegraphics[width=0.5\textwidth]{assets/som1.png}
+    \includegraphics[width=0.48\textwidth]{assets/som1.png}
     \caption{The SoME1 event}
     \label{fig:some1}
 \end{wrapfigure}
 
-The topic of my exploration originates from a personal need I've developed in the school holidays.
+The topic of my exploration originates from a personal hobby I've developed in the school holidays.
 
-I am familiar with the maths channel 3Blue1Brown (3B1B) on YouTube through a self-learning playlist on the topic of linear algebra in year 1 IB, and was patiently waiting for a new video for it is the holidays. When Grant (owner of 3B1B) announced a contest (figure \ref{fig:some1}) \parencite{sanderson} encouraging amateur video-makers to share their hidden maths knowledge, I was understandably very excited to have my entire YouTube home page filled with the new maths videos. While I did find some brilliantly made videos like ``The Beauty of B\'{e}zier Curves'' \parencite{holmer_2021}, and ``an explanation of Noether's Theorem'' \parencite{m_2021}, I quickly realized my inability to view all of the thousands of videos within a two week holiday. The solution? I will only watch the best ones.
+Due to first year IB, I am familiar with the maths channel 3Blue1Brown (3B1B) on YouTube, for his videos are of high quality. When Grant (owner of 3B1B) announced a contest (figure \ref{fig:some1}) \parencite{sanderson} encouraging amateur video-makers to share their hidden maths knowledge, I was understandably very excited to have my entire YouTube home page filled with these new maths videos. While I did find some brilliantly made videos like ``The Beauty of B\'{e}zier Curves'' \parencite{holmer_2021}, and ``an explanation of Noether's Theorem'' \parencite{m_2021}, I quickly realized my inability to view all of the thousands of videos over a two week holiday. The solution? I will only watch the best ones.
 
-But how do you tell if a YouTube video is the ``best'' out of the bunch? Visual indicators like interesting thumbnails may be attempting, but one should really not judge the book by its cover; while comparing view counts is fast, it is against the purpose of the maths event --- to discover new talented video creators. So I am left with the only other numerical indicators, to judge the quality of the video through the number of likes and dislikes it has. While this measure has its limitations: the internet audience is biased in political and social values, it is certainly the most interesting metric.
+But how do you tell if a YouTube video is the ``best'' out of the bunch? Visual indicators like interesting thumbnails may be attempting, but I decided not to judge a book by its cover; while comparing view counts is fast, it is against the purpose of the maths event --- to discover new talented video creators. So I am left with the only other numerical indicators --- I wanted to judge the quality of the video through the number of likes and dislikes it has. While this measure is still very subjective, it is certainly the most objective and interesting metric.
 
 %(At the time of writing, the company YouTube has removed the dislike count on all videos, which is disappointing)
 
-Therefore within this exploration, I will be finding an equation relating the number of likes and dislikes a YouTube video has to the best estimate of its perceived quality by the viewers. I will be using multiple methods such as simulations, statistical distributions, and a Bayesian approach to deduce the relationships between the two variables. It will be crucial that I evaluate the pros and cons of each approach, both in its solution but also in its derivation, and use my knowledge to rank five videos from the SoME1 event (table \ref{tbl:videos}).
+Therefore within this exploration, I will be finding an equation relating the number of likes and dislikes a YouTube video has to the best estimate of its perceived quality by the viewers. I will be using multiple methods such as simulations, statistical distributions, and a Bayesian approach to deduce the formula of video quality. I will evaluate the pros and cons of each approach, both in its solution but also in its derivation, and use my knowledge to rank five unwatched videos from the SoME1 event (table \ref{tbl:videos}).
 %\begin{wrapfigure}{r}{0.4\textwidth}
 %    \centering
 %    \includegraphics[width=0.45\textwidth]{assets/intro.png}
@@ -196,16 +194,16 @@ Therefore within this exploration, I will be finding an equation relating the nu
         \hline
         Dislikes & 0 & 0 & 5 & 0 & 2
     \end{tabular}
-    \captionof{table}{}
+    \captionof{table}{The statistics of the five videos at time of writing}
     \label{tbl:videos}
 \end{figure}
 
 
 \section{Basic concepts}
+First, we have to define some keywords that I used throughout the analysis. All YouTube videos are referred to as videos; the ratings of a video are its likes and dislikes, which are both positive integers; the likeability is the metric used to convey the quality of a video, and is represents a probability between 0 and 1, which can be defined as the mean probability of a viewer rating the video to select ``like''. (A likeability of $0.5$ means that a person rating the video is pressing the like button 50\% of the time) The focus would be to find a mathematical formula relating to this likeability.
 
-First, we have to define some keywords which are used from this point onward. All YouTube videos are referred to as videos; the \textbf{ratings} of a video are its likes and dislikes, which are both positive integers; the \textbf{likeability} is the metric used to convey the quality of a video, and is defined as a probability between 0 and 1, representing the mean probability of a viewer rating the video to select ``like''. (For example, a likeability of $0.5$ means that on average, a person rating the video is pressing the like button 50\% of the time) The focus would be to find a mathematical definition of this likeability.
-
-To showcase my initial attempt at formulate this value, consider the two following videos:
+\subsection{Naive likeability}
+To showcase my initial attempt at formulating this value, consider the two following videos:
 
 % the two videos
 \begin{figure}[H]
@@ -222,13 +220,13 @@ To showcase my initial attempt at formulate this value, consider the two followi
     \label{fig:vid2}
 \end{figure}
 
-Figure \ref{fig:vid1} is a video with 6 likes and 1 dislike. Figure \ref{fig:vid2} is a video with 23 likes and 4 dislikes. I found it tempting to define the likeability by the percentage of the likes received on a video. This is because the likeability increases as the number of likes increase, and it decreases as the number of dislike increases. I called it the \textbf{naive likeability}, and defined it as:
+Figure \ref{fig:vid1} is a video with 6 likes and 1 dislike. Figure \ref{fig:vid2} is a video with 23 likes and 4 dislikes. I found it tempting to define the likeability by the percentage of the likes received on a video. This is because the likeability increases as the number of likes increase, and it decreases as the number of dislike increases. I called it the naive likeability, and defined it as:
 \[
 L_n = \frac{x}{n},
 \]
 where $L_n$ is the naive likeability, $x$ is the amount of likes, and $n$ is the amount of ratings.
 
-The naive likeabilities of video one ($L_1$) and video two ($L_2$) are thus as follow:
+The naive likeabilities of video one ($L_1$) and video two ($L_2$) can thus be computed:
 \begin{align*}
     L_{1} &= \frac{6}{6+1} \approx 0.857, \,\, L_{2} = \frac{23}{23 + 4} \approx 0.851.
 \end{align*}
@@ -237,9 +235,9 @@ If we assume this naive mathematical definition of the likeabilities represents 
 
 However, the calculations are unlikely to match our proper definitions of likeability, simply because they failed to take the total amount of ratings into consideration. While video one has a higher like to dislike ratio than video two, there are fundamentally fewer overall ratings available. Thus our method also needs to factor in the amount of information we can see, to include a factor of certainty, almost.
 
-This can be illustrated with an example taken to the extreme. A video with only one like and zero dislikes have a naive likeability of 100\%, but can we really be sure that it is of a higher quality than a video with 1000 likes and 1 dislike (naive likeability of 99.9\%)?
+This can be illustrated with an example taken to the extreme. A video with only one like and zero dislikes have a naive likeability of 100\%, but can we really be sure that it is of a higher quality than a video with 999 likes and 1 dislike (naive likeability of 99.9\%)?
 
-Therefore the naive likeability definition is uninclusive of all information but is fast. Nevertheless, table \ref{tbl:naive} shows the five videos as ranked by their naive likeabilities.
+Therefore the naive likeability definition is uninclusive of all information, but being fast to compute. Nevertheless, table \ref{tbl:naive} shows the five videos as ranked by their naive likeabilities.
 
 \begin{figure}[H]
     \centering
@@ -255,13 +253,14 @@ Therefore the naive likeability definition is uninclusive of all information but
 
 
 \section{Simulation}
-For any statistical or probabilistic question, it is always helpful to start with a simulation of some kind. This is because a simulation allows me to both describe the problem as well as to approach a numerical solution, guaranteed by the law of large numbers --- stating that the statistical descriptions of a sample will tend towards that of the true descriptions as sample size increases \parencite{dekking_kraaikamp_lopuhaä_meester_2005}
+For any statistical or probabilistic question, I always found it helpful to start with a simulation of some kind. This is because a simulation allows me to both describe the problem as well as to approach a numerical solution, guaranteed by the law of large numbers --- stating that the statistical descriptions of a sample will tend towards that of the true descriptions as sample size increases \parencite{dekking_kraaikamp_lopuhaä_meester_2005}
 
 % description of what I did
 To do this, I've written a small piece of code that does the calculations in Python \parencite{python37}, and used various Python library to make all the graphs that are used throughout this report \parencite{matplotlib} \parencite{numpy} \parencite{scipy}.
 
 Using video one (6 likes and 1 dislike) as an example, notice that it is theoretically possible for the video likeability to be of any probability except 0 and 1, for there is still a non-zero probability of receiving 6 likes on a video with 1\% likability, albeit very unlikely. Therefore I thought to define the likeability of a video by the average of all the possible likeabilities weighted by how likely they are to occur, as it matches our literal definition of ``the mean probability of a viewer rating the video to select like''.
 
+\newpage
 The pseudocode for our simulation will look as follow:
 
 \begin{python}
@@ -312,15 +311,16 @@ Finally, I decided to plot this relationship between \pythoninline{occurrence} a
 % optional
 %\newpage
 
+
+To see the output, I ran the program with the parameters of 6 likes and 1 dislike from video one, and 1000 samples later I was greeted with the summary graph in figure \ref{fig:sim_ratings_v1}.
+
+The blue dots in figure \ref{fig:sim_ratings_v1} represents the simulated occurrence of the video ratings out of 1000 samples of a chosen likeability (the likeabilities are selected with steps of 0.05 for clarity). The red vertical line graphs the mean likeability.
+
 \begin{wrapfigure}{r}{0.47\textwidth}
     \includegraphics[width=0.44\textwidth,right]{assets/sim_ratings_v1.png}
     \caption{}
     \label{fig:sim_ratings_v1}
 \end{wrapfigure}
-
-To see the output, I ran the program with the parameters of 6 likes and 1 dislike from video one, and 1000 samples later I was greeted with the summary graph in figure \ref{fig:sim_ratings_v1}.
-
-The blue dots in figure \ref{fig:sim_ratings_v1} represents the simulated occurrence of the video ratings out of 1000 samples of a chosen likeability (the likeabilities are selected with steps of 0.05 for clarity). The red vertical line graphs the mean likeability.
 
 The graph was both an expected and unexpected turnout. The simulation placed the likeability of video at $0.776$, this is expected for there is certainly very little information available in only 7 ratings, but unexpected in size of the difference ($0.857-0.776=0.081$) against the naive likeability of 0.857. This shows that the naive likeability greatly overvalued the true likeability of the video.
 
@@ -575,9 +575,10 @@ where $A$ and $B$ are constants. Our initial prior is achieved by setting $A=1$ 
 Therefore the unknown probabilities are:
 \begin{align*}
     P(D|l) &= \theta\\
-    P(D) &= \int_0^1 \theta A\theta^B \, d\theta
+    P(D) &= \int_0^1 \theta A\theta^B \, d\theta,
 \end{align*}
 
+and the posterior can be represented by:
 \begin{align*}
     P(\theta|D) &= \frac{\theta A\theta^B}{\int_0^1 \theta A\theta^B \, d\theta}\\
     &= \frac{\theta^{B+1}}{\int_0^1 \theta^{B+1} \, d\theta}\\
@@ -638,19 +639,22 @@ There is a function I've encountered in class when learning about inverse functi
     \label{fig:sqrt_per}
 \end{figure}
 
-The function has a positive slope throughout the domain, making it an ideal starting point of my prior distribution. However, it needs to be normalized $\text{nsqrt}(x)$ for the area it encloses is less than one (normalized shown on the right side of figure \ref{fig:sqrt_per}):
+The function has a positive slope throughout the domain, making it an ideal starting point of my prior distribution. However, it needs to be normalized $\text{nsqrt}(x)$ for the area it encloses is less than one.
+
+We can simply scale the function down by the area $A$ it encloses:
 \begin{align*}
     A &= \int_0^1 \sqrt{x} \, dx\\
     &= [\frac{x^{\frac{3}{2}}}{\frac{3}{2}}]^1_0\\
-    &= \frac{2}{3}
+    &= \frac{2}{3}.
 \end{align*}
 
+Therefore I've defined the normalized square-root function as:
 \begin{align*}
      \text{nsqrt}(x) &= \frac{\sqrt{x}}{A}\\
     &= \frac{3}{2} \sqrt{x}
 \end{align*}
 
-The statistical mean $\mu$ of the normalized square root function also plays nicely, for it is above 0.5:
+The statistical mean $\mu$ of the normalized square root function also plays nicely, for it is above 0.5, corresponding to my initial high expectations of these videos.
 \begin{align*}
     \mu &= \int_0^1 x \frac{3}{2} \sqrt{x} \, dx\\
     &= \frac{3}{2} \int_0^1 x^{\frac{3}{2}} \, dx\\
@@ -678,13 +682,13 @@ Furthermore, it seems that not only there is no difference between treating the 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{assets/nsqrt_incre.png}
+    \includegraphics[width=0.7\textwidth]{assets/nsqrt_incre.png}
     \caption{}
     \label{fig:nsqrt_incre}
 \end{figure}
 
 % conclude, and table
-At last, the ability to plug in any prior distribution is the main advantage of the Bayesian method, as it may provide a more accurate measurement of likeability for each individual. However, it lacks the neatness of a solution provided by the statistical method and requires a computer to compute the successive priors. Thankfully, the algorithm scales in linear time, making it applicable as the number of likes and dislikes increase (appendix \ref{apd:algo}). Table \ref{tbl:baye} shows the Bayesian likeability of a nqsrt prior on the five videos.
+At last, the ability to plug in any prior distribution is the main advantage of the Bayesian method, as it may provide a more accurate measurement of likeability for each individual video. Furthermore, it provides an accuracy metric for comparing between video genres, as I may have different priors and expectations for different types of videos. However, it lacks the neatness of a solution provided by the statistical method and requires a computer to compute the successive priors. Painfully, my algorithm scales in exponential time, making it less applicable as the number of likes and dislikes increase (appendix \ref{apd:algo}). Table \ref{tbl:baye} shows the Bayesian likeability of a nqsrt prior on the five videos.
 
 \begin{figure}[H]
     \centering
@@ -699,9 +703,9 @@ At last, the ability to plug in any prior distribution is the main advantage of 
 \end{figure}
 
 \section{Conclusion}
-In this exploration, I investigated a total of five different methods of finding a solution to my problem. Three of the methods have analytic solutions, while two required computers to crunch integrals or random numbers. Because of the variety of the methods, each of them has their pros and cons and usages. While the analytic solutions are the cleanest and easiest to apply with little mental effort, they require the use of algebra manipulations and calculus understandings to derive, and lack the freedom the numerical solution contains. The simulations and the Bayesian method are both computationally intensive, especially at large rating amounts, but does not require much previous knowledge and offers a lot of flexibility in choosing priors, in that order.
+In this exploration, I investigated a total of five different methods of finding a solution to my problem. Three of the methods have analytic solutions, while two required computers to crunch integrals and random numbers. Due of the variety of the methods, each of them has their pros and cons and usages. While the analytic solutions are the cleanest and easiest to apply with little mental effort, they require the use of algebra manipulations and calculus understandings to derive, and lack the freedom the numerical solution contains. The simulations and the Bayesian method are both computationally intensive, especially at large rating amounts, but does not require much previous knowledge and offers a lot of flexibility in choosing priors, in that order.
 
-Ultimately, I would choose to use the Bayesian likeability with my nsqrt prior as rankings when watching the SoME1 videos. This is because it both accounts for the amount of information available on a video, and fits my prior expectations of the videos. My watching ordering will therefore be: Video E, Video B, Video D, Video C, and Video A. Nevertheless, table \ref{tbl:all} summaries the likeabilities of the five videos with all methods shown in this exploration.
+Ultimately, I would choose to use the Bayesian likeability with my nsqrt prior as rankings when watching the SoME1 videos. This is because it both accounts for the amount of information available on a video, and fits my prior expectations of the videos. My watching ordering will therefore be: Video E, Video B, Video D, Video C, and Video A. Nevertheless, table \ref{tbl:all}  summaries the likeabilities of the five videos with all methods shown in this exploration.
 
 \begin{figure}[H]
     \centering
@@ -764,7 +768,7 @@ def likeability(rolls, prior):
     priors[0] = prior
     mean = quad(lambda t: t * priors[0](t), 0, 1)
 
-    # linear time
+    # exponential time due to recursion
     for index in 0..len(rolls):
         is_like = rolls[index] == 'L'
         if is_like:
