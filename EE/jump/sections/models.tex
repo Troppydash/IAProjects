@@ -124,6 +124,19 @@ Overall, the straight-line model establishes the baseline of my analysis. Using 
 % state the steps of this
 
 \subsection{Step by step}
+My second model would be trying to optimize the displacement in each discrete change in time. Reflect back to subsection where I defined the restrictions (citations), where the movement integrated vector function must satisfy an inequality for maximum acceleration. I found the constraint equations to be difficult to use because it contains two related functions as input: $X(t)$ and $Y(t)$. This is because the solution to the problem is currently of form $x(t)$, which is the x component of acceleration as a function of time. Therefore the first integral $Y(t)$ must be in the form:
+\[
+    Y(t) = \int \sqrt{1-x(t)^2} \, dt,
+\]
+which turns out to be a very difficult integral to solve analytically. Therefore I attempted to derive the equations of motions again in polar coordinates, because I realized that I can represent player acceleration with a single function $\theta(t)$, which removes the square root function in the constraint inequality and allowing optimizations frame by frame.
+
+\subsubsection{Equations of motion, angular}
+Define the player acceleration in terms of a complex number of magnitude $w$ and angle $\theta$, so that:
+\[
+    \tunit{a} = \exp(
+\]
+
+
 
 
 \subsection{Euler-Lagrange optimization}
