@@ -124,17 +124,154 @@ Overall, the straight-line model establishes the baseline of my analysis. Using 
 % state the steps of this
 
 \subsection{Step by step}
-My second model would be trying to optimize the displacement in each discrete change in time. Reflect back to subsection where I defined the restrictions (citations), where the movement integrated vector function must satisfy an inequality for maximum acceleration. I found the constraint equations to be difficult to use because it contains two related functions as input: $X(t)$ and $Y(t)$. This is because the solution to the problem is currently of form $x(t)$, which is the x component of acceleration as a function of time. Therefore the first integral $Y(t)$ must be in the form:
+My second model would be trying to optimize the y-axis displacement with each discrete change in time. Reflect back to subsection where I defined the restrictions (\ref{eq:constraint}), where the movement integrated vector functions must satisfy an inequality for maximum acceleration. This is problematic for this method in that the integrated player acceleration function $X(t)$ and $Y(t)$ have no obvious relationships, as it does not need to be a vector with unit length 1. I tried to define $x(t)$ in terms of $y(t)$ with
 \[
-    Y(t) = \int \sqrt{1-x(t)^2} \, dt,
+    x(t) = \sqrt{1-y(t)^2},
 \]
-which turns out to be a very difficult integral to solve analytically. Therefore I attempted to derive the equations of motions again in polar coordinates, because I realized that I can represent player acceleration with a single function $\theta(t)$, which removes the square root function in the constraint inequality and allowing optimizations frame by frame.
+but found the integral
+\[
+    X(t) = \int \sqrt{1-y(t)^2} \, dt
+\]
+a pain or sometimes impossible to solve analytically. I needed to represent acceleration in another form preferably in a single variable function --- I attempted to do it with polar coordinates.
+
+
+
+%I found the constraint equations to be difficult to use because it contains two related functions as input: $X(t)$ and $Y(t)$. This is because the solution to the problem is currently of form $x(t)$, which is the x component of acceleration as a function of time. Therefore the first integral $Y(t)$ must be in the form:
+%\[
+%    Y(t) = \int \sqrt{1-x(t)^2} \, dt,
+%\]
+%which turns out to be a very difficult integral to solve analytically. Therefore I attempted to derive the equations of motions again in polar coordinates, because I realized that I can represent player acceleration with a single function $\theta(t)$, which removes the square root function in the constraint inequality and allowing optimizations frame by frame.
+
+% TODO: Finish writing this
 
 \subsubsection{Equations of motion, angular}
-Define the player acceleration in terms of a complex number of magnitude $w$ and angle $\theta$, so that:
+Let the player displacement $\tp$, velocity $\tv$ be complex numbers with the real part the x-axis and the imaginary part the y-axis. They are represented in the Euler forms (where the function $\exp(x)= e^{x}$ for simplicity):
+\begin{align*}
+    \tp &= a \exp(b \I)\\
+    \tv &= r \exp(\phi \I),
+\end{align*}
+where $a$ and $r$ are the magnitudes of the player displacement and velocity, and $b$ and $\phi$ are their respective angles from the x-axis.
+
+Define the player acceleration in terms of the smallest angle between the unit vector $\tunit{a}$ and the velocity $\tv$, denoted as $\theta(t)$ as a function of time (figure \ref{fig:angular}).
+
+\begin{wrapfigure}{r}{0.40\textwidth}
+    \includegraphics[width=0.37\textwidth,right]{assets/angular.png}
+    \caption{The angular function}
+    \label{fig:angular}
+\end{wrapfigure}
+
+Notice that the angular function $\theta(t)$ is the angle between the acceleration unit vector and the velocity vector, so it has a unit length with angle $\phi - \theta$:
 \[
-    \tunit{a} = \exp(
+    \tunit{a} = \exp((\phi - \theta) \I).
 \]
+
+We can then rewrite the discrete velocity update at each timestep $\tau$ as so:
+\begin{align*}
+    \tv' &= \tv + w \tunit{a}\\
+    \tv' &= \tv + w \exp((\phi - \theta) \I),
+\end{align*}
+where $w$ is the piecewise function in step 3. Also, the position update is unchanged:
+\[
+    \tp' = \tp + \tau \tv.
+\]
+
+In order to maximize jumping displacement, it seems reasonable to maximize velocity and therefore maximize acceleration. This means to maximize the scalar $w$, which is equivalent to finding a function that fits the constraint in equation \ref{eq:constraint}.
+
+Remember that the scalar function $w$ is defined piecewise:
+\[
+    w = \begin{cases}
+        \gamma_1 & \gamma_2 \ge \gamma_1\\
+     \gamma_2 & \gamma_1 > \gamma_2 > 0\\
+     0 & 0 \ge \gamma_2
+    \end{cases},
+\]
+where $\gamma_1 = LA\tau$ and $\gamma_2 = L - \tv \cdot \tunit{a}$. This can be rewritten in terms of our new angular function $\theta(t)$.
+
+Consider the case of maximum acceleration, where $w=\gamma_1$. The inequality condition can be rewritten as:
+\begin{align*}
+    \gamma_2 &\ge \gamma_1\\
+    L - \tv \cdot \tunit{a} &\ge LA\tau\\
+    L - \tmag{v} \cos \theta &\ge LA \tau\\
+    L - LA\tau &\ge \tmag{v} \cos \theta\\
+    \frac{L - LA\tau}{\tmag{v}} &\ge \cos \theta\\
+    \cos^{-1} \frac{L - LA\tau}{\tmag{v}} &\ge \theta.
+\end{align*}
+This shows that $\theta(t)$ must be greater or equal to a LHS function for maximum acceleration to happen.
+
+Now consider the case of minimum acceleration, where $w=0$. The inequality condition is:
+\begin{align*}
+    \gamma_2 &\le 0\\
+    L - \tv \cdot \tunit{a} &\le 0\\
+    L &\le \tmag{v} \cos \theta\\
+    \frac{L}{\tmag{v}} &\le \cos \theta\\
+    \cos^{-1}  \frac{L}{\tmag{v}} &\le \theta.
+\end{align*}
+This shows that $\theta(t)$ needs to be smaller than a function for minimum acceleration to happen.
+
+Therefore, we can rewrite the piecewise function $w$ with:
+\[
+w = \begin{cases}
+    \gamma_1 & \cos^{-1} \frac{L - LA\tau}{\tmag{v}} \ge \theta\\
+    \gamma_2 & \text{otherwise}\\
+    0 & \cos^{-1}  \frac{L}{\tmag{v}} \le \theta
+\end{cases}.
+\]
+
+\subsection{Optimization}
+Using the same argument as the straight-line model, I will use an initial velocity of $\tv_0 = \tang{0, 250}$.
+
+Firstly notice that for maximum acceleration magnitude, the player want to minimize $\theta(t)$. This is due to the the law of cosine (\ref{fig:min_theta}).
+
+\begin{wrapfigure}{r}{0.40\textwidth}
+    \includegraphics[width=0.37\textwidth,right]{assets/min_theta.png}
+    \caption{Minimizing $\theta(t)$}
+    \label{fig:min_theta}
+\end{wrapfigure}
+
+Let $v = \tmag{\tv}$, $a = \tunit{a}$. The length of the hypotenuse
+\[
+    v' = \sqrt{v^2 + a^2 -2 va \cos (\pi - \theta)}
+\]
+is the magnitude of the updated velocity. To maximize $v'$ means minimizing $\cos(\pi - \theta)$, as $v$ and $a$ are constant per timeframe. For the cosine function is smaller at higher x values, we need to maximize $\pi - \theta$ and therefore minimize $\theta$.
+
+Thus for maximum acceleration, the player needs to minimize $\theta$ while keeping $\theta$ above a value at every time frame. I believe we can optimize the player displacement by setting $\theta$ to equal the value at all times, and that:
+\[
+    \theta = \cos^{-1} \frac{L-LA\tau}{\tmag{v}}.
+\]
+
+Notice that the $\theta$ increases as the magnitude of velocity increases, showing that acceleration must decrease as velocity increases. Additionally, the maximization of velocity at every step does not necessarily maximize the player displacement --- a very high velocity pointing towards the origin of jump is more harmful than good.
+
+By substituting this equation of $\theta$, I derived the first step by step difference equation:
+\begin{figure}[H]
+    \centering
+    \[
+        d\tv = LA\tau \exp((\phi - \cos^{-1}(\frac{L-LA\tau}{\tmag{v}})) \I).
+    \]
+    \caption{First Step by Step difference equation}
+    \label{fig:sbs}
+\end{figure}
+
+Figure \ref{fig:1sbs} shows the player's motion under this method.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{assets/step_by_step_1.png}
+    \caption{}
+    \label{fig:1sbs}
+\end{figure}
+
+Oops, it looks like we've done a u-turn and ended up below the x-axis. Although the spacing between each timeframe dots are increasing --- indicating acceleration, the method had to keep turning for maximizing velocity which potentially reduced our displacement. Nevertheless, this first method had a displacement of $\sqrt{368.6^2 + (-57.34)^2} \approx 373.0$, which is a large increase from the straight-line model's $175$ units.
+
+\subsection{Step by Step with modification}
+The first step by step model (figure \ref{fig:1sbs}) had a problem, that the player needed to turn more than $90$ degrees to keep accelerating. This sounds counter-intuitive, so I have two ideas to fix it: stop turning at a specific angle or accelerate below the maximum value.
+
+The arguments for stop turning at a specific angle is that we are sacrificing higher velocity and less distance traveled but preferring more forward movements, which could potentially increase the total displacement. I decided to set a maximum angle for player velocity, which once reached, would
+
+
+
+
+
+
+
 
 
 
