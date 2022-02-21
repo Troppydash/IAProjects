@@ -251,7 +251,8 @@ By substituting this equation of $\theta$, I derived the first step by step diff
     \label{fig:sbs}
 \end{figure}
 
-Figure \ref{fig:1sbs} shows the player's motion under this method.
+Figure \ref{fig:1sbs} shows the player's motion under this method simulated under Euler's method.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{assets/step_by_step_1.png}
@@ -262,9 +263,27 @@ Figure \ref{fig:1sbs} shows the player's motion under this method.
 Oops, it looks like we've done a u-turn and ended up below the x-axis. Although the spacing between each timeframe dots are increasing --- indicating acceleration, the method had to keep turning for maximizing velocity which potentially reduced our displacement. Nevertheless, this first method had a displacement of $\sqrt{368.6^2 + (-57.34)^2} \approx 373.0$, which is a large increase from the straight-line model's $175$ units.
 
 \subsection{Step by Step with modification}
-The first step by step model (figure \ref{fig:1sbs}) had a problem, that the player needed to turn more than $90$ degrees to keep accelerating. This sounds counter-intuitive, so I have two ideas to fix it: stop turning at a specific angle or accelerate below the maximum value.
+The first step by step model (figure \ref{fig:1sbs}) had a problem, that the player needed to turn more than $90$ degrees to keep accelerating, causing backtracking and a u-turn. This sounds counter-intuitive, so I have two ideas to fix it: stop turning at a specific angle or accelerate below the maximum value.
 
-The arguments for stop turning at a specific angle is that we are sacrificing higher velocity and less distance traveled but preferring more forward movements, which could potentially increase the total displacement. I decided to set a maximum angle for player velocity, which once reached, would
+The arguments for stop turning at a specific angle is that we are sacrificing potential higher velocity and less distance traveled but directing more forward movements, which could potentially increase the total displacement by reducing the backtracking. I decided to set a maximum angle $k$ for player velocity, which once reached would set $\theta(t) = 0$. We can represent this using the $\text{pos}(x)$ function as the second step by step difference equation:
+
+\begin{figure}[H]
+    \centering
+    \[
+        d\tv = \text{pos}(k - \phi) LA\tau \exp((\phi - \cos^{-1}(\frac{L-LA\tau}{\tmag{v}})) \I) + \text{pos}(\phi - k) w \exp(\phi \I)
+    \]
+    \caption{Second Step by Step difference equation}
+    \label{fig:ssbs}
+\end{figure}
+
+Figure 
+
+
+
+% graphing all of them
+
+
+% the one where you accelerate below max value
 
 
 
@@ -276,7 +295,10 @@ The arguments for stop turning at a specific angle is that we are sacrificing hi
 
 
 
-\subsection{Euler-Lagrange optimization}
+\subsection{Optimal starting angle}
+
+\section{Conclusion}
+
 
 
 % TODO: calculated the restricted line,
@@ -289,9 +311,9 @@ The arguments for stop turning at a specific angle is that we are sacrificing hi
 
 % 500 for conclusion
 
-Do the step by step one
+%Do the step by step one
 
-Do the euler-lagrange one
+%Do the euler-lagrange one
 
-Extension, find the optimal angle for each
+%Extension, find the optimal angle for each
 
