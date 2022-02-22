@@ -17,6 +17,7 @@ The only meaning deviation from the default settings are the speed limit $L$, fo
 
 Furthermore, all models are free to set the initial velocity $\tv_0$, with the constraint that the magnitude of $\tv_0$ does not exceed $250$, the speed limit.
 
+% TODO: maybe change this to Euler-Lagrange? Because it uses the diff equations
 \subsection{Straight line}
 % where you do nothing
 We all know the fastest route (shortest distance) from point $A$ to point $B$ is with a straight line connecting $A$ to $B$. Therefore if the velocity magnitude is maximized, and as time is proportional to distance: $t = \frac{s}{\tmag{\tv}}$, it seems that a straight line would maximize the jumping distance assuming no constraints. This will serve as a good baseline for all the other models.
@@ -263,9 +264,9 @@ Figure \ref{fig:1sbs} shows the player's motion under this method simulated unde
 Oops, it looks like we've done a u-turn and ended up below the x-axis. Although the spacing between each timeframe dots are increasing --- indicating acceleration, the method had to keep turning for maximizing velocity which potentially reduced our displacement. Nevertheless, this first method had a displacement of $\sqrt{368.6^2 + (-57.34)^2} \approx 373.0$, which is a large increase from the straight-line model's $175$ units.
 
 \subsection{Step by Step with modification}
-The first step by step model (figure \ref{fig:1sbs}) had a problem, that the player needed to turn more than $90$ degrees to keep accelerating, causing backtracking and a u-turn. This sounds counter-intuitive, so I have two ideas to fix it: stop turning at a specific angle or accelerate below the maximum value.
+The first step by step model (figure \ref{fig:1sbs}) had a problem, that the player needed to turn more than $90$ degrees to keep accelerating, causing backtracking and a u-turn. This sounds counter-intuitive, so I have an idea to fix it: stop turning at a specific angle.
 
-The arguments for stop turning at a specific angle is that we are sacrificing potential higher velocity and less distance traveled but directing more forward movements, which could potentially increase the total displacement by reducing the backtracking. I decided to set a maximum angle $k$ for player velocity, which once reached would set $\theta(t) = 0$. We can represent this using the $\text{pos}(x)$ function as the second step by step difference equation:
+The arguments for stop turning at a specific angle is that we are sacrificing potential higher velocity and less distance traveled but directing more forward movements, which could potentially increase the total displacement by reducing the backtracking. I decided to set a maximum angle $k$ for player velocity, which once reached would set $\theta(t) = 0$. I hypothesize that the highest displacement is reached if $k=0$, as it is the moment when the player accelerates towards the x-axis rather than away from it. We can represent this modification using the $\text{pos}(x)$ function as the second step by step difference equation:
 
 \begin{figure}[H]
     \centering
@@ -276,44 +277,36 @@ The arguments for stop turning at a specific angle is that we are sacrificing po
     \label{fig:ssbs}
 \end{figure}
 
-Figure 
+Figure \ref{fig:sbs2} shows the different player motion as the maximum angle $k\in [-0.5\pi, 0.5\pi]$ with steps $0.03$ radians for clarity, simulated using equation \ref{fig:ssbs} with Euler's method.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{assets/step_by_step_2.png}
+    \caption{}
+    \label{fig:sbs2}
+\end{figure}
 
+The paths of maximum displacement is outlined with black, with a total displacement of $\approx 392.15$ with $k=-0.16$. Hilariously, the player still ended up turning over 90 degrees in the jump. The $k$ value of slightly below $0$ is a bit uprising from my hypothesis, but I believe that it is because the extra velocity gained from that $0.16$ degrees became more significant than the backtracking acceleration angles. Yet this is very insignificant, judging by the low gradient around the local maxima in figure \ref{fig:sbs2k}.
 
-% graphing all of them
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{assets/step_by_step_2k.png}
+    \caption{}
+    \label{fig:sbs2k}
+\end{figure}
 
 % the one where you accelerate below max value
-
-
-
-
-
-
-
-
-
-
+% THIS IS CANCELLED DUE TO WORD LIMIT
 
 \subsection{Optimal starting angle}
+Notice that the second step by step method of equation \ref{fig:ssbs} places the player at an angle to the initial velocity. This means that if I wish to use this method to cross a gap, I would need to have an maximum initial velocity almost perpendicularly
+
+% 3866 words, very close
+% place map under two motions, show that k=0 is best
+
+% conclude this method
 
 \section{Conclusion}
 
-
-
-% TODO: calculated the restricted line,
-
-% TODO: conclude this: max 250 total words
-
-% TODO Have around 1500 words
-
-% 500 words each for each method
-
-% 500 for conclusion
-
-%Do the step by step one
-
-%Do the euler-lagrange one
-
-%Extension, find the optimal angle for each
+% blah
 
