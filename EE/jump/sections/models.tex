@@ -299,7 +299,33 @@ The paths of maximum displacement is outlined with black, with a total displacem
 % THIS IS CANCELLED DUE TO WORD LIMIT
 
 \subsection{Optimal starting angle}
-Notice that the second step by step method of equation \ref{fig:ssbs} places the player at an angle to the initial velocity. This means that if I wish to use this method to cross a gap, I would need to have an maximum initial velocity almost perpendicularly
+Notice that the second step by step method of equation \ref{fig:ssbs} places the player's displacement vector almost 90 degrees from its initial velocity vector. If we wish to know the maximum size of a gap the player can cross, the intuitive assumption of initial velocity perpendicular to the ledge is incorrect for the player has turned. We need to find the optimal starting velocity angle.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{assets/step_by_step_edge.png}
+    \caption{}
+    \label{fig:sbsedge}
+\end{figure}
+
+
+Consider figure \ref{fig:sbsedge}. The blue curve represents the player motion with initial velocity
+\[
+    \tv_0 = \tang{0, 250},
+\]
+the red line is the final player displacement. To ensure that the player's displacement is a straight line, we simply need to ensure the player displacement is on an axis. I've achieved this by rotating the initial velocity (and thus entire player motion) by the polar angle $\phi(t_f)$ of $\tp({t_f})$:
+\[
+    \phi(t_f) = \tan^{-1} \frac{42.4}{389.86} \approx 0.11,
+\]
+and the optimal player initial velocity is:
+\[
+    \tv_0 = \tpar
+\]
+
+
+
+
 
 % 3866 words, very close
 % place map under two motions, show that k=0 is best
