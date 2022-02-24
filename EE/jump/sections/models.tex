@@ -310,29 +310,45 @@ Notice that the second step by step method of equation \ref{fig:ssbs} places the
 \end{figure}
 
 
-Consider figure \ref{fig:sbsedge}. The blue curve represents the player motion with initial velocity
+Consider figure \ref{fig:sbsedge} with gaps as vertical purple lines. The blue curve represents the player motion with initial velocity
 \[
     \tv_0 = \tang{0, 250},
 \]
-the red line is the final player displacement. To ensure that the player's displacement is a straight line, we simply need to ensure the player displacement is on an axis. I've achieved this by rotating the initial velocity (and thus entire player motion) by the polar angle $\phi(t_f)$ of $\tp({t_f})$:
+the red line is the final player displacement. To ensure that the player's displacement is a straight line, we simply need to ensure the player displacement is on an axis. I've achieved this by rotating the initial velocity (and thus entire player motion) by the polar angle $\phi$ at position $\tp({t_f})$:
 \[
-    \phi(t_f) = \tan^{-1} \frac{42.4}{389.86} \approx 0.11,
+    \phi = \tan^{-1} \frac{42.4}{389.86} \approx 0.11,
 \]
-and the optimal player initial velocity is:
+and the optimal player initial velocity is
 \[
-    \tv_0 = \tpar
+    \tv_0 = R(\phi)\tpar{0}{250} = \begin{bmatrix}
+        \cos \phi & -\sin \phi \\
+        \sin \phi & \cos \phi
+    \end{bmatrix}\tpar{0}{250} \approx \tpar{27.03}{248.53}
 \]
-
-
-
-
+which is calculated by a 2d rotation matrix. The rotated player motion is shown to be the yellow curve.
 
 % 3866 words, very close
-% place map under two motions, show that k=0 is best
+The second step by step model is a significant improvement over the first step by step model. It increased the total jump displacement from $\approx 373.0$ to $\approx 392.15$, which is due to the pausing of rotation at angle $\phi \approx 0.16$ to prevent accelerating backwards towards the origin. It is also found that the optimal initial velocity should be angled $\approx 0.11$ radians from the ledge if the player wishes to jump the furthest from ledge to ledge.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{assets/step_by_step_acc.png}
+        \caption{}
+        \label{fig:sbsa}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+   \includegraphics[width=0.7\linewidth]{assets/step_by_step_acc_v.png}
+        \caption{}
+        \label{fig:sbsav}
+\end{figure}
+
+% conclusions
+The step by step models overall are really complex and sophisticated for a player to achieve. The player must accelerate 
+following the acceleration vectors in figure \ref{fig:sbsa} throughout the jump with a time-span of less than a second; or it must be able to judge their velocity, and accelerate at an increasing angle $\theta(t)$ over time against it as seen in figure \ref{fig:sbsav}. Either method is hard to achieve without tool assistance, but grants a respective gain in jump displacement of around $200$ hammerunits against the straight-line method.
+
+The modification adds additional complexity in requiring the player to snap their acceleration to their velocity at a specific velocity angle, or around $0.4$ seconds; but it comes with an extra gain of $392.15-373.0\approx19.15$ hammerunits of displacement; marking it the most optimal model I've came up with.
 % conclude this method
 
-\section{Conclusion}
-
-% blah
 
