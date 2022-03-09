@@ -2,20 +2,21 @@
 
 %\paragraph{Research Question:}
 
-In this essay, I will be analyzing the jumping distance in a video game that I like (Counter Strike, Source). The video game closely resembles real life, where you are control a ``player'' in 3D Euclidean space with a position, velocity, and acceleration, which is updated every one sixtyth of a second. While normally your speed is limited by the game --- as to achieve realism --- I realized that it can be exceeded in some circumstances. This is extremely helpful in a game where your movement, or the lack of, determines the success of a round. Therefore, I seek to master this technique with mathematics.
+In this essay, I will be optimizing the jumping distance in the video game ``Counter Strike, Source''. This is a competitive game I play, where you control a ``player'' in a simulated 3D space governed by the game's physics simulations. While normally the player's velocity in the game is limited by a value --- as to achieve realism and fairness --- I realized that it can be exceeded in some circumstances. This is extremely helpful in a game where your movement, or the lack of, determines the success of a round. Therefore, I seek to master this technique with mathematics.
 
 %This is a result of a friend sending me inhuman like videos of people playing the game, ``exploiting'' it to make themselves move much faster in midair than intended. Out of interest, I found this exploit online and wanted was hooked --- but it is difficult to utilize a new piece of knowledge without understanding it. I want to perfect this act of incredible movement optimally.
 
-Because the game is fast during action, I would need to select a single matrix to evaluate my technique against; I chose distance traveled in a player jump --- analogy to a jump in real life. My research question was therefore:
+Because of the plentiful potential uses of this technique in game, I would need to select a single matrix to train my models against; I chose distance traveled in a player jump for its simplicity. My research question was therefore:
 \begin{quote}
     To what extent can a player travel in distance through a jump action within the video game ``Counter Strike, Source''?
 \end{quote}
 
 % definition
 \subsection{Mathematical definition}
-The problem is easier to interpret and analyze when defined mathematically.
+The question is easier to analyze when defined mathematically, but to explain its mechanics, first consider an analogy to real life. Consider the modeling of a student's location within a school: we designate him with a position, velocity, and acceleration, then simply apply the classical physic laws of motion to accurately locate him at all times. In the context of the game, the student is the player, the school is a ``map'', and a similar ``law of motion'' is applied programmatically.
 
-The player's position are coordinates with three real values, which represents its 3D displacement against the origin $\tang{0,0,0}$. I will denote it by a bold $\tp$ using vector notation
+
+The player's position are coordinates of three real numbers, representing its 3D displacement against the origin coordinate $\tang{0,0,0}$. I will denote the position by a bold $\tp$ using vector notation
 \[
     \tp = \tang{x, y, z} \quad \text{where} \, x, y, z \in  \mathbb{R}.
 \]
@@ -26,21 +27,27 @@ The player's position are coordinates with three real values, which represents i
     \label{fig:1coords}
 \end{wrapfigure}
 
-The game also stores the velocity of the player as another real 3-vector, which I will denote by a bold $\tv$ and can be defined exactly like the position. Figure \ref{fig:1coords} shows a snapshot of the game's debug console showing the two coordinates: the player is at position $\tang{226.96, -474.47, 69.52}$ with a velocity of magnitude $51.99$ (notice that the values are rounded to 2dp, realistically they are software ``doubles'' with high precision that is negligible in calculations).
+The game also stores the velocity of the player as a real 3-vector, which I will denote by a bold $\tv$. The magnitude these positions, velocities, and any real 3-vectors, are computed using Pythagoras's theorem: here is the expansion of the player's speed,
+\[
+    \tmag{\tv} = \sqrt{\tv_x^2+\tv_y^2+\tv_z^2}.
+\]
 
 
+Figure \ref{fig:1coords} shows a snapshot of the game showing the two coordinates; the player is at position $\tang{226.96, -474.47, 69.52}$ with a velocity of magnitude $51.99$ (although the displayed values are 2 dp, the game stores all decimals as high precision numbers).
 
-The game also keeps track of the time elapsed, and updates the player's position and velocity $n$ times a second, called $n$ ticks. The amount of updates per second is often determined by the server hosting the video game, often with a value of $64$ ticks, meaning $64$ updates in a second. I will represent the time between update as $\tau$, with a value of
+
+The game also keeps track of the time elapsed, and updates the player's position and velocity $n$ times a second, called $n$ ticks. This value is often $64$, meaning $64$ evenly spaced updates in a second. I will represent the time between updates as $\tau$, a value of
 \[
     \tau = \frac{1}{64} = 0.015625 \si{hz}.
 \]
-Moreover, the acceleration $\ta$ is also a real 3-vector. It is computed each update, which is then applied onto the velocity using Euler's method. The position is updated by the velocity via the same method. This sequential process can be represented by difference equations:
+
+Moreover, the acceleration $\ta$ is also a real 3-vector. It is computed every update from the ``wishing'' direction of the player (the process of which is discussed during modeling), which is then applied onto the velocity and using Euler's method. The position is updated by the velocity through the same method. This sequential process can be represented by the difference equations:
 \begin{align}
     \tv_{n+1} &= \tv_n + \ta \tau\\
     \tp_{n+1} &= \tp_n + \tv' \tau.
 \end{align}
 
-It is therefore obvious to see that the player position and velocity are discrete functions of time. While it may be conventional to represent the time parameter as subscripts, I decided to write it with a continuous function syntax. This is because the powerful optimization formulas (calculus) often only apply to continuous functions, and I conjure that the small delta time $\tau$ justifies such transition from discrete to continuous. Therefore the function syntax signifies a continuous position and velocity, while still retains the faithful discrete time properties in cases where I wish to fall back upon. To conclude, the motion of the player is completely modeled by the function $\tp(t)$ and $\tv(t)$, where $t$ is time elapsed in seconds from the start of the jump, with the updating process now approximated by differential equations:
+It is therefore obvious to see that the player position and velocity are discrete functions of time. While it may be conventional to represent the time parameter as subscripts, I decided to write it with a continuous function syntax. This is because the powerful optimization formulas (calculus) often only apply to continuous functions, and I conjecture that the small delta time $\tau$ justifies such transition from discrete to continuous; The function syntax allows for such continuous position and velocity, while still retains the faithful discrete time properties in cases where I wish to fall back upon. To conclude, I decided to model the motion of the player with the functions $\tp(t)$ and $\tv(t)$, where $t$ is time elapsed in seconds from the start of the jump, with the updating process now approximated by differential equations:
 \begin{align}
     \tv'(t) &= \ta(t)\\
     \tp'(t) &= \tv(t).
