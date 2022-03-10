@@ -188,15 +188,72 @@
 
 
 \input{sections/introduction.tex}
-\newpage
 
+\section{Basic Models}
+I want to set some baseline movement models in this section, for it not only helps me to visualize the problem, but can also test my conjuncture in the negligibility of the continuous approximations.
 
-\section{Baseline}
-I want to set some baseline movement models in this section, for it not only helps me to visualize the problem, but can also test my conjuncture in the negligiblity of the continuous approximations.
+My approach to maximize player jumping displacement can be described in sections. Firstly, I wish to find an optimal starting condition, then an analogy can made with projectile motion, leading to the precalculation of the vertical motion; Secondly, I hope to model the mechanics between the remaining two axis of motion; Lastly, I will fit various acceleration models base on my intuition, calculus, and even the switching to polar coordinates.
 
 % straight line
-The key idea that is repeated throughout this analysis is that maximizing velocity will maximize displacement.  
+\subsection{Key idea and boundary condition}
+The key idea that will be repeated throughout this analysis is the extend that maximizing the player velocity will maximize the displacement. I hypothesized this from the position differential equations in Eq. \ref{eq:1de2}, that under the assumption of constant velocity, the final displacement will be proportional to that constant:
+\begin{align*}
+    \tp'(t) &= \tv(t)\\
+    \tp(t) &= \int \tv(t) \, dt\\
+    &= t(\tv(t)) + \tp(0) = t(\tv(t)) + \tvec{0},\\
+    \tp &\propto \tv(t).
+\end{align*}
 
+Therefore, I was able to set an optimal initial velocity for the player, also known as the boundary condition of the problem. For we are maximizing the jump displacement, and higher velocity equates to higher displacement, it is reasonable to set the initial velocity as high as possible. So
+\[
+    \tmag{\tv} = 250,
+\]
+where $250$ is the player's fastest ground running speed.
+
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{.5\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{assets/1coordinates.png}
+        \caption{The coordinate system}
+        \label{fig:1coordinates}
+    \end{minipage}%
+    \begin{minipage}{.5\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{assets/2coordinate_topdown.png}
+        \caption{The top down view}
+        \label{fig:2coordinates_topdown}
+    \end{minipage}
+\end{figure}
+
+\begin{wrapfigure}{r}{0.40\textwidth}
+    \includegraphics[width=0.37\textwidth,right]{assets/2turning.png}
+    \caption{Rotational Invariant (the player wishes to go rightwards)}
+    \label{fig:2turning}
+\end{wrapfigure}
+
+Furthermore, it should be noted that the problem is rotationally invariant when viewed top down. Let the z-axis denote the vertical height of the player, and the x,y-axis to be the plane displacement from a top down view (see figure \ref{fig:1coordinates}, figure \ref{fig:2coordinates_topdown}). By considering only the x,y-axis --- and the z-axis remaining constant before and after the jump --- I realized that an optimal strategy does not depend on the angle of the initial velocity vector within the plane, for unless we somehow ended up behind our initial direction, it is always possible to rotate the initial velocity such that we travel in a desired direction of displacement (see figure \ref{fig:2turning}). This meant that the optimal initial velocity is not restricted to a certain direction, but for the sake of consistency between models, I shall use the initial velocity pointing in the y-axis:
+\[
+    \tv = \tang{0, 250, 0}.
+\]
+
+\subsection{Straight Line}
+With the key idea and boundary condition in mind, I attempted a straight line model. This model has the player accelerate and move in a straight line, for mathematics has taught me that the shortest distance between two points comes from a line, resulting in less time needed to travel a long distance, which is helpful in optimizing displacement over time. To achieve this, the player would need to accelerate along the y-axis, for that is in the direction of its initial velocity, which maximizes speed at all times, and would theoretically result in the largest displacement. Realistically, this will be equivalent to pressing down ``w'' and not moving the mouse.
+% do model!!
+
+\begin{wrapfigure}{r}{0.40\textwidth}
+    \includegraphics[width=0.37\textwidth,right]{assets/2straightjumping.png}
+    \caption{Straight Jumping}
+    \label{fig:2straightjumping}
+\end{wrapfigure}
+
+To test this model, I recorded myself jumping and doing the actions described above. Figure \ref{fig:2straightjumping} shows the coordinates of the player at the start of the jump $\tp(0)$, the first discrete time of the jump $\tp(\tau)$, and the end of the jump $\tp(t_f)$, where $t_f$ denotes the duration of the jump. % explain
+
+
+
+
+%% 44 frames
 % discuss vertical axis
 
 % evantually my best, and as a model

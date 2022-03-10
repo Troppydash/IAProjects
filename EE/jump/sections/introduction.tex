@@ -13,7 +13,7 @@ Because of the plentiful potential uses of this technique in game, I would need 
 
 % definition
 \subsection{Mathematical definition}
-The question is easier to analyze when defined mathematically, but to explain its mechanics, first consider an analogy to real life. Consider the modeling of a student's location within a school: we designate him with a position, velocity, and acceleration, then simply apply the classical physic laws of motion to accurately locate him at all times. In the context of the game, the student is the player, the school is a ``map'', and a similar ``law of motion'' is applied programmatically.
+The question is easier to analyze when defined mathematically, but to explain its mechanics, first consider an analogy to real life. Consider the modeling of a student's location within a school: we designate him with a position, velocity, and acceleration, then simply apply the classical physic laws of motion to accurately locate him at all times. In the context of the game, the student is the player, the school is a ``map'', and a similar ``law of motion'' is applied programmatically. Furthermore, the game uses ``hammer units'' and seconds as units of space and time in this virtual ``map''.
 
 
 The player's position are coordinates of three real numbers, representing its 3D displacement against the origin coordinate $\tang{0,0,0}$. I will denote the position by a bold $\tp$ using vector notation
@@ -49,8 +49,8 @@ Moreover, the acceleration $\ta$ is also a real 3-vector. It is computed every u
 
 It is therefore obvious to see that the player position and velocity are discrete functions of time. While it may be conventional to represent the time parameter as subscripts, I decided to write it with a continuous function syntax. This is because the powerful optimization formulas (calculus) often only apply to continuous functions, and I conjecture that the small delta time $\tau$ justifies such transition from discrete to continuous; The function syntax allows for such continuous position and velocity, while still retains the faithful discrete time properties in cases where I wish to fall back upon. To conclude, I decided to model the motion of the player with the functions $\tp(t)$ and $\tv(t)$, where $t$ is time elapsed in seconds from the start of the jump, with the updating process now approximated by differential equations:
 \begin{align}
-    \tv'(t) &= \ta(t)\\
-    \tp'(t) &= \tv(t).
+    \tv'(t) &= \ta(t) \label{eq:1de1}\\
+    \tp'(t) &= \tv(t) \label{eq:1de2}.
 \end{align}
 
 Ultimately, the problem can be formally defined as so:
