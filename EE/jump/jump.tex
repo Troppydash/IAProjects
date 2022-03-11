@@ -120,6 +120,7 @@
 \newcommand{\tunit}[1]{\boldsymbol{\hat{#1}}}
 \newcommand{\tmag}[1]{\|#1\|}
 \newcommand{\tang}[1]{\left\langle #1 \right\rangle}
+\newcommand{\td}{\tvec{d}}
 \newcommand{\ta}{\tvec{a}}
 \newcommand{\tv}{\tvec{v}}
 \newcommand{\tp}{\tvec{p}}
@@ -239,7 +240,11 @@ Furthermore, it should be noted that the problem is rotationally invariant when 
 \]
 
 \subsection{Straight Line}
-With the key idea and boundary condition in mind, I attempted a straight line model. This model has the player accelerate and move in a straight line, for mathematics has taught me that the shortest distance between two points comes from a line, resulting in less time needed to travel a long distance, which is helpful in optimizing displacement over time. To achieve this, the player would need to accelerate along the y-axis, for that is in the direction of its initial velocity, which maximizes speed at all times, and would theoretically result in the largest displacement. Realistically, this will be equivalent to pressing down ``w'' and not moving the mouse.
+With the key idea and boundary condition in mind, I attempted a straight line model. This model has the player accelerate and move in a straight line, for mathematics has taught me that the shortest distance between two points comes from a line, resulting in less time needed to travel a long distance, which is helpful in optimizing displacement over time. To achieve this, the player would need to accelerate along the y-axis, for that is in the direction of its initial velocity, which maximizes speed at all times, and would theoretically result in the largest displacement. Mathematically, this is equivalent, to setting the directional vector to
+\[
+    \td(t) = \tang{0, 1, 0}
+\]
+for all time $t$. Realistically, this will be equivalent to pressing down ``w'' and not moving the mouse.
 % do model!!
 
 \begin{wrapfigure}{r}{0.40\textwidth}
@@ -248,7 +253,20 @@ With the key idea and boundary condition in mind, I attempted a straight line mo
     \label{fig:2straightjumping}
 \end{wrapfigure}
 
-To test this model, I recorded myself jumping and doing the actions described above. Figure \ref{fig:2straightjumping} shows the coordinates of the player at the start of the jump $\tp(0)$, the first discrete time of the jump $\tp(\tau)$, and the end of the jump $\tp(t_f)$, where $t_f$ denotes the duration of the jump. % explain
+To test this model, I recorded myself jumping and doing the actions described above. Figure \ref{fig:2straightjumping} shows the coordinates of the player at the start of the jump $\tp(0)$, the first discrete time of the jump $\tp(\tau)$, and the end of the jump $\tp(t_f)$ --- the symbol $t_f$ denotes the duration of the jump.
+
+The positions and speeds of the player overtime relative the ``map'' origin is
+\begin{align}
+ \tp(0) &= \tang{1702.63, 725.59, 128.03}, \quad \tmag{\tv(0)} = 250.00 \label{eq:2emp0}\\
+ \tp(\tau) &= \tang{1702.63, 721.27, 130.83}, \quad \tmag{\tv(\tau)} = 378.35 \label{eq:2emp1}\\
+ \tp(t_f) &= \tang{1702.65,541.95, 132.94}, \quad \tmag{\tv(t_f)} = 250.00 \label{eq:2emp2}.
+\end{align}
+
+From the simple empirical data in Eq. \ref{eq:2emp0}, Eq. \ref{eq:2emp1}, and Eq. \ref{eq:2emp2}, I was able to not only analyze the straight line model, but also calculate various fundamental constants within the problem.
+
+
+
+
 
 
 
@@ -268,7 +286,7 @@ To test this model, I recorded myself jumping and doing the actions described ab
 \newpage
 %\input{sections/models.tex}
 \newpage
-%\input{sections/conclusion.tex}
+\input{sections/conclusion.tex}
 
 \nocite{*}
 \newpage
