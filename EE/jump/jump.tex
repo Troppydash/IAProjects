@@ -228,18 +228,24 @@ where $250$ is the player's fastest ground running speed.
     \end{minipage}
 \end{figure}
 
-\begin{wrapfigure}{r}{0.40\textwidth}
+
+Furthermore, it should be noted that the problem is rotationally invariant when viewed top down. Let the z-axis denote the vertical height of the player, and the x,y-axis to be the plane displacement from a top down view (see figure \ref{fig:1coordinates}, figure \ref{fig:2coordinates_topdown}). \begin{wrapfigure}{r}{0.40\textwidth}
     \includegraphics[width=0.37\textwidth,right]{assets/2turning.png}
     \caption{Rotational Invariant (the player wishes to go rightwards)}
     \label{fig:2turning}
 \end{wrapfigure}
-
-Furthermore, it should be noted that the problem is rotationally invariant when viewed top down. Let the z-axis denote the vertical height of the player, and the x,y-axis to be the plane displacement from a top down view (see figure \ref{fig:1coordinates}, figure \ref{fig:2coordinates_topdown}). By considering only the x,y-axis --- and the z-axis remaining constant before and after the jump --- I realized that an optimal strategy does not depend on the angle of the initial velocity vector within the plane, for unless we somehow ended up behind our initial direction, it is always possible to rotate the initial velocity such that we travel in a desired direction of displacement (see figure \ref{fig:2turning}). This meant that the optimal initial velocity is not restricted to a certain direction, but for the sake of consistency between models, I shall use the initial velocity pointing in the y-axis:
+By considering only the x,y-axis --- and the z-axis remaining constant before and after the jump --- I realized that an optimal strategy does not depend on the angle of the initial velocity vector within the plane, for unless we somehow ended up behind our initial direction, it is always possible to rotate the initial velocity such that we travel in a desired direction of displacement (see figure \ref{fig:2turning}). This meant that the optimal initial velocity is not restricted to a certain direction, but for the sake of consistency between models, I shall use the initial velocity pointing in the y-axis:
 \[
     \tv = \tang{0, 250, 0}.
 \]
 
 \subsection{Straight Line}
+
+\begin{wrapfigure}{r}{0.40\textwidth}
+    \includegraphics[width=0.37\textwidth,right]{assets/2straightjumping.png}
+    \caption{Straight Jumping}
+    \label{fig:2straightjumping}
+\end{wrapfigure}
 With the key idea and boundary condition in mind, I attempted a straight line model. This model has the player accelerate and move in a straight line, for mathematics has taught me that the shortest distance between two points comes from a line, resulting in less time needed to travel a long distance, which is helpful in optimizing displacement over time. To achieve this, the player would need to accelerate along the y-axis, for that is in the direction of its initial velocity, which maximizes speed at all times, and would theoretically result in the largest displacement. Mathematically, this is equivalent, to setting the directional vector to
 \[
     \td(t) = \tang{0, 1, 0}
@@ -247,22 +253,106 @@ With the key idea and boundary condition in mind, I attempted a straight line mo
 for all time $t$. Realistically, this will be equivalent to pressing down ``w'' and not moving the mouse.
 % do model!!
 
-\begin{wrapfigure}{r}{0.40\textwidth}
-    \includegraphics[width=0.37\textwidth,right]{assets/2straightjumping.png}
-    \caption{Straight Jumping}
-    \label{fig:2straightjumping}
-\end{wrapfigure}
-
-To test this model, I recorded myself jumping and doing the actions described above. Figure \ref{fig:2straightjumping} shows the coordinates of the player at the start of the jump $\tp(0)$, the first discrete time of the jump $\tp(\tau)$, and the end of the jump $\tp(t_f)$ --- the symbol $t_f$ denotes the duration of the jump.
-
-The positions and speeds of the player overtime relative the ``map'' origin is
+To test this model, I recorded myself jumping and doing the actions described above --- it is important that the x,z-axis should not be changed after the jump; it is only the y-axis that I am recording. Figure \ref{fig:2straightjumping} shows the coordinates of the player at the start of the jump $\tp(0)$, the first discrete time of the jump $\tp(\tau)$, and the end of the jump $\tp(t_f)$ --- the symbol $t_f$ denotes the duration of the jump. Here are them written inline:
 \begin{align}
  \tp(0) &= \tang{1702.63, 725.59, 128.03}, \quad \tmag{\tv(0)} = 250.00 \label{eq:2emp0}\\
  \tp(\tau) &= \tang{1702.63, 721.27, 130.83}, \quad \tmag{\tv(\tau)} = 378.35 \label{eq:2emp1}\\
  \tp(t_f) &= \tang{1702.65,541.95, 132.94}, \quad \tmag{\tv(t_f)} = 250.00 \label{eq:2emp2}.
 \end{align}
 
-From the simple empirical data in Eq. \ref{eq:2emp0}, Eq. \ref{eq:2emp1}, and Eq. \ref{eq:2emp2}, I was able to not only analyze the straight line model, but also calculate various fundamental constants within the problem.
+\subsubsection{Analysis}
+Using the simple empirical data in Eq. \ref{eq:2emp0}, Eq. \ref{eq:2emp1}, and Eq. \ref{eq:2emp2}, not only can I analyze the straight line model, but I can also calculate the various fundamental constants within the problem --- such as impulse and acceleration. However, I've also noticed that the x,z-axis has changed after the jump. The x change is likely the result of my uncertainty in having an initial velocity directly in the y-axis, but due to the rotational invariant discussed before, this is a non detrimental problem; but the z-axis is different and is likely to be the result of some ``bounciness'' of the player as it hits the floor --- which doesn't matter in the optimizing of displacement. Thus, I chose to ignore only the z-axis change during calculations.
+
+The total displacement of this jump par definition is the expression $d = \tmag{\tp(t_f) - \tp(0)}$, which is
+\begin{align*}
+    d &= \sqrt{(\tp(t_f)_x - \tp(0)_x)^2 + (\tp(t_f)_y - \tp(0)_y)^2 + (\tp(t_f)_z - \tp(0)_z)^2}\\
+    &= \sqrt{(1702.65-1702.63)^2 + (541.95-725.59)^2 + (0)^2}\\
+    &\approx 183.64.
+\end{align*}
+
+
+Firstly notice the sudden change in the velocity of the player at in first frame, time $\tau$. From this I deduced that the act of jumping is achieved by an impulse --- a sudden change in velocity --- upon the z-axis. With the assumption that no such impulses occurs in the x,y-axis, we can find the vertical change in velocity of the player at the start of the jump using the Pythagorean Theorem (figure \ref{fig:2verticalimpulse}):
+\begin{wrapfigure}{r}{0.40\textwidth}
+    \includegraphics[width=0.37\textwidth,right]{assets/2verticalimpulse.png}
+    \caption{Jumping impulses}
+    \label{fig:2verticalimpulse}
+\end{wrapfigure}
+\begin{align*}
+    \tmag{\tv}^2 &= \tv_y^2 + \tv_z^2\\
+    \tv_z &= \sqrt{\tmag{\tv}^2 - \tv_y^2}\\
+    &= \sqrt{378.35^2 -250^2}\\
+    &= 284.00.
+\end{align*}
+
+With approximations in continuous time, we can set the player's initial vertical velocity to this number such that
+\[
+    \tv_{z0} = 284.
+\]
+
+
+Secondly, by measuring the duration of the jump --- which I've done by counting the number of video frames of a sixty hertz video, or $44 \times \frac{1}{60} = 0.7333 \si{s}$ --- I was able to derive the average speed $\tv_{a}$ of the player:
+\[
+    \tv_{a} = \frac{183.71}{0.7333} \approx 250.42.
+\]
+
+Isn't that surprising? Turns out that there is almost zero net acceleration in the straight line model --- the average velocity does not differ from its initial value --- which meant that the acceleration as a function of time $t$ and wishing direction $\td(t)$ is zero:
+\[
+    \ta(t, \td) = \tang{0, 0, 0}.
+\]
+
+I suspect a speed limit is in play here. This is bad in the optimization of jump displacement as it restricts the player's velocity, which by the key idea, is likely to limit the displacement too. But the game certainty cannot be limiting the magnitude of velocity directly as I've achieved higher velocity while playing, often subconsciously. My research in the engine source code \parencite{valvesoftware} and a simplified article about the mechanics in a similar game called ``Half Life'' \parencite{jwchong} was targeting exactly this mechanic of velocity limiting. In short, the player's velocity $\tv$ is limited by its projection onto the wished direction $\td$.
+
+\subsubsection{Speed limit and Continuous modeling}
+\begin{wrapfigure}{r}{0.40\textwidth}
+    \includegraphics[width=0.37\textwidth,right]{assets/2proj.png}
+    \caption{Projection limiting}
+    \label{fig:2proj}
+\end{wrapfigure}
+A vector's projection onto another is another way to say how much the vector is pointing in the direction of another, in the form of a number. Denoted by $\text{proj}(\tv, \td)$, the projection is the side of the triangle along the direction of $\td$ form by a perpendicular line from $\tv$ to $\td$ (figure \ref{fig:2proj}). This can be defined using dot products by the following identity (APPENDIX proof):
+\[
+    \text{proj}(\tv, \td) = \frac{\tv \cdot \td}{\tmag{\td}}.
+\]
+
+Additionally, the game engine states that the vector $\td$ never has a z-component and is a unit vector, meaning that its magnitude is zero. Therefore the projection is simply the 2D vector dot product between $\tv$ and $\td$.
+\begin{align*}
+    \text{proj}(\tv, \td) &= \tv \cdot \td\\
+    &= \tv_x \td_x + \tv_y \td_y + \tv_z \td_z\\
+    &= \tv_x \td_x + \tv_y \td_y.
+\end{align*}
+
+Lastly, the game engine computes the player acceleration by checking if this projection excesses a limit $L$, set to $250$. If it does, acceleration will be zero; else, acceleration is a constant $K$ in the direction of $\td$, equal to $LA\tau$ each frame, and in the continuous sense is $LA$ --- where $A$ is a multiplier equal to $10$. The player's acceleration function can therefore be defined piecewisely as:
+\begin{figure}[H]
+    \centering
+    \[
+        \ta(t) = \begin{cases}
+            LA \td & \text{proj}(\tv, \td) \ge L\\
+            0 & \text{otherwise}
+        \end{cases}
+    \]
+    \label{eq:playeracceleration}
+    \caption{Player acceleration function}
+\end{figure}
+
+In the case of maximizing displacement, we ideally want the first condition of equation \ref{eq:playeracceleration} to be true for as long as possible. Yet in the context of my straight line model, it is simple to see that the first condition is never true, for
+\begin{align*}
+    \text{proj}(\tv, \td) &= \tv_x \td_x + \tv_y \td_y\\
+    &= \tv_x \times 0 + \tv_y \times 1\\
+    &= \tv_y,\\
+    \text{and because} \quad \tv_{y0} &= 250 = L\\
+    \text{proj}(\tv, \td) &= L\\
+    \text{and} \quad \ta(t) &= 0.
+\end{align*}
+Our acceleration model has therefore confirmed our hypothesis that the player is not accelerating at all. This makes the model a terrible one for maximizing one's jumping displacement, as low acceleration equals to lower velocity, and in turn decreases displacement per my key idea.
+
+But before I try some other models, let's first evaluate the continuous approximation using this simplistic model.
+
+
+
+
+
+
+% should we first talk about modeling constants or this mechanic?
+
 
 
 
@@ -278,14 +368,14 @@ From the simple empirical data in Eq. \ref{eq:2emp0}, Eq. \ref{eq:2emp1}, and Eq
 
 % try it
 
-% TODO: do the euler-lagrange only with max speed!!
+
 
 %\input{sections/vertical.tex}
-\newpage
+%\newpage
 %\input{sections/jumping.tex}
-\newpage
-%\input{sections/models.tex}
-\newpage
+%\newpage
+\input{sections/models.tex}
+%\newpage
 \input{sections/conclusion.tex}
 
 \nocite{*}
