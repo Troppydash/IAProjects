@@ -125,16 +125,22 @@
 % state the steps of this
 
 \subsection{Step by step}
-My second model would be trying to optimize the y-axis displacement with each discrete change in time. Reflect back to subsection where I defined the restrictions (\ref{eq:constraint}), where the movement integrated vector functions must satisfy an inequality for maximum acceleration. This is problematic for this method in that the integrated player acceleration function $X(t)$ and $Y(t)$ have no obvious relationships, as it does not need to be a vector with unit length 1. I tried to define $x(t)$ in terms of $y(t)$ with
-\[
-    x(t) = \sqrt{1-y(t)^2},
-\]
-but found the integral
-\[
-    X(t) = \int \sqrt{1-y(t)^2} \, dt
-\]
-a pain or sometimes impossible to solve analytically. I needed to represent acceleration in another form preferably in a single variable function --- I attempted to do it with polar coordinates.
+%My second model would be trying to optimize the y-axis displacement with each discrete change in time. Reflect back to subsection where I defined the restrictions (\ref{eq:constraint}), where the movement integrated vector functions must satisfy an inequality for maximum acceleration. This is problematic for this method in that the integrated player acceleration function $X(t)$ and $Y(t)$ have no obvious relationships, as it does not need to be a vector with unit length 1. I tried to define $x(t)$ in terms of $y(t)$ with
+%\[
+%    x(t) = \sqrt{1-y(t)^2},
+%\]
+%but found the integral
+%\[
+%    X(t) = \int \sqrt{1-y(t)^2} \, dt
+%\]
+%a pain or sometimes impossible to solve analytically. I needed to represent acceleration in another form preferably in a single variable function --- I attempted to do it with polar coordinates.
+The key idea hypothesizes higher velocity with higher displacement, so does the same apply to acceleration and velocity as well? The step by step model considers the maximization of velocity by maximizing the acceleration at every frame.
 
+However, a new framework in modeling the player's movement is needed. If we were to continue using the Cartesian axis for player direction $\td$, either I could model the two functions $x(t)$ $y(t)$ and ensure that they consulates a unit vector, which is messy and complicated; or I can write one axis in terms of the other, like so
+\[
+    y(t) = \sqrt{1-x(t)^2},
+\]
+but due to the velocity being the integral of acceleration and integrating such a function is difficult, it is also not ideal. So I came up with the idea of using polar coordinates instead.
 
 
 %I found the constraint equations to be difficult to use because it contains two related functions as input: $X(t)$ and $Y(t)$. This is because the solution to the problem is currently of form $x(t)$, which is the x component of acceleration as a function of time. Therefore the first integral $Y(t)$ must be in the form:
@@ -145,77 +151,69 @@ a pain or sometimes impossible to solve analytically. I needed to represent acce
 
 % TODO: Finish writing this
 
-\subsubsection{Equations of motion, angular}
-Let the player displacement $\tp$, velocity $\tv$ be complex numbers with the real part the x-axis and the imaginary part the y-axis. They are represented in the Euler forms (where the function $\exp(x)= e^{x}$ for simplicity):
+\subsubsection{Angular equations of motion}
+Let the player displacement $\tp$, velocity $\tv$ be complex numbers with the real part the x-axis and the imaginary part the y-axis. They are represented in Euler forms (where the function $\exp(x)= e^{x}$ for simplicity):
 \begin{align*}
     \tp &= a \exp(b \I)\\
     \tv &= r \exp(\phi \I),
 \end{align*}
 where $a$ and $r$ are the magnitudes of the player displacement and velocity, and $b$ and $\phi$ are their respective angles from the x-axis.
 
-Define the player acceleration in terms of the smallest angle between the unit vector $\tunit{a}$ and the velocity $\tv$, denoted as $\theta(t)$ as a function of time (figure \ref{fig:angular}).
-
-\begin{wrapfigure}{r}{0.40\textwidth}
-    \includegraphics[width=0.37\textwidth,right]{assets/angular.png}
-    \caption{The angular function}
-    \label{fig:angular}
-\end{wrapfigure}
-
-Notice that the angular function $\theta(t)$ is the angle between the acceleration unit vector and the velocity vector, so it has a unit length with angle $\phi - \theta$:
+Define the player acceleration in terms of the smallest angle between directional vector $\td$ and the velocity $\tv$, denoted as $\theta(t)$ as a function of time (figure \ref{fig:angular}). Therefore the directional vector is the player velocity but rotated by angle $\theta$, creating
 \[
-    \tunit{a} = \exp((\phi - \theta) \I).
+\td = \exp((\phi - \theta) \I).
 \]
 
-We can then rewrite the discrete velocity update at each timestep $\tau$ as so:
+
+%\begin{wrapfigure}{r}{0.40\textwidth}
+%    \includegraphics[width=0.37\textwidth,right]{assets/angular.png}
+%    \caption{The angular function}
+%    \label{fig:angular}
+%\end{wrapfigure}
+%
+%Using the discrete updating formulas in Eq.\ref{eq:1de1}, Eq.\ref{eq:1de2} and the piecewise acceleration function in figure \ref{eq:playeracceleration}, the velocity update can be rewritten in the angular form:
+%\begin{align*}
+%    \tv' &= \tv + LA \exp((\phi - \theta) \I),
+%\end{align*}
+%with assumption that $\ta$ is maximized. Also, the position update remains unchanged:
+%\[
+%    \tp' = \tp + \tau \tv.
+%\]
+It is now possible to write the player speed limit from a vector projection to a simple cosine equation. Assuming that $\td$ and $\tv$ are two dimensional, and using the dot product identity, we get a much more simple constraint.
 \begin{align*}
-    \tv' &= \tv + w \tunit{a}\\
-    \tv' &= \tv + w \exp((\phi - \theta) \I),
+    \text{proj}(\td, \tv)(t) &= \td \cdot \tv\\
+    &= \tmag{\td} \tmag{\tv} \cos \theta(t)\\
+    &= r \cos \theta(t).
 \end{align*}
-where $w$ is the piecewise function in step 3. Also, the position update is unchanged:
-\[
-    \tp' = \tp + \tau \tv.
-\]
 
-In order to maximize jumping displacement, it seems reasonable to maximize velocity and therefore maximize acceleration. This means to maximize the scalar $w$, which is equivalent to finding a function that fits the constraint in equation \ref{eq:constraint}.
 
-Remember that the scalar function $w$ is defined piecewise:
-\[
-    w = \begin{cases}
-        \gamma_1 & \gamma_2 \ge \gamma_1\\
-     \gamma_2 & \gamma_1 > \gamma_2 > 0\\
-     0 & 0 \ge \gamma_2
-    \end{cases},
-\]
-where $\gamma_1 = LA\tau$ and $\gamma_2 = L - \tv \cdot \tunit{a}$. This can be rewritten in terms of our new angular function $\theta(t)$.
+%In order to maximize jumping displacement, it seems reasonable to maximize velocity and therefore maximize acceleration. This means to maximize the scalar $w$, which is equivalent to finding a function that fits the constraint in equation \ref{eq:constraint}.
 
-Consider the case of maximum acceleration, where $w=\gamma_1$. The inequality condition can be rewritten as:
+%Remember that the scalar function $w$ is defined piecewise:
+%\[
+%    w = \begin{cases}
+%        \gamma_1 & \gamma_2 \ge \gamma_1\\
+%     \gamma_2 & \gamma_1 > \gamma_2 > 0\\
+%     0 & 0 \ge \gamma_2
+%    \end{cases},
+%\]
+%where $\gamma_1 = LA\tau$ and $\gamma_2 = L - \tv \cdot \tunit{a}$. This can be rewritten in terms of our new angular function $\theta(t)$.
+Notice that the entire inequality is different in the discrete case. Not only does the projection $\text{proj}(\td, \tv)$ have to be less than the speed limit, but it also has to allow the maximum discrete acceleration of magnitude $LA\tau$ every frame (PICTURE). Therefore, the inequality condition can be rewritten as:
 \begin{align*}
-    \gamma_2 &\ge \gamma_1\\
-    L - \tv \cdot \tunit{a} &\ge LA\tau\\
-    L - \tmag{v} \cos \theta &\ge LA \tau\\
-    L - LA\tau &\ge \tmag{v} \cos \theta\\
-    \frac{L - LA\tau}{\tmag{v}} &\ge \cos \theta\\
-    \cos^{-1} \frac{L - LA\tau}{\tmag{v}} &\ge \theta.
+    L &\ge \text{proj}(\td, \td) + LA\tau\\
+    L - LA\tau &\ge \text{proj}(\td, \td)\\
+    &\ge r \cos \theta(t),\\
+    \frac{L - LA\tau}{r} &\ge \cos \theta\\
+    \cos^{-1} \frac{L - LA\tau}{r} &\ge \theta.
 \end{align*}
-This shows that $\theta(t)$ must be greater or equal to a LHS function for maximum acceleration to happen.
+This shows that $\theta(t)$ must be greater or equal to an inverse cosine function for maximum acceleration.
 
-Now consider the case of minimum acceleration, where $w=0$. The inequality condition is:
-\begin{align*}
-    \gamma_2 &\le 0\\
-    L - \tv \cdot \tunit{a} &\le 0\\
-    L &\le \tmag{v} \cos \theta\\
-    \frac{L}{\tmag{v}} &\le \cos \theta\\
-    \cos^{-1}  \frac{L}{\tmag{v}} &\le \theta.
-\end{align*}
-This shows that $\theta(t)$ needs to be smaller than a function for minimum acceleration to happen.
-
-Therefore, we can rewrite the piecewise function $w$ with:
+Therefore, we can rewrite the piecewise function $\ta(t)$ with (PICTURE EXAMPLE):
 \[
-w = \begin{cases}
-    \gamma_1 & \cos^{-1} \frac{L - LA\tau}{\tmag{v}} \ge \theta\\
-    \gamma_2 & \text{otherwise}\\
-    0 & \cos^{-1}  \frac{L}{\tmag{v}} \le \theta
-\end{cases}.
+\ta(t) = \begin{cases}
+    LA & \cos^{-1} \frac{L - LA\tau}{r} \ge \theta\\
+    0 & \text{otherwise}
+\end{cases}
 \]
 
 \subsection{Optimization}

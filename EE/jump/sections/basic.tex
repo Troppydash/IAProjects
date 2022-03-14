@@ -199,7 +199,7 @@ Thus, since the z-axis displacement is zero, the gravitational acceleration $g$ 
 
 Comparing to the actual value of $g=800$, the absolute value of $772.79$ is not far off. The relative error of $\frac{800 - 772.79}{800} = 3.4\%$ is close enough for an approximation. Therefore it is justified that for the rest of the models that I can continuously use the continuous approximations, to which I will.
 
-\subsection{Intuitive model}
+\subsection{Skilled Player's model}
 A better strategy would be one where the player accelerates not directly along their velocity, but rather at an angle to their velocity. Personally I've been told by numerous skilled players that you need to move your mouse slowly to the right --- meaning rotating the vector $\td$ over time --- to get higher speed and distance. Now I can test this theory.
 
 Currently, any strategy is uniquely defined by the player wishing direction function $\td(t)$. Therefore let
@@ -265,14 +265,14 @@ Using the Pythagorean Theorem, the magnitude of the player's displacement using 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.85\textwidth]{assets/skilled_displacement.png}
-    \caption{The displacement function of the Skilled Model}
+    \caption{}
     \label{fig:skilled_displacement}
 
 \end{figure}
-The graph of equation \ref{eq:2skilled_displacement}, shown in figure \ref{fig:skilled_displacement}, is symmetrical along the y-axis. This is because of yet another symmetry between a left-turning and a right-turning jump. Quantitatively, this ``unlimited'' strategy peeks when $w=0$, where the strategy collapses to my straight line model. As the turning speed $w$ increases, the ideal displacement decreases and levels near $w=10$: I guess that a spinning player does not contribute much to jumping far. Therefore I limited the possible values of $w$ between $0$ and $4\pi$.
+The graph of equation \ref{eq:2skilled_displacement}, shown in figure \ref{fig:skilled_displacement}, is symmetrical along the y-axis. This is because of yet another symmetry between a left-turning and a right-turning jump. Quantitatively, this ``unlimited'' strategy peeks when $w=0$, where the strategy collapses to my straight line model. As the turning speed $w$ increases, the ideal displacement decreases and levels near $w=10$: I guess that a spinning player does not contribute much to jumping far. Therefore we need to choose the smallest $w$ possible to maximize potential jump displacement.
 
 \subsubsection{Restriction equation}
-In addition to finding the ``unlimited'' displacement of the strategy for all constants $w$, we also need check if they satisfy the assumption of unrestricted acceleration at all times. Ideally there should be a value of $w$ that always fits this constraint, but the smallest ``error'' from the ideal is a backup option.
+In addition to finding the ``unlimited'' displacement of the strategy for all constants $w$, we also need check if they satisfy the assumption of unrestricted acceleration at all times. Ideally there should be a value of $w$ that always fits this constraint, but the smallest ``error'' from the ideal is always a backup option.
 
 As shown in figure \ref{eq:playeracceleration}, for maximum acceleration of $\ta(t) = LA\td$, the constraint
 \[
@@ -286,19 +286,19 @@ must be held for the duration of the jump from $t=0$ to $t=t_f$. Expanding and o
     0 &> \left(-\frac{k}{w} \cos(wt) + \frac{k}{w}\right) \sin(wt) + \left(\frac{k}{w} \sin(wt) + 250\right) \cos(wt) - 250
 \end{align*}
 
-To find the value of the constant $w$ that best fulfills this inequality, I need a Quantitatively measure --- I called it the error function --- on how well this inequality is held through the time domain. Ideally the function should only include the failures of fulfilling the inequality, where RHS is larger than one, so I chose an integral from $t=0$ to $t=t_f$ on the only positive values of the RHS. This is done with a custom piecewise function $H(x)$ such that
+To find the value of the constant $w$ that best fulfills this inequality, I need a quantitative measure on how well this inequality is held through the jump. Ideally the function should only include the failures of fulfilling the inequality, but as explained in the more advanced models --- that the projection RHS should be as close to zero as possible for high speeds --- I chose an integral from $t=0$ to $t=t_f$ on the absolute values of the RHS, denoted as the ``error'' of a model. This is done with the absolute function $|x|$ defined by
 \[
- H(x) = \begin{cases}
-         x & x > 0\\
-         0 & \text{otherwise}
+ |x| = \begin{cases}
+         x & x \geq 0\\
+         -x & x < 0
         \end{cases}
 \]
 
-as to only extract the possible values. Therefore the error function $R(w)$ for each constant $w$ is defined to be the integral of the positive values of the RHS of the inequality over the jump.
+as to make all errors positive. Therefore the error function $R(w)$ for each constant $w$ is the integral of the absolute value of the RHS over the jump:
 \begin{figure}[H]
  \centering
  \[
-  R(w) = \int_0^{t_f} H\left(\left(-\frac{k}{w} \cos(wt) + \frac{k}{w}\right) \sin(wt) + \left(\frac{k}{w} \sin(wt) - 250\right) \cos(wt) - 250\right) \, dt
+  R(w) = \int_0^{t_f} \left|\left(-\frac{k}{w} \cos(wt) + \frac{k}{w}\right) \sin(wt) + \left(\frac{k}{w} \sin(wt) + 250\right) \cos(wt) - 250\right| \, dt
  \]
  \caption{The error function}
  \label{eq:2error}
@@ -308,10 +308,33 @@ as to only extract the possible values. Therefore the error function $R(w)$ for 
 \begin{figure}[H]
  \centering
  \includegraphics[width=0.85\textwidth]{assets/restriction_equation.png}
- \caption{The graph of the error function}
+ \caption{}
  \label{fig:2error}
 \end{figure}
+% TODO: if needed, show the two red dots and choose the smallest one
+Figure \ref{fig:2error} shows the graph of the error function in equation \ref{eq:2error}. While it may be possible to find the minimum of the error function using calculus, the steps are too complex and a numerical is taken instead and is shown by the red dot in the graph.
 
-Figure \ref{fig:2error} shows the graph of the error function in equation \ref{eq:2error}. Once again the graph is symmetrical because of the rotational invariant of the problem.
+\begin{wrapfigure}{r}{0.50\textwidth}
+    \includegraphics[width=0.47\textwidth,right]{assets/skilled_player.png}
+    \caption{Skilled Player's Model}
+    \label{fig:skilled_player}
+\end{wrapfigure}
+
+My program shows that the red dot is at coordinate
+\[
+    \tang{4.2884, 184.4228},
+\]
+meaning that the error function is the smallest in this skilled strategy with a constant $w=4.2884$. So the skilled player's model is defined by the direction function
+\[
+    \td(t) = \tang{\sin(4.2884t), \cos(4.2884t)},
+\]
+indicating a relatively fast rate of turning at a period of $\frac{2\pi}{4.2884} = 1.4652\si{s}$.
 
 
+Ideally, this optimized model corresponds to a displacement of $627.35$ using figure \ref{fig:skilled_displacement}. But I suspect the leftover ``$184.4228$'' errors to decrease the displacement by quite an amount. Figure \ref{fig:skilled_player} shows the actual path of the player when simulated in game; this is in combination with a correctly estimated lower displacement of $254.19$ units.
+\begin{align*}
+    \tp(t_f) &= \tang{88.3021, 238.3556}\\
+    \tmag{\tp(t_f)} &\approx 254.19
+\end{align*}
+
+The skilled player's model does indeed produce a higher displacement ($254.19$) than the straight line model ($183.64$). Not only does this confirm the theory from these skilled people, but the large error of the even optimized model could indicate further possible optimizations when I look at the problem discretely.
