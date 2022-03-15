@@ -159,7 +159,14 @@ Let the player displacement $\tp$, velocity $\tv$ be complex numbers with the re
 \end{align*}
 where $a$ and $r$ are the magnitudes of the player displacement and velocity, and $b$ and $\phi$ are their respective angles from the x-axis.
 
-Define the player acceleration in terms of the smallest angle between directional vector $\td$ and the velocity $\tv$, denoted as $\theta(t)$ as a function of time (figure \ref{fig:angular}). Therefore the directional vector is the player velocity but rotated by angle $\theta$, creating
+
+
+\begin{wrapfigure}{r}{0.40\textwidth}
+    \includegraphics[width=0.37\textwidth,right]{assets/angular_freedom.png}
+    \caption{Angular function}
+    \label{fig:angular_freedom}
+\end{wrapfigure}
+Define the player acceleration in terms of the smallest angle between directional vector $\td$ and the velocity $\tv$, denoted as $\theta(t)$ as a function of time (figure \ref{fig:angular_freedom}). I will limit this function's domain between $0$ and $\pi$ as to prevent overturning. Therefore the directional vector is the player velocity but rotated by angle $\theta$, creating
 \[
 \td = \exp((\phi - \theta) \I).
 \]
@@ -182,8 +189,8 @@ Define the player acceleration in terms of the smallest angle between directiona
 It is now possible to write the player speed limit from a vector projection to a simple cosine equation. Assuming that $\td$ and $\tv$ are two dimensional, and using the dot product identity, we get a much more simple constraint.
 \begin{align*}
     \text{proj}(\td, \tv)(t) &= \td \cdot \tv\\
-    &= \tmag{\td} \tmag{\tv} \cos \theta(t)\\
-    &= r \cos \theta(t).
+    &= \tmag{\td} \tmag{\tv} \cos \theta\\
+    &= r \cos \theta.
 \end{align*}
 
 
@@ -198,59 +205,70 @@ It is now possible to write the player speed limit from a vector projection to a
 %    \end{cases},
 %\]
 %where $\gamma_1 = LA\tau$ and $\gamma_2 = L - \tv \cdot \tunit{a}$. This can be rewritten in terms of our new angular function $\theta(t)$.
-Notice that the entire inequality is different in the discrete case. Not only does the projection $\text{proj}(\td, \tv)$ have to be less than the speed limit, but it also has to allow the maximum discrete acceleration of magnitude $LA\tau$ every frame (PICTURE). Therefore, the inequality condition can be rewritten as:
+\begin{wrapfigure}{r}{0.40\textwidth}
+    \includegraphics[width=0.37\textwidth,right]{assets/discrete_limit.png}
+    \caption{Discrete Limit}
+    \label{fig:discrete_limit}
+\end{wrapfigure}
+Notice that the entire inequality is different in the discrete case. Not only does the projection $\text{proj}(\td, \tv)$ have to be less than the speed limit, but it also has to allow the maximum discrete acceleration of magnitude $LA\tau$ every frame (\ref{fig:discrete_limit}). Therefore, the inequality condition can be rewritten. Note that because cosine is a decreasing function, the inequality sign must be reversed \parencite{ineqcosine},
 \begin{align*}
-    L &\ge \text{proj}(\td, \td) + LA\tau\\
-    L - LA\tau &\ge \text{proj}(\td, \td)\\
-    &\ge r \cos \theta(t),\\
+    L &\ge \text{proj}(\td, \tv) + LA\tau\\
+    L - LA\tau &\ge \text{proj}(\td, \tv)\\
+    &\ge r \cos \theta,\\
     \frac{L - LA\tau}{r} &\ge \cos \theta\\
-    \cos^{-1} \frac{L - LA\tau}{r} &\ge \theta.
+    \cos^{-1} \frac{L - LA\tau}{r} &\le \theta.
 \end{align*}
-This shows that $\theta(t)$ must be greater or equal to an inverse cosine function for maximum acceleration.
 
-Therefore, we can rewrite the piecewise function $\ta(t)$ with (PICTURE EXAMPLE):
+\begin{wrapfigure}{r}{0.50\textwidth}
+    \includegraphics[width=0.47\textwidth,right]{assets/angular_acceleration_limiting.png}
+    \caption{Angular acceleration}
+    \label{fig:angular_acceleration_limiting}
+\end{wrapfigure}
+This shows that $\theta(t)$ must be greater or equal to an inverse cosine function for maximum acceleration. Figure \ref{fig:angular_acceleration_limiting} demonstrates the magnitude of acceleration for all angles of $\theta$, under the condition that the player velocity is $\tang{40, 250}$. The red area means zero acceleration, showcasing that a small $\theta$ exceeds the speed limit; the green area means full acceleration, showing how larger $\theta$, or more rotation of $\td$ against $\tv$ will result in higher acceleration.
+
+Therefore, we can rewrite the piecewise function $\ta(t)$ with:
 \[
 \ta(t) = \begin{cases}
-    LA & \cos^{-1} \frac{L - LA\tau}{r} \ge \theta\\
+    LA & \cos^{-1} \frac{L - LA\tau}{r} \le \theta\\
     0 & \text{otherwise}
 \end{cases}
 \]
 
-\subsection{Optimization}
-Using the same argument as the straight-line model, I will use an initial velocity of $\tv_0 = \tang{0, 250}$.
 
-Firstly notice that for maximum acceleration magnitude, the player want to minimize $\theta(t)$. This is due to the the law of cosine (\ref{fig:min_theta}).
+\subsubsection{Optimization}
+%Using the same argument as the straight-line model, I will use an initial velocity of $\tv_0 = \tang{0, 250}$.
+To maximize acceleration at each frame, I noticed that the player would want to minimize $\theta(t)$. This is due to the the law of cosine (figure \ref{fig:min_theta}).
 
 \begin{wrapfigure}{r}{0.40\textwidth}
-    \includegraphics[width=0.37\textwidth,right]{assets/min_theta.png}
+    \includegraphics[width=0.37\textwidth,right]{assets/mini_theta.png}
     \caption{Minimizing $\theta(t)$}
     \label{fig:min_theta}
 \end{wrapfigure}
 
-Let $v = \tmag{\tv}$, $a = \tunit{a}$. The length of the hypotenuse
+Let $v_n = \tmag{\tv_n}$, $v_{n+1} = \tmag{\tv_{n+1}}$, and $d = \tmag{d}$. The length of the updated velocity /hypotenuse $v_{n+1}$ using the law of cosine on the opposite angle of $\theta$ is
 \[
-    v' = \sqrt{v^2 + a^2 -2 va \cos (\pi - \theta)}
+    v_{n+1} = \sqrt{v_n^2 + d_n^2 - 2 v_n d\cos (\pi - \theta)}.
 \]
-is the magnitude of the updated velocity. To maximize $v'$ means minimizing $\cos(\pi - \theta)$, as $v$ and $a$ are constant per timeframe. For the cosine function is smaller at higher x values, we need to maximize $\pi - \theta$ and therefore minimize $\theta$.
+Because only $\theta$ is controlled by the player, to maximize the updated velocity $v_{n+1}$ means minimizing $\cos(\pi - \theta)$. For the cosine function is smaller at higher x values, we need to maximize $\pi - \theta$ and therefore minimize $\theta$.
 
-Thus for maximum acceleration, the player needs to minimize $\theta$ while keeping $\theta$ above a value at every time frame. I believe we can optimize the player displacement by setting $\theta$ to equal the value at all times, and that:
+Therefore for maximum acceleration, the player needs to minimize $\theta$ while keeping it above a value limit. This means that we should set $\theta$ to equal the value limit at all times, so
 \[
-    \theta = \cos^{-1} \frac{L-LA\tau}{\tmag{v}}.
+    \theta = \cos^{-1} \frac{L-LA\tau}{r}.
 \]
 
-Notice that the $\theta$ increases as the magnitude of velocity increases, showing that acceleration must decrease as velocity increases. Additionally, the maximization of velocity at every step does not necessarily maximize the player displacement --- a very high velocity pointing towards the origin of jump is more harmful than good.
+Notice that the turning $\theta$ increases as the magnitude of velocity increases, which confirms the Skilled Player's theory of turning the player. Furthermore, this means that the effective acceleration will decrease over time as well.
 
-By substituting this equation of $\theta$, I derived the first step by step difference equation:
+By substituting this equation of $\theta$ into the difference equation of Eq.\ref{eq:1de1}, I derived the difference equation for my first step by step model:
 \begin{figure}[H]
     \centering
     \[
-        d\tv = LA\tau \exp((\phi - \cos^{-1}(\frac{L-LA\tau}{\tmag{v}})) \I).
+        d\tv = LA\tau \exp\left(\left(\phi - \cos^{-1}\left(\frac{L-LA\tau}{r}\right)\right) \I\right).
     \]
     \caption{First Step by Step difference equation}
     \label{fig:sbs}
 \end{figure}
 
-Figure \ref{fig:1sbs} shows the player's motion under this method simulated under Euler's method.
+Figure \ref{fig:1sbs} shows the player's motion under this method.
 
 \begin{figure}[H]
     \centering
@@ -259,23 +277,28 @@ Figure \ref{fig:1sbs} shows the player's motion under this method simulated unde
     \label{fig:1sbs}
 \end{figure}
 
-Oops, it looks like we've done a u-turn and ended up below the x-axis. Although the spacing between each timeframe dots are increasing --- indicating acceleration, the method had to keep turning for maximizing velocity which potentially reduced our displacement. Nevertheless, this first method had a displacement of $\sqrt{368.6^2 + (-57.34)^2} \approx 373.0$, which is a large increase from the straight-line model's $175$ units.
+Oops, it looks like we've done a u-turn and ended up below the x-axis. Although the spacing between each timeframe dots are increasing indicating acceleration, this strategy had to keep turning tp maximize acceleration, of which potentially reduced our displacement if it starts accelerating towards the origin. Nevertheless, this model created a displacement of $\sqrt{368.6^2 + (-57.34)^2} \approx 373.0$, which is a large increase from the previous models.
 
 \subsection{Step by Step with modification}
-The first step by step model (figure \ref{fig:1sbs}) had a problem, that the player needed to turn more than $90$ degrees to keep accelerating, causing backtracking and a u-turn. This sounds counter-intuitive, so I have an idea to fix it: stop turning at a specific angle.
+The first step by step model (figure \ref{fig:1sbs}) had a problem, which is that the player needed to turn more than $90$ degrees in total to maximize acceleration, potentially decreasing the jumping displacement by backtracking. I have an idea to fix it: stop turning at a condition.
 
-The arguments for stop turning at a specific angle is that we are sacrificing potential higher velocity and less distance traveled but directing more forward movements, which could potentially increase the total displacement by reducing the backtracking. I decided to set a maximum angle $k$ for player velocity, which once reached would set $\theta(t) = 0$. I hypothesize that the highest displacement is reached if $k=0$, as it is the moment when the player accelerates towards the x-axis rather than away from it. We can represent this modification using the $\text{pos}(x)$ function as the second step by step difference equation:
+The arguments for stop turning is that we are sacrificing potential higher velocity and less distance traveled but directing more outwards movement that could increase the total displacement. Furthermore, the success of this modification could disprove my conjunctures stating that higher acceleration leads to higher velocity, and therefore higher displacement.
+
+So let there be a maximum angle $k$ for player velocity, which once reached would set $\theta(t) = 0$. We can represent this modification as a piecewise function named second step by step difference equation:
 
 \begin{figure}[H]
     \centering
     \[
-        d\tv = \text{pos}(k - \phi) LA\tau \exp((\phi - \cos^{-1}(\frac{L-LA\tau}{\tmag{v}})) \I) + \text{pos}(\phi - k) w \exp(\phi \I)
+        d\tv = \begin{cases}
+            LA\tau \exp\left(\left(\phi - \cos^{-1}\left(\frac{L-LA\tau}{r}\right)\right) \I\right) & \phi < k\\
+            0 & \text{otherwise}
+        \end{cases}
     \]
     \caption{Second Step by Step difference equation}
     \label{fig:ssbs}
 \end{figure}
 
-Figure \ref{fig:sbs2} shows the different player motion as the maximum angle $k\in [-0.5\pi, 0.5\pi]$ with steps $0.03$ radians for clarity, simulated using equation \ref{fig:ssbs} with Euler's method.
+
 
 \begin{figure}[H]
     \centering
@@ -284,7 +307,7 @@ Figure \ref{fig:sbs2} shows the different player motion as the maximum angle $k\
     \label{fig:sbs2}
 \end{figure}
 
-The paths of maximum displacement is outlined with black, with a total displacement of $\approx 392.15$ with $k=-0.16$. Hilariously, the player still ended up turning over 90 degrees in the jump. The $k$ value of slightly below $0$ is a bit uprising from my hypothesis, but I believe that it is because the extra velocity gained from that $0.16$ degrees became more significant than the backtracking acceleration angles. Yet this is very insignificant, judging by the low gradient around the local maxima in figure \ref{fig:sbs2k}.
+Figure \ref{fig:sbs2} shows the different player motion as the maximum angle $k\in [-0.5\pi, 0.5\pi]$ with steps $0.03$ radians for clarity. The paths of maximum displacement is outlined with black, with value $\approx 392.15$ at $k=-0.16$. As expected, the total turning of the player decreased at the most optimal path. The value $k$ is slightly below $0$, meaning that it is still beneficial --- at least for a bit --- to continue turning and accelerating even if the velocity begins to point towards the x-axis. Yet this value of $k$ is really stable and allows slight errors, judging by the low gradient around the local maxima in figure \ref{fig:sbs2k}.
 
 \begin{figure}[H]
     \centering
@@ -296,57 +319,59 @@ The paths of maximum displacement is outlined with black, with a total displacem
 % the one where you accelerate below max value
 % THIS IS CANCELLED DUE TO WORD LIMIT
 
-\subsection{Optimal starting angle}
-Notice that the second step by step method of equation \ref{fig:ssbs} places the player's displacement vector almost 90 degrees from its initial velocity vector. If we wish to know the maximum size of a gap the player can cross, the intuitive assumption of initial velocity perpendicular to the ledge is incorrect for the player has turned. We need to find the optimal starting velocity angle.
+\subsubsection{Rotating initial velocity}
+To generalize the second step by step model, I wanted to utilize the rotational invariant of the problem to align the final displacement onto the x-axis.
+
+Because the model placed the player's final position at quite an angle against the initial velocity, it means that if we wish cross a gap, the intuitive assumption of initial velocity perpendicular to the ledge is incorrect for the player has turned. The first step of generalization would be finding the optimal angle of initial velocity.
 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{assets/step_by_step_edge.png}
-    \caption{}
+    \caption{The rotation of the second step by step model}
     \label{fig:sbsedge}
 \end{figure}
 
 
-Consider figure \ref{fig:sbsedge} with gaps as vertical purple lines. The blue curve represents the player motion with initial velocity
+Consider figure \ref{fig:sbsedge} with the x-axis gap as vertical purple lines. The blue curve represents the player motion with initial velocity in the y-axis
 \[
-    \tv_0 = \tang{0, 250},
+    \tv(0) = \tang{0, 250},
 \]
-the red line is the final player displacement. To ensure that the player's displacement is a straight line, we simply need to ensure the player displacement is on an axis. I've achieved this by rotating the initial velocity (and thus entire player motion) by the polar angle $\phi$ at position $\tp({t_f})$:
+the red line is the final player's displacement. To ensure that the player's displacement is a line on the x-axis perpendicular to the gap, I can rotate the initial velocity (and thus entire player motion) by an angle $\phi$ so that the angle of the final displacement is zero. So
 \[
-    \phi = \tan^{-1} \frac{42.4}{389.86} \approx 0.11,
+    \phi = -\tan^{-1} \frac{42.4}{389.86} \approx -0.11,
 \]
-and the optimal player initial velocity is
+and the optimal player's initial velocity is
 \[
     \tv_0 = R(\phi)\tpar{0}{250} = \begin{bmatrix}
         \cos \phi & -\sin \phi \\
         \sin \phi & \cos \phi
     \end{bmatrix}\tpar{0}{250} \approx \tpar{27.03}{248.53}
 \]
-which is calculated by a 2d rotation matrix. The rotated player motion is shown to be the yellow curve.
+which is calculated by a 2d rotation matrix. The rotated player motion is the yellow curve in the figure above.
 
 % 3866 words, very close
-The second step by step model is a significant improvement over the first step by step model. It increased the total jump displacement from $\approx 373.0$ to $\approx 392.15$, which is due to the pausing of rotation at angle $\phi \approx 0.16$ to prevent accelerating backwards towards the origin. It is also found that the optimal initial velocity should be angled $\approx 0.11$ radians from the ledge if the player wishes to jump the furthest from ledge to ledge.
+\subsection{Evaluation}
+Overall, the second step by step model is a significant improvement over the first step by step model. It increased the total jump displacement from $\approx 373.0$ to $\approx 392.15$, and is due to the pausing of rotation at angle $\phi \approx 0.16$. I also found that the optimal initial velocity should be angled $\approx 0.11$ radians from the ledge if the player wishes to jump across the longest gap.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\linewidth]{assets/step_by_step_acc.png}
-        \caption{}
+    \includegraphics[width=0.8\linewidth]{assets/step_by_step_acc.png}
+        \caption{The optimal discrete angular function $\theta(t)$}
         \label{fig:sbsa}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-   \includegraphics[width=0.7\linewidth]{assets/step_by_step_acc_v.png}
-        \caption{}
-        \label{fig:sbsav}
-\end{figure}
+%\begin{figure}[H]
+%    \centering
+%   \includegraphics[width=0.7\linewidth]{assets/step_by_step_acc_v.png}
+%        \caption{}
+%        \label{fig:sbsav}
+%\end{figure}
 
 % conclusions
-The step by step models overall are really complex and sophisticated for a player to achieve. The player must accelerate
-following the acceleration vectors in figure \ref{fig:sbsa} throughout the jump with a time-span of less than a second; or it must be able to judge their velocity, and accelerate at an increasing angle $\theta(t)$ over time against it as seen in figure \ref{fig:sbsav}. Either method is hard to achieve without tool assistance, but grants a respective gain in jump displacement of around $200$ hammerunits against the straight-line method.
+The step by step models overall are very complex and sophisticated for a player to achieve. The player must be able to judge their velocity, and accelerate at an increasing angle $\theta(t)$ over time against it as seen in figure \ref{fig:sbsa}. This is hard to achieve without external assistance from computers or software, but it grants a respective gain in jump displacement of around $200$ hammerunits against the simplest straight-line model.
 
-The modification adds additional complexity in requiring the player to snap their acceleration to their velocity at a specific velocity angle, or around $0.4$ seconds; but it comes with an extra gain of $392.15-373.0\approx19.15$ hammerunits of displacement; marking it the most optimal model I've came up with.
+The modification adds additional complexity in requiring the player to snap their acceleration as to stop any turning at a specific velocity angle, or at around $0.4$ seconds; but it comes with an extra gain of $392.15-373.0\approx19.15$ hammerunits of displacement against the non modified method, marking it the most optimal model I've came up with.
 % conclude this method
 
 
