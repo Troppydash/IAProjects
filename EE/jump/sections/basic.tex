@@ -1,20 +1,20 @@
 
 \section{Basic Models}
-I want to set some baseline movement models in this section, for it not only helps me to visualize the problem, but can also test my conjuncture of the continuous approximations.
+I want to set some baseline models in this section for it can help me to visualize the problem and can also test my conjuncture of the continuous approximations.
 
-Firstly, I wish to find an optimal starting condition, and an analogy can made with projectile motion, leading to the precalculation of the vertical motion; Secondly, I hope to model the mechanics between the remaining two axis of motion; Lastly, I will fit various acceleration models using my intuition, calculus, and even polar coordinates.
+Firstly, I wish to find an optimal starting condition, leading to the precalculation of the vertical motion; Secondly, I hope to model the motion of the remaining two axis of motion; Lastly, I will fit various acceleration models using my intuition, calculus, and even polar coordinates.
 
 % straight line
-\subsection{Key idea and boundary condition}
-The key idea that will be repeated throughout this analysis is the extend that maximizing the player velocity will maximize the displacement. I hypothesized this from the position differential equations in Eq. \ref{eq:1de2}, that under the assumption of constant velocity, the final displacement will be proportional to that constant:
+\subsection{Key idea and boundary conditions}
+The key idea that is repeated throughout this analysis is the extent that maximizing the player's velocity or acceleration will maximize the displacement. I hypothesized this from the positional differential equations in Eq. \ref{eq:1de2}, where under the assumption of constant velocity the final displacement will be proportional to that constant:
 \begin{align*}
     \tp'(t) &= \tv(t)\\
     \tp(t) &= \int \tv(t) \, dt\\
-    &= t(\tv(t)) + \tp(0) = t(\tv(t)) + \tvec{0},\\
+    &= t\tv(t) + \tp(0) = t\tv(t) + \tzero,\\
     \tp &\propto \tv(t).
 \end{align*}
 
-Therefore, I was able to set an optimal initial velocity for the player, also known as the boundary condition of the problem. For we are maximizing the jump displacement, and higher velocity equates to higher displacement, it is reasonable to set the initial velocity as high as possible. So
+Using this idea, I devised an optimal initial velocity for the player --- this also known as the boundary condition of the problem. For we are maximizing the jump displacement, and higher velocity equates to higher displacement, it is reasonable to set the initial velocity/speed as high as possible. So
 \[
     \tmag{\tv} = 250,
 \]
@@ -38,23 +38,31 @@ where $250$ is fastest ground running speed.
 \end{figure}
 
 
-Furthermore, it should be noted that the problem is rotationally invariant when viewed top down. Let the z-axis denote the vertical height of the player, and the x,y-axis to be the plane displacement from a top down view (see figure \ref{fig:1coordinates}, figure \ref{fig:2coordinates_topdown}). \begin{wrapfigure}{r}{0.40\textwidth}
+Furthermore, it should be noted that the problem is rotationally invariant when viewed top down. Let the z-axis denote the vertical height of the player, and the x,y-axis to be the plane displacement from a top down view (see figure \ref{fig:1coordinates}, figure \ref{fig:2coordinates_topdown}). Due to the jump performance on an even plane, the player's z-index will remain unchanged before and after the jump.
+
+\begin{wrapfigure}{r}{0.40\textwidth}
     \includegraphics[width=0.37\textwidth,right]{assets/2turning.png}
     \caption{Rotational Invariant (the player wishes to go rightwards)}
     \label{fig:2turning}
 \end{wrapfigure}
-By considering only the x,y-axis --- and the z-axis remaining constant before and after the jump --- I realized that an optimal strategy does not depend on the angle of the initial velocity vector within the plane, for unless we somehow ended up behind our initial direction, it is always possible to rotate the initial velocity such that we travel in a desired direction of displacement (see figure \ref{fig:2turning}). This meant that the optimal initial velocity is not restricted to a certain direction, but for the sake of consistency between models, I shall use the initial velocity pointing in the y-axis:
+
+By considering only the x,y-axis then, I realized that an optimal strategy does not depend on the angle of the initial velocity vector within the plane, for it is always possible to rotate the initial velocity so that we travel in a desired direction of displacement (see the blue vector and purple curve in figure \ref{fig:2turning}). This meant that the optimal initial velocity is not restricted to a certain direction, but for the sake of consistency between models, I shall use the initial velocity pointing in the y-axis:
 \[
-    \tv = \tang{0, 250, 0}.
+    \tv(0) = \tang{0, 250, 0}.
 \]
+Additionally, let the initial position of the player to be zero for ease of calculations:
+\[
+    \tp(0) = \tang{0, 0, 0}
+\]
+
 
 \subsection{Straight Line}
 
-With the key idea and boundary condition in mind, I attempted a straight line strategy. This model has the player accelerate and move in a straight line, for mathematics has taught me that the shortest distance between two points comes from a line, resulting in less time needed to travel a long distance, which is helpful in optimizing displacement over time. To achieve this, the player would need to accelerate along the y-axis, for that is in the direction of its initial velocity, which maximizes speed at all times, and would theoretically result in the largest displacement. Mathematically, this is equivalent, to setting the directional vector to
+With the key idea and boundary conditions in mind, I attempted a straight line strategy. This model has the player accelerate and move in a straight line, as mathematics has taught me that the shortest displacement between two points comes from a line, meaning in less time needed to travel a long displacement, which is helpful in optimizing displacement over time. To achieve this, the player would need to accelerate along its initial velocity --- the y-axis, which ideally maximizes speed at all times, and would theoretically result in the largest displacement. Mathematically this is equivalent to setting the directional vector to
 \[
     \td(t) = \tang{0, 1, 0}
 \]
-for all time $t$. Realistically, this will be equivalent to pressing down ``w'' and not moving the mouse.
+at all times. Realistically, this will be equivalent to pressing down the move forward button and not moving the mouse that turns the player.
 % do model!!
 \begin{figure}[H]
     \centering
@@ -72,7 +80,7 @@ for all time $t$. Realistically, this will be equivalent to pressing down ``w'' 
     \end{minipage}
 \end{figure}
 
-To test this model, I recorded myself jumping and doing the actions described above --- it is important that the x,z-axis should not be changed after the jump; it is only the y-axis that I am recording. Figure \ref{fig:straight_constraint} shows my estimation of the real player's path with software; Figure \ref{fig:2straightjumping} shows the coordinates of the player at the start of the jump $\tp(0)$, the first discrete time of the jump $\tp(\tau)$, and the end of the jump $\tp(t_f)$ --- the symbol $t_f$ denotes the duration of the jump. Here are them written inline:
+To test this model, I recorded myself jumping and performing the actions described above. Ideally the x,z-axis shouldn't be changed as I am moving along the y-axis only. Figure \ref{fig:straight_constraint} shows the estimation of the player's path using software; Figure \ref{fig:2straightjumping} shows the coordinates of the player at the start of the jump $\tp(0)$, the first frame of the jump $\tp(\tau)$, and the end of the jump $\tp(t_f)$, where the symbol $t_f$ denotes the duration of the jump:
 \begin{align}
  \tp(0) &= \tang{1702.63, 725.59, 128.03}, \quad \tmag{\tv(0)} = 250.00 \label{eq:2emp0}\\
  \tp(\tau) &= \tang{1702.63, 721.27, 130.83}, \quad \tmag{\tv(\tau)} = 378.35 \label{eq:2emp1}\\
@@ -80,7 +88,7 @@ To test this model, I recorded myself jumping and doing the actions described ab
 \end{align}
 
 \subsubsection{Analysis}
-Using the simple empirical data in Eq. \ref{eq:2emp0}, Eq. \ref{eq:2emp1}, and Eq. \ref{eq:2emp2}, not only can I analyze the straight line model, but I can also calculate the various fundamental constants within the problem --- such as impulse and acceleration. However, I've also noticed that the x,z-axis has changed after the jump. The x change is likely the result of my uncertainty in having an initial velocity directly in the y-axis, but due to the rotational invariant discussed before, this is a non detrimental problem; but the z-axis is different and is likely to be the result of some ``bounciness'' of the player as it hits the floor --- which doesn't matter in the optimizing of displacement. Thus, I chose to ignore only the z-axis change during calculations.
+With the simple empirical data in Eq. \ref{eq:2emp0}, Eq. \ref{eq:2emp1}, and Eq. \ref{eq:2emp2}, not only can I analyze the straight line model, but I can also calculate the various fundamental constants within the problem such as impulse and acceleration. However, I've also noticed that the x,z-axis has changed after the jump. The x change is likely the result of my uncertainty in having an initial velocity directly in the y-axis, but due to the rotational invariant discussed before, this is a non detrimental problem; but the z-axis is different and is likely to be the result of some ``bounciness'' of the player as it hits the floor --- which doesn't matter in the optimizing of displacement. Thus, I chose to ignore only the z-axis change during calculations.
 
 The total displacement of this jump par definition is the expression $d = \tmag{\tp(t_f) - \tp(0)}$, which is
 \begin{align*}
