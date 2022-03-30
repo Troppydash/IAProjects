@@ -2,23 +2,23 @@
 
 %\paragraph{Research Question:}
 
-In this essay, I will be optimizing the jumping displacement in the video game ``Counter Strike, Source''. This is a competitive game that I enjoy where you control a ``player'' in a simulated 3D space doing objectives. While normally the player's movement --- the velocity in particular --- in the game is limited by a value for fairness sake, I realized that it can be exceeded under certain circumstances. This is extremely helpful in a game where your movement determines you and your team's success, therefore, I sought to master this technique with mathematics.
+In this essay, I will attempt to maximize the jump displacement of a player in the video game ``Counter Strike, Source'' (CITATION). This is a competitive game that I enjoy where you control a ``player'' in a simulated 3D space doing objectives. While normally the player's movement --- the velocity in particular --- in the game is limited by a value for fairness sake, I realized that it can be exceeded under certain circumstances. This is extremely helpful in a game where your movement determines you and your team's success, therefore, I sought to master this technique with mathematics.
 
 % This is a result of a friend sending me inhuman like videos of people playing the game, ``exploiting'' it to make themselves move much faster in midair than intended. Out of interest, I found this exploit online and wanted was hooked --- but it is difficult to utilize a new piece of knowledge without understanding it. I want to perfect this act of incredible movement optimally.
 
 To achieve this I would need to select and concentrate on a single matrix to evaluate my models against, because of the myriad uses of this technique in game; I chose the displacement traveled in a player jump for its simplicity. My research question was therefore:
 \begin{quote}
-    To what extent can a player travel in displacement through a jump action on an even plane within the video game ``Counter Strike, Source''?
+    To what extent can I use an input/acceleration function to maximize the player's x,y-axis displacement during one jump above a flat z-axis plane with achievable initial conditions in the video game ``Counter Strike, Source''?
 \end{quote}
 
 % definition
 \subsection{Mathematical definition}
-The question is easier to analyze when defined mathematically, but in order to explain the mechanics, let's first consider an analogy to real life. Consider the modeling of a student's location within a school: we designate him with a position, velocity, and acceleration, then by simply applying the classical laws of motion we can accurately locate him at all times. In the context of the video game, the student is the player, the school is a ``map'', and a similar ``law of motion'' is applied programmatically. Additionally, the game uses ``hammer units'' as units of space and seconds as units of time in its virtual environment.
+The question is easier to analyze when defined mathematically, but in order to explain the mechanics, let's first consider an analogy to real life. Consider the modeling of a student's movement within a school: we designate him with a position, velocity, and acceleration, then by simply applying the classical laws of motion we can accurately locate him at all times. In the context of the video game, the student is the player, the school is a ``map'', and a similar ``law of motion'' is applied programmatically. Additionally, the game uses ``hammer units'' as units of space and seconds as units of time in its virtual environment.
 
 
-From my personal experience with the game, and from external sources on this topic \parencite{Kered13}, The player's position are coordinates of three real numbers, representing its 3D displacement against the origin coordinate $\tang{0,0,0}$. I will denote its position by a bold $\tp$ using vector notation
+From my personal experience with the game, and from secondary sources on this topic \parencite{Kered13}, the player's positions are coordinates of three real numbers, representing its 3D displacement against the map origin coordinate $\tang{0,0,0}$. I will denote this position by a bold $\tp$ using vector notation
 \[
-    \tp = \tang{x, y, z} \quad \text{where} \, x, y, z \in  \mathbb{R}.
+    \tp = \tang{x, y, z} = \tpars{x}{y}{z} \quad \text{where} \, x, y, z \in  \mathbb{R}.
 \]
 
 \begin{wrapfigure}{r}{0.40\textwidth}
@@ -27,16 +27,16 @@ From my personal experience with the game, and from external sources on this top
     \label{fig:1coords}
 \end{wrapfigure}
 
-The game stores the velocity of the player as a real 3-vector as well, which I will denote by a bold $\tv$. The magnitude of these positions, velocities, and any real 3-vectors are computed using Pythagoras's theorem: here is the equation for the player's speed,
+Continuing, the game stores the velocity of the player as a real 3-vector as well, which I will denote by a bold $\tv$. The magnitude of these positions, velocities, and any real 3-vectors are computed using Pythagoras's theorem: here is the equation for the player's speed,
 \[
     \tmag{\tv} = \sqrt{\tv_x^2+\tv_y^2+\tv_z^2}.
 \]
 
 
-Figure \ref{fig:1coords} is a snapshot of the game showing the two value; the player is at position $\tang{226.96, -474.47, 69.52}$ with a velocity of magnitude $51.99$ (the displayed values are rounded to 2 p).
+Figure \ref{fig:1coords} is a snapshot of the game showing the two values; the player is at position \verb|pos|:$\tang{226.96, -474.47, 69.52}$ with a velocity of magnitude \verb|vel|:$51.99$. The \verb|ang| value is the Euler angles (CITATION) of the player's direction, showing a pitch of $1.86$ degrees from the x,y-axis and a yaw of $-96.86$ degrees within the x,y-axis.
 
 
-The game also keeps track of the time elapsed, and updates the player's position and velocity $n$ times a second, called $n$ ticks. This value is often $64$, meaning $64$ evenly spaced updates in a second. I will represent the time between updates as $\tau$, a value of
+The game also keeps track of the time elapsed, and updates the player's position and velocity evenly $64$ times a second (CITATION). I will denote the time between updates with $\tau$, of value
 \[
     \tau = \frac{1}{64} = 0.015625 \si{s}.
 \]
@@ -55,15 +55,17 @@ Moreover, the acceleration $\ta$ is also a real 3-vector. It is computed every u
 
 The process of one such update is called a ``frame'', and can be visualized through vectors scalings and additions as figure \ref{fig:1vecadd} demonstrates.
 
-It is therefore obvious to see that the player position and velocity are discrete functions of time. While it may be conventional to represent the time parameter as subscripts, I decided against it and to write it with a continuous function syntax. This is because the powerful optimization techniques such as calculus only apply to continuous functions, and I conjecture that the small delta time $\tau$ justifies such transition from discrete to continuous. Beneficially, the function syntax allows for such continuous position and velocity, while still retaining the faithful discrete time properties in case I wish to fall back upon it. To summarize, I decided to model the motion of the player with the functions $\tp(t)$ and $\tv(t)$, where $t$ is time elapsed in seconds from the start of the jump, with the updating process now approximated by differential equations:
+It is therefore obvious to see that the player position and velocity are discrete functions of time. While it may be conventional to represent the time parameter as subscripts, I decided against it and instead using a continuous function syntax. This is because the powerful optimization technique --- calculus --- only applies to continuous functions, and I conjecture that the small $\tau$ justifies such transition of time from discrete to continuous (CITATION). The function syntax $f(t)$ easily denotes continuous position and velocity, while still allowing discreteness $f(n\tau), \quad n\in\mathbb{Z}$ used in section 3.
+
+Without loss of generality, I can model the player's motion with the functions $\tp(t)$ and $\tv(t)$, where $t$ is time elapsed from the start of the jump. The updating process is now approximated by differential equations:
 \begin{align}
     \tv'(t) &= \ta(t) \label{eq:1de1}\\
     \tp'(t) &= \tv(t) \label{eq:1de2}.
 \end{align}
 
-Ultimately, the problem can be formally state as so:
+Ultimately, the problem can be formally stated as:
 \begin{quote}
-    Given initial position $\tvec{p}(0)$ and velocity $\tvec{v}(0)$ as three dimensional vectors when the player initializes a jump event. If $\ta(t)$ is the acceleration vector function representing the player acceleration at every time $t$, with $\tv(t)$ and $\tp(t)$ being the respective derived velocity and position of the player at time $t$, what is the maximum displacement $\tmag{\tp(t_f) - \tp(0)}$ achievable if $t_f$ is the total duration of the jump?
+    Given initial position and velocity $\tvec{p}(0)$ and $\tvec{v}(0)$ as three dimensional vectors when the player initializes a jump event, if $\ta(t)$ is the player's acceleration at time $t$, with $\tv(t)$ and $\tp(t)$ being the respective derived velocity and position of the player, what is the achievable maximum displacement $\tmag{\tp(t_f) - \tp(0)}$ if $t_f$ is the total time of the jump?
 \end{quote}
 %The problem originated from my personal curiosity within the limitations of the video game ``Counter Strike'' that occupies a large part of my life. It came about as I was getting into the community of counter-strike long jumping --- a community aiming to exploit the video game's physics to achieve the longest jumping distance. Therefore I want to explore this optimization problem with various methods in an extended essay to further improve my knowledge within this ``niche`` community.
 
