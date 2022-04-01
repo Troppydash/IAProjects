@@ -160,7 +160,36 @@ Let the player displacement $\tp$, velocity $\tv$ be complex numbers with the re
 where $a$ and $r$ are the magnitudes of the player displacement and velocity, and $b$ and $\phi$ are their respective angles from the x-axis.
 
 \begin{wrapfigure}{r}{0.40\textwidth}
-    \includegraphics[width=0.3\textwidth,right]{assets/angular_freedom.png}
+    \sized[0.4]{
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        %uncomment if require: \path (0,224); %set diagram left start at 0, and has height of 224
+
+        %Shape: Axis 2D [id:dp14144095768588938] 
+        \draw [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ] (423.68,50.2) -- (455.25,50.2)(426.84,18.66) -- (426.84,53.7) (448.25,45.2) -- (455.25,50.2) -- (448.25,55.2) (421.84,25.66) -- (426.84,18.66) -- (431.84,25.66)  ;
+        %Straight Lines [id:da47227000140678865] 
+        \draw    (304.12,154.45) -- (362.4,70.91) ;
+        \draw [shift={(364.12,68.45)}, rotate = 124.9] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+        %Straight Lines [id:da6578973543629849] 
+        \draw [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,draw opacity=1 ]   (304.12,154.45) -- (408.21,127.21) ;
+        \draw [shift={(411.12,126.45)}, rotate = 165.34] [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+        %Shape: Arc [id:dp2369142581998589] 
+        \draw  [draw opacity=0] (320.12,131.99) .. controls (323.02,133.62) and (325.25,136.41) .. (326.06,139.91) .. controls (326.76,142.95) and (326.25,145.98) .. (324.86,148.51) -- (314.17,142.64) -- cycle ; \draw  [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ] (320.12,131.99) .. controls (323.02,133.62) and (325.25,136.41) .. (326.06,139.91) .. controls (326.76,142.95) and (326.25,145.98) .. (324.86,148.51) ;  
+
+        % Text Node
+        \draw (433.67,51.67) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {{\fontfamily{pcr}\selectfont x}};
+        % Text Node
+        \draw (412.33,27) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {{\fontfamily{pcr}\selectfont y}};
+        % Text Node
+        \draw (334.52,120.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,opacity=1 ,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle \theta $};
+        % Text Node
+        \draw (352.52,149.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,opacity=1 ,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle d$};
+        % Text Node
+        \draw (317.52,85.7) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {$\displaystyle v$};
+        \end{tikzpicture}
+    }
+    %\includegraphics[width=0.3\textwidth,right]{assets/angular_freedom.png}
     \caption{\vspace{1ex} Angular function}
     \label{fig:angular_freedom}
 \end{wrapfigure}
@@ -205,7 +234,67 @@ It is now possible to rewrite the speed limit as a simple cosine inequality. Ass
 %\]
 %where $\gamma_1 = LA\tau$ and $\gamma_2 = L - \tv \cdot \tunit{a}$. This can be rewritten in terms of our new angular function $\theta(t)$.
 \begin{wrapfigure}{r}{0.40\textwidth}
-    \includegraphics[width=0.37\textwidth,right]{assets/discrete_limit.png}
+    %\includegraphics[width=0.37\textwidth,right]{assets/discrete_limit.png}
+    \sized[0.4]{
+        
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,269); %set diagram left start at 0, and has height of 269
+
+%Shape: Axis 2D [id:dp3688296019635018] 
+\draw [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ] (419.68,43.2) -- (451.25,43.2)(422.84,11.66) -- (422.84,46.7) (444.25,38.2) -- (451.25,43.2) -- (444.25,48.2) (417.84,18.66) -- (422.84,11.66) -- (427.84,18.66)  ;
+%Straight Lines [id:da15946190790496706] 
+\draw [color={rgb, 255:red, 224; green, 16; blue, 209 }  ,draw opacity=1 ]   (253.98,218.45) -- (339.9,179.96) ;
+\draw [shift={(342.63,178.73)}, rotate = 155.87] [fill={rgb, 255:red, 224; green, 16; blue, 209 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+%Straight Lines [id:da23789994899521405] 
+\draw    (253.98,218.45) -- (298.66,87.57) ;
+\draw [shift={(299.63,84.73)}, rotate = 108.85] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+%Straight Lines [id:da7945400962055216] 
+\draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ]   (299.63,84.73) -- (317.53,76.04) -- (331.93,69.04) ;
+\draw [shift={(334.63,67.73)}, rotate = 154.09] [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+%Straight Lines [id:da32752633260821995] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (299.63,84.73) -- (309.1,105.43) -- (342.63,178.73) ;
+%Shape: Right Angle [id:dp1944206914820521] 
+\draw   (333.14,183.05) -- (328.83,173.55) -- (338.32,169.24) ;
+%Straight Lines [id:da11716809450724408] 
+\draw    (253.98,218.45) -- (333.22,70.38) ;
+\draw [shift={(334.63,67.73)}, rotate = 118.15] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+%Shape: Right Angle [id:dp26249838064168163] 
+\draw   (308.97,81.07) -- (313.67,90.38) -- (304.37,95.08) ;
+%Straight Lines [id:da3181116090278877] 
+\draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ]   (342.63,178.73) -- (374.88,164.92) ;
+\draw [shift={(377.63,163.73)}, rotate = 156.8] [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+%Straight Lines [id:da11758138251143024] 
+\draw [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,draw opacity=1 ]   (256.98,226.45) -- (408.38,161.42) ;
+\draw [shift={(411.13,160.23)}, rotate = 156.75] [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+%Straight Lines [id:da7832053208510404] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (259.98,233.45) -- (383.13,180.23) ;
+
+% Text Node
+\draw (429.67,44.67) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\fontfamily{pcr}\selectfont x}};
+% Text Node
+\draw (408.33,20) node [anchor=north west][inner sep=0.75pt]   [align=left] {{\fontfamily{pcr}\selectfont y}};
+% Text Node
+\draw (253.98,125) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle v_{n}$};
+% Text Node
+\draw (331.98,83) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle v_{n+1}$};
+% Text Node
+\draw (336.74,152.6) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,opacity=1 ,rotate=-335.67] [align=left] {$\displaystyle LA\tau $};
+% Text Node
+\draw (264.74,190.6) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 224; green, 16; blue, 194 }  ,opacity=1 ,rotate=-335.67] [align=left] {proj$\displaystyle ( v,d)$};
+% Text Node
+\draw (288.74,58.6) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,opacity=1 ,rotate=-335.67] [align=left] {$\displaystyle LA\tau $};
+% Text Node
+\draw (413.13,163.23) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,opacity=1 ] [align=left] {$\displaystyle d$};
+% Text Node
+\draw (340.06,218.34) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,opacity=1 ] [align=left] {$\displaystyle L$};
+
+
+\end{tikzpicture}
+
+    }
     \caption{Discrete Limit}
     \label{fig:discrete_limit}
 \end{wrapfigure}
@@ -241,7 +330,57 @@ Therefore, we can rewrite the 2D acceleration function $\ta(t)$ with:
 To maximize acceleration at each frame, I noticed that the player would want to minimize $\theta(t)$. This is due to the the law of cosine (figure \ref{fig:min_theta}).
 
 \begin{wrapfigure}{r}{0.40\textwidth}
-    \includegraphics[width=0.37\textwidth,right]{assets/mini_theta.png}
+    %\includegraphics[width=0.37\textwidth,right]{assets/mini_theta.png}
+    \sized{
+    
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+
+%Shape: Axis 2D [id:dp161788656784575] 
+\draw [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ] (443.68,70.2) -- (475.25,70.2)(446.84,38.66) -- (446.84,73.7) (468.25,65.2) -- (475.25,70.2) -- (468.25,75.2) (441.84,45.66) -- (446.84,38.66) -- (451.84,45.66)  ;
+%Straight Lines [id:da6082790355416728] 
+\draw [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,draw opacity=1 ]   (294.85,233.78) -- (371.11,212.06) ;
+\draw [shift={(374,211.23)}, rotate = 164.1] [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+%Straight Lines [id:da529580686828609] 
+\draw [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,draw opacity=1 ]   (334.85,130.78) -- (411.11,109.06) ;
+\draw [shift={(414,108.23)}, rotate = 164.1] [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+%Straight Lines [id:da6869395653145243] 
+\draw    (294.85,233.78) -- (333.76,133.58) ;
+\draw [shift={(334.85,130.78)}, rotate = 111.22] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+%Straight Lines [id:da8505569385359156] 
+\draw    (294.85,233.78) -- (411.93,110.41) ;
+\draw [shift={(414,108.23)}, rotate = 133.5] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+%Shape: Arc [id:dp13917835626195973] 
+\draw  [draw opacity=0] (303.12,213.99) .. controls (306.02,215.62) and (308.25,218.41) .. (309.06,221.91) .. controls (309.76,224.95) and (309.25,227.98) .. (307.86,230.51) -- (297.17,224.64) -- cycle ; \draw  [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ] (303.12,213.99) .. controls (306.02,215.62) and (308.25,218.41) .. (309.06,221.91) .. controls (309.76,224.95) and (309.25,227.98) .. (307.86,230.51) ;  
+%Straight Lines [id:da505532385848832] 
+\draw  [dash pattern={on 4.5pt off 4.5pt}]  (361.05,63.07) -- (294.85,233.78) ;
+%Shape: Arc [id:dp87688867176111] 
+\draw  [draw opacity=0] (344.12,109.99) .. controls (347.02,111.62) and (349.25,114.41) .. (350.06,117.91) .. controls (350.76,120.95) and (350.25,123.98) .. (348.86,126.51) -- (338.17,120.64) -- cycle ; \draw  [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ] (344.12,109.99) .. controls (347.02,111.62) and (349.25,114.41) .. (350.06,117.91) .. controls (350.76,120.95) and (350.25,123.98) .. (348.86,126.51) ;  
+
+% Text Node
+\draw (453.67,71.67) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {{\fontfamily{pcr}\selectfont x}};
+% Text Node
+\draw (432.33,47) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {{\fontfamily{pcr}\selectfont y}};
+% Text Node
+\draw (315.52,206.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,opacity=1 ,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle \theta $};
+% Text Node
+\draw (350.52,102.4) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,opacity=1 ,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle \theta $};
+% Text Node
+\draw (294.85,156) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {$\displaystyle v_{n}$};
+% Text Node
+\draw (377.43,152.51) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {$\displaystyle v_{n+1}$};
+% Text Node
+\draw (328.43,227.51) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,opacity=1 ,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle d$};
+% Text Node
+\draw (371.43,98.51) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,opacity=1 ,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle d$};
+
+
+\end{tikzpicture}
+
+    }
     \caption{Minimizing $\theta(t)$}
     \label{fig:min_theta}
 \end{wrapfigure}
