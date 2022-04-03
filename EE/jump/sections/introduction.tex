@@ -2,7 +2,7 @@
 
 %\paragraph{Research Question:}
 
-In this essay, I will attempt to maximize the jump displacement of a player in the video game ``Counter Strike, Source'' (CITATION). This is a competitive game that I enjoy where you control a ``player'' in a simulated 3D space doing objectives. While normally the player's movement --- the velocity in particular --- in the game is limited by a value for fairness sake, I realized that it can be exceeded under certain circumstances. This is extremely helpful in a game where your movement determines you and your team's success, therefore, I sought to master this technique with mathematics.
+In this essay, I will attempt to maximize the jump displacement of a player in the video game ``Counter Strike, Source''\citefoot{source}. This is a competitive game that I enjoy where you control a ``player'' in a simulated 3D space doing objectives. While normally the player's movement --- the velocity in particular --- in the game is limited by a value for fairness sake, I realized that it can be exceeded under certain circumstances. This is extremely helpful in a game where your movement determines you and your team's success, therefore, I sought to master this technique with mathematics.
 
 % This is a result of a friend sending me inhuman like videos of people playing the game, ``exploiting'' it to make themselves move much faster in midair than intended. Out of interest, I found this exploit online and wanted was hooked --- but it is difficult to utilize a new piece of knowledge without understanding it. I want to perfect this act of incredible movement optimally.
 
@@ -16,90 +16,44 @@ To achieve this I would need to select and concentrate on a single matrix to eva
 The question is easier to analyze when defined mathematically, but in order to explain the mechanics, let's first consider an analogy to real life. Consider the modeling of a student's movement within a school: we designate him with a position, velocity, and acceleration, then by simply applying the classical laws of motion we can accurately locate him at all times. In the context of the video game, the student is the player, the school is a ``map'', and a similar ``law of motion'' is applied programmatically. Additionally, the game uses ``hammer units'' as units of space and seconds as units of time in its virtual environment.
 
 
-From my personal experience with the game, and from secondary sources on this topic \parencite{Kered13}, the player's positions are coordinates of three real numbers, representing its 3D displacement against the map origin coordinate $\tang{0,0,0}$. I will denote this position by a bold $\tp$ using vector notation
+From my personal experience with the game, and from secondary sources on this topic\citefoot{Kered13}, the player's positions are coordinates of three real numbers, representing its 3D displacement against the map origin coordinate $\tang{0,0,0}$. I will denote this position with a bold $\tp$ using vector notation
 \[
     \tp = \tang{x, y, z} = \tpars{x}{y}{z} \quad \text{where} \, x, y, z \in  \mathbb{R}.
 \]
-
-\begin{wrapfigure}{r}{0.40\textwidth}
-    \includegraphics[width=0.37\textwidth,right]{assets/1coords.png}
-    \caption{Player Coordinates}
-    \label{fig:1coords}
-\end{wrapfigure}
 
 Continuing, the game stores the velocity of the player as a real 3-vector as well, which I will denote by a bold $\tv$. The magnitude of these positions, velocities, and any real 3-vectors are computed using Pythagoras's theorem: here is the equation for the player's speed,
 \[
     \tmag{\tv} = \sqrt{\tv_x^2+\tv_y^2+\tv_z^2}.
 \]
 
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{.5\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{assets/1coords.png}
+        \caption[Player Coordinates]{Player coordinates}
+        \label{fig:1coords}
+    \end{minipage}%
+    \begin{minipage}{.5\textwidth}
+        \centering
+         \includegraphics[width=0.7\textwidth]{assets/viewangles.png}
+        \caption[Player View Angles]{Player view angles: $\theta$ for yaw, $\phi$ for pitch\footnotemark}
+        \label{fig:view_ang}
+    \end{minipage}
+\end{figure}
+\footnotetext{\citeall{euler_ang}}
 
-Figure \ref{fig:1coords} is a snapshot of the game showing the two values; the player is at position \verb|pos|:$\tang{226.96, -474.47, 69.52}$ with a velocity of magnitude \verb|vel|:$51.99$. The \verb|ang| value is the Euler angles (CITATION) of the player's direction, showing a pitch of $1.86$ degrees from the x,y-axis and a yaw of $-96.86$ degrees within the x,y-axis.
+
+Figure \ref{fig:1coords} is a snapshot of the game showing the two values; the player is at position \verb|pos|:$\tang{226.96, -474.47, 69.52}$ with a velocity of magnitude \verb|vel|:$51.99$. The \verb|ang| value is the Euler angles of the player's direction, showing a pitch of $1.86$ degrees from the x,y-axis and a yaw of $-96.86$ degrees within the x,y-axis (figure \ref{fig:view_ang}).
 
 
-The game also keeps track of the time elapsed, and updates the player's position and velocity evenly $64$ times a second (CITATION). I will denote the time between updates with $\tau$, of value
+The game also keeps track of the time elapsed, and updates the player's position and velocity evenly $64$ times a second\citefoot{ticks}. I will denote the time between updates with $\tau$, of value
 \[
     \tau = \frac{1}{64} = 0.015625 \si{s}.
 \]
 
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
 
-
-
-\begin{wrapfigure}{r}{0.40\textwidth}
-    %\includegraphics[width=0.37\textwidth,right]{assets/1vecadd.png}
-   \sized[0.4]{
-
-
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
-
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-%uncomment if require: \path (0,222); %set diagram left start at 0, and has height of 222
-
-%Straight Lines [id:da5341042164989492] 
-\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (238.83,207.63) -- (292.55,94.34) ;
-\draw [shift={(293.83,91.63)}, rotate = 115.37] [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-%Straight Lines [id:da2680616006042429] 
-\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ]   (293.83,91.63) -- (311.85,39.47) ;
-\draw [shift={(312.83,36.63)}, rotate = 109.06] [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-%Straight Lines [id:da40190082326075405] 
-\draw    (293.83,91.63) -- (348.93,77.38) ;
-\draw [shift={(351.83,76.63)}, rotate = 165.5] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-%Straight Lines [id:da5964693784074314] 
-\draw [color={rgb, 255:red, 80; green, 227; blue, 194 }  ,draw opacity=1 ]   (238.83,207.63) -- (349.87,78.9) ;
-\draw [shift={(351.83,76.63)}, rotate = 130.78] [fill={rgb, 255:red, 80; green, 227; blue, 194 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-%Straight Lines [id:da9628477994436984] 
-\draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ]   (351.83,76.63) -- (370.91,72.3) ;
-\draw [shift={(373.83,71.63)}, rotate = 167.2] [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-%Straight Lines [id:da9110999692345249] 
-\draw [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,draw opacity=1 ][fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ]   (312.83,36.63) -- (371.23,70.14) ;
-\draw [shift={(373.83,71.63)}, rotate = 209.85] [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-%Shape: Axis 2D [id:dp2823282530780956] 
-\draw [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ] (404.68,39.53) -- (436.25,39.53)(407.84,8) -- (407.84,43.03) (429.25,34.53) -- (436.25,39.53) -- (429.25,44.53) (402.84,15) -- (407.84,8) -- (412.84,15)  ;
-
-% Text Node
-\draw (414.67,41) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {{\fontfamily{pcr}\selectfont x}};
-% Text Node
-\draw (393.33,16.33) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {{\fontfamily{pcr}\selectfont y}};
-% Text Node
-\draw (302.67,141) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 80; green, 227; blue, 194 }  ,opacity=1 ,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle p_{n+1}$};
-% Text Node
-\draw (242.67,117.67) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {$\displaystyle {\displaystyle \textcolor[rgb]{0.29,0.56,0.89}{p}\textcolor[rgb]{0.29,0.56,0.89}{_{n}}}$};
-% Text Node
-\draw (274.67,51.67) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,opacity=1 ,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle v_{n}$};
-% Text Node
-\draw (339.33,29) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,opacity=1 ,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle a\tau $};
-% Text Node
-\draw (299.84,68.94) node [anchor=north west][inner sep=0.75pt]  [rotate=-345.52,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle v_{n+1} \tau $};
-% Text Node
-\draw (349.85,78.37) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,opacity=1 ,rotate=-345.52,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle v_{n+1}$};
-
-
-\end{tikzpicture}
-
-   }
-    \caption{Every frame}
-    \label{fig:1vecadd}
-\end{wrapfigure}
 
 Moreover, the acceleration $\ta$ is also a real 3-vector. It is computed every update from the ``wishing'' direction $\td$ --- a real 2-vector in the x,y-axis only --- of the player, which is then applied onto the velocity $\tv_n$ using Euler's method. The position $\tp_n$ is then updated with the new velocity $\tv{n+1}$ through the same method. This sequential process can be represented by the difference equations
 \begin{align}
@@ -107,9 +61,66 @@ Moreover, the acceleration $\ta$ is also a real 3-vector. It is computed every u
     \tp_{n+1} &= \tp_n + \tv_{n+1} \tau.
 \end{align}
 
+\begin{figure}[H]
+    \centering
+    %\includegraphics[width=0.37\textwidth,right]{assets/1vecadd.png}
+    \sized[0.4]{
+
+
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+            %uncomment if require: \path (0,222); %set diagram left start at 0, and has height of 222
+
+            %Straight Lines [id:da5341042164989492]
+            \draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (238.83,207.63) -- (292.55,94.34) ;
+            \draw [shift={(293.83,91.63)}, rotate = 115.37] [fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+            %Straight Lines [id:da2680616006042429]
+            \draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ]   (293.83,91.63) -- (311.85,39.47) ;
+            \draw [shift={(312.83,36.63)}, rotate = 109.06] [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+            %Straight Lines [id:da40190082326075405]
+            \draw    (293.83,91.63) -- (348.93,77.38) ;
+            \draw [shift={(351.83,76.63)}, rotate = 165.5] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+            %Straight Lines [id:da5964693784074314]
+            \draw [color={rgb, 255:red, 80; green, 227; blue, 194 }  ,draw opacity=1 ]   (238.83,207.63) -- (349.87,78.9) ;
+            \draw [shift={(351.83,76.63)}, rotate = 130.78] [fill={rgb, 255:red, 80; green, 227; blue, 194 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+            %Straight Lines [id:da9628477994436984]
+            \draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ]   (351.83,76.63) -- (370.91,72.3) ;
+            \draw [shift={(373.83,71.63)}, rotate = 167.2] [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+            %Straight Lines [id:da9110999692345249]
+            \draw [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,draw opacity=1 ][fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ]   (312.83,36.63) -- (371.23,70.14) ;
+            \draw [shift={(373.83,71.63)}, rotate = 209.85] [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+            %Shape: Axis 2D [id:dp2823282530780956]
+            \draw [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ] (404.68,39.53) -- (436.25,39.53)(407.84,8) -- (407.84,43.03) (429.25,34.53) -- (436.25,39.53) -- (429.25,44.53) (402.84,15) -- (407.84,8) -- (412.84,15)  ;
+
+            % Text Node
+            \draw (414.67,41) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {{\fontfamily{pcr}\selectfont x}};
+            % Text Node
+            \draw (393.33,16.33) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {{\fontfamily{pcr}\selectfont y}};
+            % Text Node
+            \draw (302.67,141) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 80; green, 227; blue, 194 }  ,opacity=1 ,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle p_{n+1}$};
+            % Text Node
+            \draw (242.67,117.67) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {$\displaystyle {\displaystyle \textcolor[rgb]{0.29,0.56,0.89}{p}\textcolor[rgb]{0.29,0.56,0.89}{_{n}}}$};
+            % Text Node
+            \draw (274.67,51.67) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,opacity=1 ,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle v_{n}$};
+            % Text Node
+            \draw (339.33,29) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,opacity=1 ,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle a\tau $};
+            % Text Node
+            \draw (299.84,68.94) node [anchor=north west][inner sep=0.75pt]  [rotate=-345.52,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle v_{n+1} \tau $};
+            % Text Node
+            \draw (349.85,78.37) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,opacity=1 ,rotate=-345.52,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle v_{n+1}$};
+
+
+        \end{tikzpicture}
+
+    }
+    \caption{Vector addition for every frame}
+    \label{fig:1vecadd}
+\end{figure}
+
 The process of one such update is called a ``frame'', and can be visualized through vectors scalings and additions as figure \ref{fig:1vecadd} demonstrates.
 
-It is therefore obvious to see that the player position and velocity are discrete functions of time. While it may be conventional to represent the time parameter as subscripts, I decided against it and instead using a continuous function syntax. This is because the powerful optimization technique --- calculus --- only applies to continuous functions, and I conjecture that the small $\tau$ justifies such transition of time from discrete to continuous (CITATION). The function syntax $f(t)$ easily denotes continuous position and velocity, while still allowing discreteness $f(n\tau), n\in\mathbb{Z}$ used in section 3.
+It is therefore obvious to see that the player position and velocity are discrete functions of time. While it may be conventional to represent the time parameter as subscripts, I decided against it and instead using a continuous function syntax. This is because the powerful optimization technique --- calculus --- only applies to continuous functions, and I conjecture that the small time-step $\tau$ justifies such transition of discrete to continuous time\citefoot{knoebel_2007}. The function syntax ($f(t)$) easily denotes continuous position and velocity, while still allowing discreteness used in section 3 ($f(n\tau), n\in\mathbb{Z}$).
 
 Without loss of generality, I can model the player's motion with the functions $\tp(t)$ and $\tv(t)$, where $t$ is time elapsed from the start of the jump. The updating process is now approximated by differential equations:
 \begin{align}
@@ -119,7 +130,7 @@ Without loss of generality, I can model the player's motion with the functions $
 
 Ultimately, the problem can be formally stated as:
 \begin{quote}
-    Given initial position and velocity $\tvec{p}(0)$ and $\tvec{v}(0)$ as three dimensional vectors when the player initializes a jump event, if $\ta(t)$ is the player's acceleration at time $t$, with $\tv(t)$ and $\tp(t)$ being the respective derived velocity and position of the player, what is the achievable maximum displacement $\tmag{\tp(t_f) - \tp(0)}$ if $t_f$ is the total time of the jump?
+    Given initial position and velocity --- $\tvec{p}(0)$, $\tvec{v}(0)$ --- as three dimensional vectors when the player initializes a jump event, if $\ta(t)$ is the player's acceleration at time $t$, with $\tv(t)$ and $\tp(t)$ being the respective derived velocity and position of the player, what is the achievable maximum displacement $\tmag{\tp(t_f) - \tp(0)}$ if $t_f$ is the total time of the jump?
 \end{quote}
 %The problem originated from my personal curiosity within the limitations of the video game ``Counter Strike'' that occupies a large part of my life. It came about as I was getting into the community of counter-strike long jumping --- a community aiming to exploit the video game's physics to achieve the longest jumping distance. Therefore I want to explore this optimization problem with various methods in an extended essay to further improve my knowledge within this ``niche`` community.
 

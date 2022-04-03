@@ -134,13 +134,13 @@
 %    X(t) = \int \sqrt{1-y(t)^2} \, dt
 %\]
 %a pain or sometimes impossible to solve analytically. I needed to represent acceleration in another form preferably in a single variable function --- I attempted to do it with polar coordinates.
-The key idea hypothesizes higher velocity with higher displacement, so does the same apply to acceleration and velocity as well? The discrete model considers the maximization of velocity by maximizing the acceleration at every frame.
+The key idea hypothesizes higher velocity with higher displacement, so does the same apply to acceleration as well? The discrete model considers the maximization of velocity by maximizing the acceleration at every frame.
 
-However, a new framework in modeling the player's movement is needed. If we were to continue using the Cartesian axis for player direction $\td$, I could either model the two functions $\td_x(t)$ $\td_y(t)$ and ensure that they consulates a unit vector, which is messy and complicated; or I can write one axis in terms of the other, like so
+However, a new framework in modeling the player's movement is needed. If we were to continue using the Cartesian axis for player direction $\td$, I could either model the two functions $\td_x(t)$ $\td_y(t)$ and ensure that they consulates a unit vector, which is complicated; or I can write an axis in terms of the other, like
 \[
     \td_y(t) = \sqrt{1-\td_x(t)^2},
 \]
-but due to the velocity being the integral of acceleration and integrating such a function is difficult, it is also not ideal. So I came up with the idea of using polar coordinates instead.
+but due to the velocity being the integral of acceleration and integrating such a function is difficult, it is also not ideal. So I came up with the idea of polar coordinates.
 
 
 %I found the constraint equations to be difficult to use because it contains two related functions as input: $X(t)$ and $Y(t)$. This is because the solution to the problem is currently of form $x(t)$, which is the x component of acceleration as a function of time. Therefore the first integral $Y(t)$ must be in the form:
@@ -151,31 +151,32 @@ but due to the velocity being the integral of acceleration and integrating such 
 
 % TODO: Finish writing this
 
-\subsubsection{Angular equations of motion}
-Let the player displacement $\tp$, velocity $\tv$ be complex numbers with the real part the x-axis and the imaginary part the y-axis. They are represented in Euler forms (where the function $\exp(x)= e^{x}$ for simplicity):
+\subsubsection{Polar equations of motion}
+Let the player displacement $\tp(t)$, velocity $\tv(t)$ be complex numbers with the real part the x-axis and the imaginary part the y-axis. They are represented in Euler forms (where $\exp(x)= e^{x}$ for simplicity):
 \begin{align*}
-    \tp &= a \exp(b \I)\\
-    \tv &= r \exp(\phi \I),
+    \tp(t) &= a(t) \exp(b(t) \I)\\
+    \tv(t) &= r(t) \exp(\phi(t) \I),
 \end{align*}
-where $a$ and $r$ are the magnitudes of the player displacement and velocity, and $b$ and $\phi$ are their respective angles from the x-axis.
+where $a(t)$ and $r(t)$ are the magnitudes of the player displacement and velocity, and $b(t)$ and $\phi(t)$ are their respective angles from the x-axis.
 
-\begin{wrapfigure}{r}{0.40\textwidth}
+\begin{figure}[H]
+    \centering
     \sized[0.4]{
-        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+        \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
 
         \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
         %uncomment if require: \path (0,224); %set diagram left start at 0, and has height of 224
 
-        %Shape: Axis 2D [id:dp14144095768588938] 
+        %Shape: Axis 2D [id:dp14144095768588938]
         \draw [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ] (423.68,50.2) -- (455.25,50.2)(426.84,18.66) -- (426.84,53.7) (448.25,45.2) -- (455.25,50.2) -- (448.25,55.2) (421.84,25.66) -- (426.84,18.66) -- (431.84,25.66)  ;
-        %Straight Lines [id:da47227000140678865] 
+        %Straight Lines [id:da47227000140678865]
         \draw    (304.12,154.45) -- (362.4,70.91) ;
         \draw [shift={(364.12,68.45)}, rotate = 124.9] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-        %Straight Lines [id:da6578973543629849] 
+        %Straight Lines [id:da6578973543629849]
         \draw [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,draw opacity=1 ]   (304.12,154.45) -- (408.21,127.21) ;
         \draw [shift={(411.12,126.45)}, rotate = 165.34] [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-        %Shape: Arc [id:dp2369142581998589] 
-        \draw  [draw opacity=0] (320.12,131.99) .. controls (323.02,133.62) and (325.25,136.41) .. (326.06,139.91) .. controls (326.76,142.95) and (326.25,145.98) .. (324.86,148.51) -- (314.17,142.64) -- cycle ; \draw  [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ] (320.12,131.99) .. controls (323.02,133.62) and (325.25,136.41) .. (326.06,139.91) .. controls (326.76,142.95) and (326.25,145.98) .. (324.86,148.51) ;  
+        %Shape: Arc [id:dp2369142581998589]
+        \draw  [draw opacity=0] (320.12,131.99) .. controls (323.02,133.62) and (325.25,136.41) .. (326.06,139.91) .. controls (326.76,142.95) and (326.25,145.98) .. (324.86,148.51) -- (314.17,142.64) -- cycle ; \draw  [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ] (320.12,131.99) .. controls (323.02,133.62) and (325.25,136.41) .. (326.06,139.91) .. controls (326.76,142.95) and (326.25,145.98) .. (324.86,148.51) ;
 
         % Text Node
         \draw (433.67,51.67) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {{\fontfamily{pcr}\selectfont x}};
@@ -190,13 +191,13 @@ where $a$ and $r$ are the magnitudes of the player displacement and velocity, an
         \end{tikzpicture}
     }
     %\includegraphics[width=0.3\textwidth,right]{assets/angular_freedom.png}
-    \caption{\vspace{1ex} Angular function}
+    \caption{Angular function}
     \label{fig:angular_freedom}
-\end{wrapfigure}
+\end{figure}
 
-Define the player's actions in terms of the smallest angle between directional vector $\td$ and the velocity $\tv$, denoted as $\theta(t)$ as a function of time (figure \ref{fig:angular_freedom}). I will limit this function's domain between $0$ and $\pi$ as to prevent overturning. Therefore the directional vector is the player's unit velocity rotated by angle $\theta$, creating
+Define the player's direction in terms of the smallest angle between unit directional vector $\td(t)$ and the velocity $\tv(t)$, denoted as $\theta(t)$ as a function of time (figure \ref{fig:angular_freedom}). This function's domain is limited between $0$ and $\pi$ par definition. Therefore the directional vector is the player's unit velocity rotated by angle $\theta$
 \[
-\td = \exp((\phi - \theta) \I).
+    \td(t) = \exp((\phi(t) - \theta(t)) \I).
 \]
 
 
@@ -214,7 +215,7 @@ Define the player's actions in terms of the smallest angle between directional v
 %\[
 %    \tp' = \tp + \tau \tv.
 %\]
-It is now possible to rewrite the speed limit as a simple cosine inequality. Assuming that $\td$ and $\tv$ are two dimensional, using the dot product identity yields
+It is now possible to rewrite the speed limit as a simple cosine inequality. Because $\td(t)$ and $\tv(t)$ are two dimensional, the dot product identity yields
 \begin{align*}
     \text{proj}(\td, \tv) &= \td \cdot \tv\\
     &= \tmag{\td} \tmag{\tv} \cos \theta\\
@@ -233,43 +234,44 @@ It is now possible to rewrite the speed limit as a simple cosine inequality. Ass
 %    \end{cases},
 %\]
 %where $\gamma_1 = LA\tau$ and $\gamma_2 = L - \tv \cdot \tunit{a}$. This can be rewritten in terms of our new angular function $\theta(t)$.
-\begin{wrapfigure}{r}{0.40\textwidth}
+\begin{figure}[H]
     %\includegraphics[width=0.37\textwidth,right]{assets/discrete_limit.png}
+    \centering
     \sized[0.4]{
-        
 
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
 
 \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
 %uncomment if require: \path (0,269); %set diagram left start at 0, and has height of 269
 
-%Shape: Axis 2D [id:dp3688296019635018] 
+%Shape: Axis 2D [id:dp3688296019635018]
 \draw [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ] (419.68,43.2) -- (451.25,43.2)(422.84,11.66) -- (422.84,46.7) (444.25,38.2) -- (451.25,43.2) -- (444.25,48.2) (417.84,18.66) -- (422.84,11.66) -- (427.84,18.66)  ;
-%Straight Lines [id:da15946190790496706] 
+%Straight Lines [id:da15946190790496706]
 \draw [color={rgb, 255:red, 224; green, 16; blue, 209 }  ,draw opacity=1 ]   (253.98,218.45) -- (339.9,179.96) ;
 \draw [shift={(342.63,178.73)}, rotate = 155.87] [fill={rgb, 255:red, 224; green, 16; blue, 209 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-%Straight Lines [id:da23789994899521405] 
+%Straight Lines [id:da23789994899521405]
 \draw    (253.98,218.45) -- (298.66,87.57) ;
 \draw [shift={(299.63,84.73)}, rotate = 108.85] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-%Straight Lines [id:da7945400962055216] 
+%Straight Lines [id:da7945400962055216]
 \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ]   (299.63,84.73) -- (317.53,76.04) -- (331.93,69.04) ;
 \draw [shift={(334.63,67.73)}, rotate = 154.09] [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-%Straight Lines [id:da32752633260821995] 
+%Straight Lines [id:da32752633260821995]
 \draw  [dash pattern={on 4.5pt off 4.5pt}]  (299.63,84.73) -- (309.1,105.43) -- (342.63,178.73) ;
-%Shape: Right Angle [id:dp1944206914820521] 
+%Shape: Right Angle [id:dp1944206914820521]
 \draw   (333.14,183.05) -- (328.83,173.55) -- (338.32,169.24) ;
-%Straight Lines [id:da11716809450724408] 
+%Straight Lines [id:da11716809450724408]
 \draw    (253.98,218.45) -- (333.22,70.38) ;
 \draw [shift={(334.63,67.73)}, rotate = 118.15] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-%Shape: Right Angle [id:dp26249838064168163] 
+%Shape: Right Angle [id:dp26249838064168163]
 \draw   (308.97,81.07) -- (313.67,90.38) -- (304.37,95.08) ;
-%Straight Lines [id:da3181116090278877] 
+%Straight Lines [id:da3181116090278877]
 \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ]   (342.63,178.73) -- (374.88,164.92) ;
 \draw [shift={(377.63,163.73)}, rotate = 156.8] [fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-%Straight Lines [id:da11758138251143024] 
+%Straight Lines [id:da11758138251143024]
 \draw [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,draw opacity=1 ]   (256.98,226.45) -- (408.38,161.42) ;
 \draw [shift={(411.13,160.23)}, rotate = 156.75] [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-%Straight Lines [id:da7832053208510404] 
+%Straight Lines [id:da7832053208510404]
 \draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (259.98,233.45) -- (383.13,180.23) ;
 
 % Text Node
@@ -295,70 +297,74 @@ It is now possible to rewrite the speed limit as a simple cosine inequality. Ass
 \end{tikzpicture}
 
     }
-    \caption{Discrete Limit}
+    \caption{Discrete frame and limit}
     \label{fig:discrete_limit}
-\end{wrapfigure}
+\end{figure}
 
-Also the entire inequality will be different in the discrete case. Not only does the projection $\text{proj}(\td, \tv)$ has to be less than the speed limit, but it also has to allow the maximum discrete acceleration of magnitude $LA\tau$ every frame (\ref{fig:discrete_limit}). Therefore, the inequality condition must be rewritten discretely. (Note that because cosine is a decreasing function, the inequality sign must be reversed \parencite{ineqcosine}),
+Also the entire inequality will be different in the discrete case. Not only does the projection $\text{proj}(\td, \tv)$ has to be less than the speed limit, but it also has to allow the maximum discrete acceleration of magnitude $LA\tau$ every frame (figure \ref{fig:discrete_limit}).
+
+Therefore, the inequality condition must be rewritten discretely: (Because cosine is a decreasing function, the inequality sign must be reversed \citefoot{ineqcosine})
 \begin{align*}
     L &\ge \text{proj}(\td, \tv) + LA\tau\\
     L - LA\tau &\ge \text{proj}(\td, \tv)\\
     &\ge r \cos \theta,\\
     \frac{L - LA\tau}{r} &\ge \cos \theta\\
-    \cos^{-1} \frac{L - LA\tau}{r} &\le \theta.
+    \cos^{-1} (\frac{L - LA\tau}{r}) &\le \theta.
 \end{align*}
 
-\begin{wrapfigure}{r}{0.50\textwidth}
-    \includegraphics[width=0.47\textwidth,right]{assets/angular_acceleration_limiting.png}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{assets/angular_acceleration_limiting.png}
     \caption{Angular acceleration}
     \label{fig:angular_acceleration_limiting}
-\end{wrapfigure}
+\end{figure}
 
-This shows that $\theta(t)$ must be greater or equal to an inverse cosine function for maximum acceleration. Figure \ref{fig:angular_acceleration_limiting} demonstrates the magnitude of acceleration for all angles of $\theta$ under a player velocity of $\tang{40, 250}$. The red area indicates zero acceleration, showcasing that a small $\theta$ exceeds the speed limit; the green area means full acceleration, showing how larger $\theta$ or more rotation of $\td$ against $\tv$ will result in higher acceleration.
+The equation shows that $\theta(t)$ must be greater or equal to a value for maximum acceleration. Figure \ref{fig:angular_acceleration_limiting} demonstrates the magnitude of acceleration for all angles of $\theta$ under a player velocity of $\tang{40, 250}$. The red area indicates zero acceleration, because the small $\theta$ exceeds the speed limit; the green area means full acceleration, so larger $\theta$ or more rotation of $\td$ against $\tv$ will result in higher acceleration.
 
-Therefore, we can rewrite the 2D acceleration function $\ta(t)$ with:
+Therefore, we can rewrite the planer acceleration function $\ta(t)$ with:
 \[
 \ta(t) = \begin{cases}
-    LA & \cos^{-1} \frac{L - LA\tau}{r} \le \theta\\
-    0 & \text{otherwise}
+    LA & \cos^{-1}(\frac{L - LA\tau}{r}) \le \theta\\
+    0 & \cos^{-1}(\frac{L - LA\tau}{r}) \geq \theta
 \end{cases}
 \]
 
 
 \subsubsection{Optimization}
 %Using the same argument as the straight-line model, I will use an initial velocity of $\tv_0 = \tang{0, 250}$.
-To maximize acceleration at each frame, I noticed that the player would want to minimize $\theta(t)$. This is due to the the law of cosine (figure \ref{fig:min_theta}).
+To maximize acceleration at each frame, I noticed that the player would want to minimize $\theta(t)$. This is due to the the law of cosine\citefoot{lawofcosine} (figure \ref{fig:min_theta}).
 
-\begin{wrapfigure}{r}{0.40\textwidth}
+\begin{figure}[H]
+    \centering
     %\includegraphics[width=0.37\textwidth,right]{assets/mini_theta.png}
     \sized{
-    
 
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
 
 \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
 %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
 
-%Shape: Axis 2D [id:dp161788656784575] 
+%Shape: Axis 2D [id:dp161788656784575]
 \draw [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ] (443.68,70.2) -- (475.25,70.2)(446.84,38.66) -- (446.84,73.7) (468.25,65.2) -- (475.25,70.2) -- (468.25,75.2) (441.84,45.66) -- (446.84,38.66) -- (451.84,45.66)  ;
-%Straight Lines [id:da6082790355416728] 
+%Straight Lines [id:da6082790355416728]
 \draw [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,draw opacity=1 ]   (294.85,233.78) -- (371.11,212.06) ;
 \draw [shift={(374,211.23)}, rotate = 164.1] [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-%Straight Lines [id:da529580686828609] 
+%Straight Lines [id:da529580686828609]
 \draw [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,draw opacity=1 ]   (334.85,130.78) -- (411.11,109.06) ;
 \draw [shift={(414,108.23)}, rotate = 164.1] [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-%Straight Lines [id:da6869395653145243] 
+%Straight Lines [id:da6869395653145243]
 \draw    (294.85,233.78) -- (333.76,133.58) ;
 \draw [shift={(334.85,130.78)}, rotate = 111.22] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-%Straight Lines [id:da8505569385359156] 
+%Straight Lines [id:da8505569385359156]
 \draw    (294.85,233.78) -- (411.93,110.41) ;
 \draw [shift={(414,108.23)}, rotate = 133.5] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
-%Shape: Arc [id:dp13917835626195973] 
-\draw  [draw opacity=0] (303.12,213.99) .. controls (306.02,215.62) and (308.25,218.41) .. (309.06,221.91) .. controls (309.76,224.95) and (309.25,227.98) .. (307.86,230.51) -- (297.17,224.64) -- cycle ; \draw  [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ] (303.12,213.99) .. controls (306.02,215.62) and (308.25,218.41) .. (309.06,221.91) .. controls (309.76,224.95) and (309.25,227.98) .. (307.86,230.51) ;  
-%Straight Lines [id:da505532385848832] 
+%Shape: Arc [id:dp13917835626195973]
+\draw  [draw opacity=0] (303.12,213.99) .. controls (306.02,215.62) and (308.25,218.41) .. (309.06,221.91) .. controls (309.76,224.95) and (309.25,227.98) .. (307.86,230.51) -- (297.17,224.64) -- cycle ; \draw  [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ] (303.12,213.99) .. controls (306.02,215.62) and (308.25,218.41) .. (309.06,221.91) .. controls (309.76,224.95) and (309.25,227.98) .. (307.86,230.51) ;
+%Straight Lines [id:da505532385848832]
 \draw  [dash pattern={on 4.5pt off 4.5pt}]  (361.05,63.07) -- (294.85,233.78) ;
-%Shape: Arc [id:dp87688867176111] 
-\draw  [draw opacity=0] (344.12,109.99) .. controls (347.02,111.62) and (349.25,114.41) .. (350.06,117.91) .. controls (350.76,120.95) and (350.25,123.98) .. (348.86,126.51) -- (338.17,120.64) -- cycle ; \draw  [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ] (344.12,109.99) .. controls (347.02,111.62) and (349.25,114.41) .. (350.06,117.91) .. controls (350.76,120.95) and (350.25,123.98) .. (348.86,126.51) ;  
+%Shape: Arc [id:dp87688867176111]
+\draw  [draw opacity=0] (344.12,109.99) .. controls (347.02,111.62) and (349.25,114.41) .. (350.06,117.91) .. controls (350.76,120.95) and (350.25,123.98) .. (348.86,126.51) -- (338.17,120.64) -- cycle ; \draw  [color={rgb, 255:red, 245; green, 166; blue, 35 }  ,draw opacity=1 ] (344.12,109.99) .. controls (347.02,111.62) and (349.25,114.41) .. (350.06,117.91) .. controls (350.76,120.95) and (350.25,123.98) .. (348.86,126.51) ;
 
 % Text Node
 \draw (453.67,71.67) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {{\fontfamily{pcr}\selectfont x}};
@@ -383,22 +389,22 @@ To maximize acceleration at each frame, I noticed that the player would want to 
     }
     \caption{Minimizing $\theta(t)$}
     \label{fig:min_theta}
-\end{wrapfigure}
+\end{figure}
 
-Let $v_n = \tmag{\tv_n}$, $v_{n+1} = \tmag{\tv_{n+1}}$, and $d = \tmag{d}$. The length of the updated velocity $v_{n+1}$ using the law of cosine on the opposite angle of $\theta$ is
+Let $v_n = \tmag{\tv_n}$, $v_{n+1} = \tmag{\tv_{n+1}}$, and $d = \tmag{d}$. The length of the updated velocity $v_{n+1}$ using the law of cosine on the opposite angle of $\theta(t)$ is
 \[
-    v_{n+1} = \sqrt{v_n^2 + d_n^2 - 2 v_n d\cos (\pi - \theta)}.
+    v_{n+1} = \sqrt{v_n^2 + d_n^2 - 2 v_n d\cos (\pi - \theta(t))}.
 \]
-Because only $\theta$ is controlled by the player, to maximize the updated velocity $v_{n+1}$ means minimizing $\cos(\pi - \theta)$. For the cosine function is smaller at higher $x$ values, we need to maximize $\pi - \theta$ and therefore minimize $\theta$.
+Because only $\theta$ is controlled by the player, to maximize the updated velocity $v_{n+1}$ means minimizing $\cos(\pi - \theta(t))$. For the cosine function is smaller at higher $x$ values, we need to maximize $\pi - \theta(t)$ and therefore minimize $\theta(t)$.
 
-Therefore for maximum acceleration, the player needs to minimize $\theta$ while keeping it above a value limit. This means that we should set $\theta$ to equal the value limit at all times, so
+Therefore for maximum acceleration, the player needs to minimize $\theta(t)$ while keeping it above a value. This means that we should set $\theta(t)$ to equal the value at all times, so
 \[
-    \theta = \cos^{-1} \frac{L-LA\tau}{r}.
+    \theta(t) = \cos^{-1} \left( \frac{L-LA\tau}{r} \right).
 \]
 
-Notice that $\theta$ increases as the magnitude of velocity increases over time, which agrees with the Skilled Player's theory of turning the player. However, this means that the effective acceleration will decrease over time as well.
+Notice that $\theta(t)$ increases as the magnitude of velocity increases over time, which agrees with the skilled player's theory of turning overtime. However, this means that the acceleration will decrease over time as well.
 
-By substituting this equation of $\theta$ into the difference equation of Eq.\ref{eq:1de1}, I derived the difference equation for my first discrete model:
+By substituting this equation of $\theta(t)$ into the difference equation of Eq.\ref{eq:1de1}, I derived the difference equation for my first discrete model:
 \begin{figure}[H]
     \centering
     \[
@@ -417,10 +423,10 @@ Figure \ref{fig:1sbs} shows the player's motion under this method.
     \label{fig:1sbs}
 \end{figure}
 
-Oops, it looks like the player completed a u-turn and ended up below the x-axis. Although the spacing between each timeframe dots are increasing indicating acceleration, this strategy had to keep turning to maximize acceleration, of which potentially reduced our displacement if it started accelerating towards the origin. Nevertheless, this model created a displacement of $\sqrt{368.6^2 + (-57.34)^2} \approx 373.0$, which is a large increase from the previous models.
+It seems like the player completed a u-turn and ended up below the x-axis. Although the distance between each position dots are increasing indicating acceleration, this strategy had to keep turning to maximize that, which may reduced our displacement at a certain angle. Nevertheless, this model created a displacement of $\sqrt{368.6^2 + (-57.34)^2} \approx 373.0$, which is a large increase from the previous models.
 
 \subsection{Discrete model with modification}
-The first discrete model (figure \ref{fig:1sbs}) had a problem, which is that the player needed to turn more than $90$ degrees in total to maximize acceleration, potentially decreasing the jumping displacement by backtracking. I have an idea to fix it: stop turning at an angle.
+The first discrete model (figure \ref{fig:1sbs}) had a problem, which is that the player needed to keep turning to maximize acceleration. I have an idea to fix it: stop turning at an angle.
 
 The arguments for stop turning is that we are sacrificing potential higher velocity and less distance traveled but directing more outwards movement that could increase the total displacement. Moreover, the success of this modification could disprove my conjunctures stating that higher acceleration leads to higher velocity, and therefore higher displacement.
 
@@ -429,9 +435,9 @@ So let there be a maximum angle $k$ for player velocity, which once reached woul
 \begin{figure}[H]
     \centering
     \[
-        d\tv = \begin{cases}
+        \tv_{n+1} = \begin{cases}
             LA\tau \exp\left(\left(\phi - \cos^{-1}\left(\frac{L-LA\tau}{r}\right)\right) \I\right) & \phi < k\\
-            0 & \text{otherwise}
+            0 & \phi \geq k
         \end{cases}
     \]
     \caption{Second discrete difference equation}
@@ -447,7 +453,7 @@ So let there be a maximum angle $k$ for player velocity, which once reached woul
     \label{fig:sbs2}
 \end{figure}
 
-Figure \ref{fig:sbs2} shows the different player motion as the maximum angle $k\in [-0.5\pi, 0.5\pi]$ with steps $0.03$ radians for clarity. The paths of maximum displacement is outlined with black, with value $\approx 392.15$ at $k=-0.16$. As expected, the total turning of the player decreased at the most optimal path. The value $k$ is slightly below $0$, meaning that it is still beneficial --- at least for a bit --- to continue turning and accelerating even if the velocity begins to point towards the x-axis.
+Figure \ref{fig:sbs2} shows the different player motion as the maximum angle $k\in [-0.5\pi, 0.5\pi]$ with $0.03$ radians steps for clarity. The paths of maximum displacement is outlined in black, with displacement $\approx 392.15$ at $k=-0.16$. As expected, the total turning of the player decreased at the most optimal path. The value $k$ is slightly below $0$, meaning that it is still beneficial --- at least for a bit --- to continue turning and accelerating even if the velocity begins to point towards the x-axis.
 
 \begin{figure}[H]
     \centering
@@ -494,7 +500,7 @@ Yet this value of $k=-0.16$ is really stable judging by the low gradient around 
 
 % 3866 words, very close
 \subsection{Evaluation}
-Overall, the second discrete model is a significant improvement over the first discrete model. It increased the total jump displacement from $\approx 373.0$ to $\approx 392.15$ due to the pausing of rotation at angle $\phi \approx 0.16$. I also found that the optimal initial velocity should be angled $\approx 0.11$ radians from the ledge if the player wishes to jump across the longest gap.
+Overall, the second discrete model is a significant improvement over the first discrete model. It increased the total jump displacement from $\approx 373.0$ to $\approx 392.15$ due to the pausing of rotation at angle $\phi \approx -0.16$. I also found that the optimal initial velocity should be angled $\approx 0.11$ radians from the ledge if the player wishes to jump across the longest gap.
 
 \begin{figure}[H]
     \centering

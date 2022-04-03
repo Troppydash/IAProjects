@@ -1,5 +1,22 @@
 
 
 \section{Conclusion}
-This essay explored the optimal jumping displacement of a player in ``Counter Strike, Source''. I first modeled the game with empirical data from the straight line model, deriving the mechanics behind jumping and researching the speed limit. In a case to avoid the speed limit, I've tested theories from both the skilled people and myself, and creating a modification to push the optimization further on the second discrete model. I believe that this exploration is useful towards the tool-assisted speedrun community, owning to the high amount of skill and precision needed for the advance models.
+There were four distinct models analyzed in this essay: the straight line model, the skilled player's model, the first difference equation, and the second difference equation. Coincidentally they are ranked in jumping displacement and complexity from low to high (table \ref{tbl:dis}), with the easiest one requiring the player to do nothing except a running start, and the most complex one needing constant monitoring of the velocity vector.
+
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        & Straight Line & Skilled Player's & 1st Diff. Eq. & 2nd Diff. Eq.\\
+        \hline
+        Displacement & 183.64  & 254.19 & 373.00 & 392.15 \\
+        \hline
+    \end{tabular}
+    \caption{Displacements from the models}
+    \label{tbl:dis}
+\end{figure}
+
+Method wise, the continuous approximation models were appealing at the start as I intended to use calculus to optimize the problem; but as the velocity limiting piecewise function creeped in, I found the discrete methods to be less complicated and more rewarding. Additionally, I ended up disproving my key idea in that higher velocity may not equate to higher displacement, and subsequently for higher acceleration as well. Breaking the key idea might allow further optimizations of the Skilled player's model in choosing a better $w$, and the discrete models in allowing some deceleration, all of which could improve jumping displacement further. The true degree to which this may undermine this analysis is unknown, but if I were to come back to this problem, I have some ideas in functional maximizing the displacement function directly using variational calculus \citefoot{apushkinskaya_2014}.
+
+To summarize, this essay explored the optimal jumping displacement of a player in ``Counter Strike, Source''. I first modeled the game with empirical data from the straight line model, deriving the mechanics behind jumping and researching the speed limit. In a case to avoid the speed limit, I've tested theories from both the skilled people and myself, and creating a modification to push the optimization further on the second discrete model. I believe that this exploration is useful towards the tool-assisted speedrun community, owing to the high amount of skill and precision needed for the advance models.
 
