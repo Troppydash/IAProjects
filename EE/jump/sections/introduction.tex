@@ -8,7 +8,7 @@ In this essay, I will attempt to maximize the jump displacement of a player in t
 
 To achieve this I would need to select and concentrate on a single matrix to evaluate my models against, because of the myriad uses of this technique in game; I chose the displacement traveled in a player jump for its simplicity. My research question was therefore:
 \begin{quote}
-    To what extent can I use an input/acceleration function to maximize the player's x,y-axis displacement during one jump above a flat z-axis plane with achievable initial conditions in the video game ``Counter Strike, Source''?
+    How to maximize the player's x,y-axis displacement during one jump above a flat z-axis plane with achievable initial conditions in the video game ``Counter Strike, Source''?
 \end{quote}
 
 % definition
@@ -79,14 +79,14 @@ Moreover, the acceleration $\ta$ is also a real 3-vector. It is computed every u
             \draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ]   (293.83,91.63) -- (311.85,39.47) ;
             \draw [shift={(312.83,36.63)}, rotate = 109.06] [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
             %Straight Lines [id:da40190082326075405]
-            \draw    (293.83,91.63) -- (348.93,77.38) ;
-            \draw [shift={(351.83,76.63)}, rotate = 165.5] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+            \draw    (292.83,86.63) -- (347.93,72.38) ;
+            \draw [shift={(350.83,71.63)}, rotate = 165.5] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
             %Straight Lines [id:da5964693784074314]
             \draw [color={rgb, 255:red, 80; green, 227; blue, 194 }  ,draw opacity=1 ]   (238.83,207.63) -- (349.87,78.9) ;
             \draw [shift={(351.83,76.63)}, rotate = 130.78] [fill={rgb, 255:red, 80; green, 227; blue, 194 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
             %Straight Lines [id:da9628477994436984]
-            \draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ]   (351.83,76.63) -- (370.91,72.3) ;
-            \draw [shift={(373.83,71.63)}, rotate = 167.2] [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
+            \draw [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,draw opacity=1 ]   (293.83,91.63) -- (370.92,72.36) ;
+            \draw [shift={(373.83,71.63)}, rotate = 165.96] [fill={rgb, 255:red, 155; green, 155; blue, 155 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
             %Straight Lines [id:da9110999692345249]
             \draw [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,draw opacity=1 ][fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ]   (312.83,36.63) -- (371.23,70.14) ;
             \draw [shift={(373.83,71.63)}, rotate = 209.85] [fill={rgb, 255:red, 144; green, 19; blue, 254 }  ,fill opacity=1 ][line width=0.08]  [draw opacity=0] (10.72,-5.15) -- (0,0) -- (10.72,5.15) -- (7.12,0) -- cycle    ;
@@ -94,21 +94,21 @@ Moreover, the acceleration $\ta$ is also a real 3-vector. It is computed every u
             \draw [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ] (404.68,39.53) -- (436.25,39.53)(407.84,8) -- (407.84,43.03) (429.25,34.53) -- (436.25,39.53) -- (429.25,44.53) (402.84,15) -- (407.84,8) -- (412.84,15)  ;
 
             % Text Node
-            \draw (414.67,41) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {{\fontfamily{pcr}\selectfont x}};
+            \draw (414.67,41) node [anchor=north west][inner sep=0.75pt]  [xscale=1.1,yscale=1.1] [align=left] {{\fontfamily{pcr}\selectfont x}};
             % Text Node
-            \draw (393.33,16.33) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {{\fontfamily{pcr}\selectfont y}};
+            \draw (393.33,16.33) node [anchor=north west][inner sep=0.75pt]  [xscale=1.1,yscale=1.1] [align=left] {{\fontfamily{pcr}\selectfont y}};
             % Text Node
-            \draw (302.67,141) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 80; green, 227; blue, 194 }  ,opacity=1 ,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle p_{n+1}$};
+            \draw (302.67,141) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 80; green, 227; blue, 194 }  ,opacity=1 ,xscale=1.1,yscale=1.1] [align=left] {$\displaystyle p_{n+1}$};
             % Text Node
-            \draw (242.67,117.67) node [anchor=north west][inner sep=0.75pt]  [xscale=1.25,yscale=1.25] [align=left] {$\displaystyle {\displaystyle \textcolor[rgb]{0.29,0.56,0.89}{p}\textcolor[rgb]{0.29,0.56,0.89}{_{n}}}$};
+            \draw (242.67,117.67) node [anchor=north west][inner sep=0.75pt]  [xscale=1.1,yscale=1.1] [align=left] {$\displaystyle {\displaystyle \textcolor[rgb]{0.29,0.56,0.89}{p}\textcolor[rgb]{0.29,0.56,0.89}{_{n}}}$};
             % Text Node
-            \draw (274.67,51.67) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,opacity=1 ,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle v_{n}$};
+            \draw (274.67,51.67) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,opacity=1 ,xscale=1.1,yscale=1.1] [align=left] {$\displaystyle v_{n}$};
             % Text Node
-            \draw (339.33,29) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,opacity=1 ,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle a\tau $};
+            \draw (339.33,29) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 144; green, 19; blue, 254 }  ,opacity=1 ,xscale=1.1,yscale=1.1] [align=left] {$\displaystyle a\tau $};
             % Text Node
-            \draw (299.84,68.94) node [anchor=north west][inner sep=0.75pt]  [rotate=-345.52,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle v_{n+1} \tau $};
+            \draw (300.84,61.94) node [anchor=north west][inner sep=0.75pt]  [rotate=-345.52,xscale=1.1,yscale=1.1] [align=left] {$\displaystyle v_{n+1} \tau $};
             % Text Node
-            \draw (349.85,78.37) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,opacity=1 ,rotate=-345.52,xscale=1.25,yscale=1.25] [align=left] {$\displaystyle v_{n+1}$};
+            \draw (345.85,78.37) node [anchor=north west][inner sep=0.75pt]  [color={rgb, 255:red, 155; green, 155; blue, 155 }  ,opacity=1 ,rotate=-345.52,xscale=1.1,yscale=1.1] [align=left] {$\displaystyle v_{n+1}$};
 
 
         \end{tikzpicture}
