@@ -2,7 +2,9 @@
 \section{Basic Models}
 I want to create some basic models in this section to help me visualize the problem; it can also test my conjuncture of the continuous approximations.
 
-%Firstly, I wish to find an optimal starting condition --- this leads to the precalculation of the vertical motion. Secondly, I will model the motion of the remaining two axis of motion. Lastly, I will fit various acceleration models using my experience, some calculus, and even polar coordinates.
+Firstly I will find an optimal starting condition, leading to a basic straight line model that empirically models vertical motion. Then I will confirm the continuous approximation, and model the x,y-axis
+%Firstly, I wish to find an optimal starting condition --- this leads to the precalculation of the vertical motion. Secondly, I will model the motion of the remaining two axis of motion. Lastly, I will fit various acceleration models
+through the advice from skilled players using calculus.
 
 % straight line
 \subsection{Key idea and boundary conditions}
@@ -82,7 +84,7 @@ Realistically, this will be equivalent to pressing down the move forward button 
     \end{minipage}
 \end{figure}
 
-To test this model, I recorded myself jumping and performing the actions described above on a flat plane. Figure \ref{fig:straight_constraint} shows the estimation of the player's path using software\footnote{python37}\footnote{matplotlib}; Figure \ref{fig:2straightjumping} shows the coordinates of the player at the start of the jump $\tp(0)$, the first frame of the jump $\tp(\tau)$, and the end of the jump $\tp(t_f)$:
+To test this model, I recorded the player jumping and performing the actions described above on a flat plane. Figure \ref{fig:straight_constraint} shows the estimation of the player's path using software\footnote{python37}\footnote{matplotlib}; Figure \ref{fig:2straightjumping} shows the coordinates of the player at the start of the jump $\tp(0)$, the first frame of the jump $\tp(\tau)$, and the end of the jump $\tp(t_f)$:
 \begin{align}
  \tp(0) &= \tang{1702.63, 725.59, 128.03}, \quad \tmag{\tv(0)} = 250.00 \label{eq:2emp0}\\
  \tp(\tau) &= \tang{1702.63, 721.27, 130.83}, \quad \tmag{\tv(\tau)} = 378.35 \label{eq:2emp1}\\
@@ -99,7 +101,7 @@ The total displacement of this jump par our definition is the expression $d = \t
     &\approx 183.64.
 \end{align*}
 
-Firstly notice the sudden change in the velocity of the player in first frame at time $\tau$. From this I deduced that the act of jumping is achieved by an impulse --- a sudden change in velocity --- upon the z-axis. With the assumption that no such impulses occurs in the xy-axis, and that the x,y-plane acceleration in the first frame is negligible, I found the size of the impulse using the Pythagorean Theorem\citefoot{Pythagoreantheorem} (figure \ref{fig:2verticalimpulse}).
+Firstly notice the sudden change in the velocity of the player in first frame at time $\tau$. So I modeled the jump by an impulse --- a sudden change in velocity --- upon the z-axis. With the assumption that no such impulses occurs in the xy-axis, and that the x,y-plane acceleration in the first frame is negligible, I found the size of the impulse using the Pythagorean Theorem\citefoot{Pythagoreantheorem} (figure \ref{fig:2verticalimpulse}).
 
 \begin{align*}
     \tmag{\tv}^2 &= \tv_y^2 + \tv_z^2\\
