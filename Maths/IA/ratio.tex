@@ -112,6 +112,11 @@
 \renewcommand{\headrulewidth}{0pt}
 \linespread{1.25}
 
+% custom
+\DeclareMathOperator{\di}{d\!}
+\newcommand*\Eval[3]{\left.#1\right\rvert_{#3}^{#2}}
+
+
 \usepackage{hyperref}
 
 \title{\vspace{-8ex}Estimating the quality of YouTube videos based on its number of likes and dislikes}
@@ -148,11 +153,11 @@ The topic of my exploration originates from a personal hobby I've developed in t
 
 Due to first year IB, I am familiar with the maths channel 3Blue1Brown (3B1B) on YouTube, for his videos are of high quality. When Grant (owner of 3B1B) announced a contest (figure \ref{fig:some1}) \parencite{sanderson} encouraging amateur video-makers to share their hidden maths knowledge, I was understandably very excited to have my entire YouTube home page filled with these new maths videos. While I did find some brilliantly made videos like ``The Beauty of B\'{e}zier Curves'' \parencite{holmer_2021}, and ``an explanation of Noether's Theorem'' \parencite{m_2021}, I quickly realized my inability to view all of the thousands of videos over a two week holiday. The solution? I will only watch the best ones.
 
-But how do you tell if a YouTube video is the ``best'' out of the bunch? Visual indicators like interesting thumbnails may be attempting, but I decided not to judge a book by its cover; while comparing view counts is fast, it is against the purpose of the maths event --- to discover new talented video creators. So I am left with the only other numerical indicators --- I wanted to judge the quality of the video through the number of likes and dislikes it has. While this measure is still very subjective, it is certainly the most objective and interesting metric.
+But how do you tell if a YouTube video is the ``best'' out of the bunch? Visual indicators like interesting thumbnails is tempting, but I decided not to judge a book by its cover; while comparing view counts is fast, it is against the purpose of the maths event --- to discover new talented video creators. So I am left with the only other numerical indicators --- I want to judge the quality of the video through the number of likes and dislikes it has. While this measure can still contain subjectivity, it is certainly the most objective and interesting metric.
 
 %(At the time of writing, the company YouTube has removed the dislike count on all videos, which is disappointing)
 
-Therefore within this exploration, I will be finding an equation relating the number of likes and dislikes a YouTube video has to the best estimate of its perceived quality by the viewers. I will be using multiple methods such as simulations, statistical distributions, and a Bayesian approach to deduce the formula of video quality. I will evaluate the pros and cons of each approach, both in its solution but also in its derivation, and use my knowledge to rank five unwatched videos from the SoME1 event (table \ref{tbl:videos}).
+Therefore within this exploration, I will be finding an equation relating the number of likes and dislikes a YouTube video has to the best estimate of its perceived quality by the viewers. I will be using multiple methods such as simulations, statistical distributions, and a Bayesian approach to deduce the formula of video quality. I will evaluate the pros and cons of each approach, both in its results but also in its derivation. With the spirit of the contest, I chose to rank five random videos from the SoME1 event (table \ref{tbl:videos}).
 %\begin{wrapfigure}{r}{0.4\textwidth}
 %    \centering
 %    \includegraphics[width=0.45\textwidth]{assets/intro.png}
@@ -199,45 +204,63 @@ Therefore within this exploration, I will be finding an equation relating the nu
 \end{figure}
 
 
-\section{Basic concepts}
+\section{Ideas and Keywords}
 First, we have to define some keywords that I used throughout the analysis. All YouTube videos are referred to as videos; the ratings of a video are its likes and dislikes, which are both positive integers; the likeability is the metric used to convey the quality of a video, and is represents a probability between 0 and 1, which can be defined as the mean probability of a viewer rating the video to select ``like''. (A likeability of $0.5$ means that a person rating the video is pressing the like button 50\% of the time) The focus would be to find a mathematical formula relating to this likeability.
 
+Additionally, I am assuming that people can and will rate the video solely based on its quality --- the quality being the fundamental objective value. This eliminates rating from viewers who watched only a section of the video, or ratings given based on the creator and not the video it self. The assumption is both very idealistic and hard to confirm; notice that the five chosen videos have more views and ratings, revealing a potential bias towards the negative ratings for the satisfied viewers simply move on. This will restrict the scope of any models created in this essay, but I believe that the spirit of the contest --- to promote small creators --- will offset the usual biases, pushing these sample videos into the scope of the models.
+
 \subsection{Naive likeability}
-To showcase my initial attempt at formulating this value, consider the two following videos:
+For my first attempt towards a formula of video likeabilities, consider video A and video C (table \ref{tbl:ex}).
+
+
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{c|c|c}
+        & Video A & Video C \\
+        \hline
+        \hline
+        Likes & 4 & 34\\
+        \hline
+        Dislikes & 0 & 6
+    \end{tabular}
+    \captionof{table}{}
+    \label{tbl:ex}
+\end{figure}
 
 % the two videos
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{assets/s_vid2.png}
-    \caption{Video one \parencite{fluency_2021}}
-    \label{fig:vid1}
-\end{figure}
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=0.7\textwidth]{assets/s_vid2.png}
+%    \caption{Video one \parencite{fluency_2021}}
+%    \label{fig:vid1}
+%\end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{assets/s_vid1.png}
-    \caption{Video two \parencite{division_2021}}
-    \label{fig:vid2}
-\end{figure}
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=0.7\textwidth]{assets/s_vid1.png}
+%    \caption{Video two \parencite{division_2021}}
+%    \label{fig:vid2}
+%\end{figure}
 
-Figure \ref{fig:vid1} is a video with 6 likes and 1 dislike. Figure \ref{fig:vid2} is a video with 23 likes and 4 dislikes. I found it tempting to define the likeability by the percentage of the likes received on a video. This is because the likeability increases as the number of likes increase, and it decreases as the number of dislike increases. I called it the naive likeability, and defined it as:
+Video A has 4 likes and 0 dislike. Video C has 34 likes and 6 dislikes. I found it tempting to define the likeability by the percentage of the likes received on a video, for I imagine likeability increases as the number of likes increase, and decreases as the number of dislikes increases. I will call this method the naive likeability, defined by:
 \[
-L_n = \frac{x}{n},
+    L = \frac{x}{n},
 \]
-where $L_n$ is the naive likeability, $x$ is the amount of likes, and $n$ is the amount of ratings.
+where $L$ is the naive likeability, $x$ is the amount of likes, and $n$ is the amount of ratings.
 
-The naive likeabilities of video one ($L_1$) and video two ($L_2$) can thus be computed:
+The naive likeabilities of video A ($L_1$) and video C ($L_2$) can thus be computed:
 \begin{align*}
-    L_{1} &= \frac{6}{6+1} \approx 0.857, \,\, L_{2} = \frac{23}{23 + 4} \approx 0.851.
+    L_{1} &= \frac{4}{4} = 1, \,\, L_{2} = \frac{34}{34 + 6} \approx 0.872
 \end{align*}
 
-If we assume this naive mathematical definition of the likeabilities represents our language definition, then we can rate the first video higher than the second because it has a higher likeability ($0.857 > 0.851$). So I should watch video one first, right?
+If we assume this naive mathematical definition of the likeabilities represents my language definition, then the first video rates higher than the second because it has a higher likeability ($1 > 0.872$). So I should watch video A first, right?
 
-However, the calculations are unlikely to match my language definitions of likeability, simply because they failed to take the total amount of ratings into consideration. While video one has a higher like to dislike ratio than video two, there are fundamentally fewer overall ratings available. Thus our method also needs to factor in the amount of information we can see, to include a factor of certainty, almost.
+Upon reflection, the calculations are unlikely to match my language definitions of likeability. Intuitively, it is very unlikely that 100\% of people will like video A because we saw just 4 likes --- the method failed to take the total amount of ratings into consideration. While video A has a higher like to dislike ratio than video C, there are fundamentally fewer overall ratings available.
 
 This can be illustrated with an example taken to the extreme. A video with only one like and zero dislikes have a naive likeability of 100\%, but can we really be sure that it is of a higher quality than a video with 999 likes and 1 dislike (naive likeability of 99.9\%)?
 
-Therefore the naive likeability definition is uninclusive of all information, but being fast to compute. Nevertheless, table \ref{tbl:naive} shows the five videos as ranked by their naive likeabilities.
+\subsection{Naive Likeability Analysis}
+Therefore the naive likeability definition is noninclusive of the rating amount, but is simple to compute even in ones head. I believe that it is a naive method to rate videos when the amount of ratings are small --- I hypothesis if the naive approach will be more accurate at higher amount of ratings, as most review sites utilize such ratios objectively. Nevertheless, table \ref{tbl:naive} shows the five videos as ranked by their naive likeabilities, showing that I should watch video A,B,D first, then video E and finally video C.
 
 \begin{figure}[H]
     \centering
@@ -251,16 +274,18 @@ Therefore the naive likeability definition is uninclusive of all information, bu
     \label{tbl:naive}
 \end{figure}
 
+Incidentally, the low amount of ratings assisted most sampled videos to a high naive likeability. Video A, B, and D all received a perfect likeability of 100\%, while naively indicating equal quality, it feels like that video B should be of higher quality than the others due to its larger ratings count of 25. Therefore I believe that a more inclusive approach would differentiate this perfect trio, ranking video B above the others.
 
-\section{Simulation}
-For any statistical or probabilistic question, I always found it helpful to start with a simulation of some kind. This is because a simulation allows me to both describe the problem as well as to generate a numerical solution, guaranteed by the law of large numbers --- stating that the statistical descriptions of a sample will tend towards that of the true descriptions as sample size increases \parencite{dekking_kraaikamp_lopuhaä_meester_2005}
+
+\section{Simulation Approach}
+For any statistical or probabilistic question, I always found it helpful to start with a simulation of some kind. This is because a simulation allows me to both describe the problem as well as to generate a numerical solution, guaranteed by the law of large numbers --- stating that the statistical descriptions of a sample will tend towards that of the true descriptions as sample size increases \parencite{dekking_kraaikamp_lopuhaä_meester_2005}.
 
 % description of what I did
-To do this, I've written a small piece of code that does the calculations in Python \parencite{python37}, and used various Python libraries to make all the graphs that are used throughout this report \parencite{matplotlib} \parencite{numpy} \parencite{scipy}.
+To do this, I've written a small piece of code that does the calculations in Python \parencite{python37}, and also used various Python libraries to make all the graphs that are used throughout this report \parencite{matplotlib} \parencite{numpy} \parencite{scipy}.
 
-Using video one (6 likes and 1 dislike) as an example, notice that it is theoretically possible for the video likeability to be of any probability except 0 and 1, for there is still a non-zero probability of receiving 6 likes on a video with 1\% likability, albeit very unlikely. Therefore I thought to define the likeability of a video by the average of all the possible likeabilities weighted by how likely they are to occur, as it matches our literal definition of ``the mean probability of a viewer rating the video to select like''.
+Using video A (4 likes and 0 dislike) as an example, I thought to define the likeability of a video by the average of all the possible likeabilities weighted by how likely they are to occur, as it matches my literal definition of ``the mean probability of a viewer rating the video to select like''.
 
-\newpage
+\subsection{Simulation Method}
 The pseudocode for our simulation is
 \begin{python}
 1   weighted = 0
@@ -281,7 +306,7 @@ Then I loop over all possible likeabilities from 0 to 1 using a \textit{for in} 
 2   for likeability in 0..1:
 \end{python}
 
-For each likability, I considered a simulation of 1000 times a group of 7 people rating the video. This is performed by the function \pythoninline{simulate_occurrence}(full source code in appendix \ref{apd:sim_occ}), which takes the likeability as an input. It outputs the \# of times the ratings by those 7 people matches the 6 likes and 1 dislike of video one and saves this in the variable called \pythoninline{occurrence}.
+For each likability, I considered a simulation of 1000 times a group of 4 people rating the video. This is performed by the function \pythoninline{simulate_occurrence}(full source code in appendix \ref{apd:sim_occ}), which takes the likeability as an input. It outputs the number of times the ratings by those 4 people matches the 4 likes and 0 dislike of video A and saves this in the variable called \pythoninline{occurrence}.
 \begin{python}
 3       occurrence = simulate_occurrence(likability)
 \end{python}
@@ -305,37 +330,41 @@ Finally, I decided to plot the relationship between \pythoninline{occurrence} ag
 %\newpage
 
 
-To see the output, I ran the program with the parameters of 6 likes and 1 dislike from video one, and 1000 samples later I was greeted with the graph in figure \ref{fig:sim_ratings_v1}.
+To see the output, I ran the program with the parameters of 4 likes and 0 dislike from video one, and 1000 samples later I was greeted with the graph in figure \ref{fig:sim_ratings_v1}.
 
-The blue dots in figure \ref{fig:sim_ratings_v1} represents the simulated occurrence of the video ratings out of 1000 samples of a chosen likeability (the likeabilities are selected with steps of 0.05 for clarity). The red vertical line graphs the mean likeability.
-
-\begin{figure}
+\begin{figure}[H]
     \centering
     \begin{minipage}{.5\textwidth}
         \centering
         \includegraphics[width=0.9\linewidth]{assets/sim_ratings_v1.png}
-        \caption{For video one}
+        \caption{For video A}
         \label{fig:sim_ratings_v1}
     \end{minipage}%
     \begin{minipage}{.5\textwidth}
         \centering
         \includegraphics[width=0.9\linewidth]{assets/sim_ratings_v2.png}
-        \caption{For video two}
+        \caption{For video C}
         \label{fig:sim_ratings_v2}
     \end{minipage}
 \end{figure}
 
-The graph was both an expected and unexpected turnout. The simulation placed the likeability of video at $0.776$, this is expected for there is certainly very little information available in only 7 ratings, but unexpected in size of the difference ($0.857-0.776=0.081$) against the naive likeability of 0.857. This shows that the naive likeability greatly overvalued the true likeability of the video.
+\subsection{Simulation Analysis}
+The blue dots in figure \ref{fig:sim_ratings_v1} represents the simulated occurrence of the video ratings out of 1000 samples of a chosen likeability (the likeabilities are selected with steps of 0.01 for clarity). The red vertical line graphs the mean likeability.
 
-By running the program with the parameters of the second video with 23 likes and 4 dislikes,
-we obtain a mean of $0.828$ and figure \ref{fig:sim_ratings_v2}.
+The graph was both an expected and unexpected turnout. The simulation placed the likeability of video at $0.838$, this is expected for there is certainly very little information available in only 4 ratings, but unexpected in size of the difference ($1-0.838=0.162$) against the naive likeability. This confirms my suspicion that the naive likeability overvalued the true likeability of the video for.
 
-In comparison with its naive likeability, video two is less affected by the lack of information for the simulated likeability has a much smaller difference ($0.851-0.828=0.023$) than we've seen in video one. This could imply that the naive likeability increases in accuracy the more information we have (tested in appendix \ref{apd:acc}), which showcases how different models are suited to different types of videos, and could allow me to use the naive likeability to judge popular videos.
+By running the program with the parameters of the second video with 34 likes and 6 dislikes,
+I've obtained a mean of $0.857$ and figure \ref{fig:sim_ratings_v2}.
 
-The shape of the graphs, or more formally, distributions of the likeabilities are also worth noting. They very much resemble a hill shaped curve that has a peek at only one likeability, and slopes increasing shallower the further away from the peek. Interestingly, the chosen metric of the statistical mean does not reflect the peek of the curve --- the red line does not intersect at the top of the curve. I believe this has to do with the long tail of zero occurrences at lower likeabilities, for they decrease the statistical mean in calculations.
+In comparison with its naive likeability, video C is less affected by the lack of information for the simulated likeability has a much smaller difference ($0.872-0.857=0.015$) than that of video one's. This partially confirmed my hypothesis of the naive method gaining accuracy at larger rating counts (tested in appendix \ref{apd:acc}), and could justify the use of the naive likeability to judge popular videos.
+
+The shape of the graphs are also worth noting.
+While the two figures are very distinct in shape and symmetry, I've noticed that the peak x-value of the graphs are the naive likeabilities of the videos. This is in contrast to the statistical mean of the graphs, which leans closer to the middle and away from the peak. Statistically, this is a comparison between mode and means, and the skewness of the distributions seemed to affect the exact differences between the mode and the mean. I wonder if when the graphs are symmetrical (like a normal distribution), the naive likeability really does equate to the correct likeability.
+
+%They very much resemble a hill shaped curve that has a peek at only one likeability, and slopes increasing shallower the further away from the peek. Interestingly, the chosen metric of the statistical mean does not reflect the peek of the curve --- the red line does not intersect at the top of the curve. I believe this has to do with the long tail of zero occurrences at lower likeabilities, for they decrease the statistical mean in calculations.
 
 % conclusion
-Therefore the simulation approach had proved to be helpful in framing the question in finding the so-called statistical mean of the range of possible likeabilities. On top of that, it had created a numerical method of estimating the likeability of videos. But it does come at a cost of precision and computational time, making the method unreliable and expensive to scale up to higher amounts of ratings. Table \ref{tbl:simulation} lists the five videos and their simulated likeability values with a sample size of 1000, and step 0.01.
+Nevertheless, the simulation approach had proved to be helpful in framing the question in finding the so-called statistical mean of the range of possible likeabilities. On top of that, it had created a numerical method of estimating the likeability of videos. But it does come at a cost of precision and computational time, making the method unreliable and expensive to scale up to higher amounts of ratings. Table \ref{tbl:simulation} lists the five videos and their simulated likeability values with a sample size of 1000, and step 0.01.
 
 \begin{figure}[H]
     \centering
@@ -349,15 +378,16 @@ Therefore the simulation approach had proved to be helpful in framing the questi
     \label{tbl:simulation}
 \end{figure}
 
-\section{Statistical}
+Two things are to be highlighted here. Firstly notice the slight variations in the simulated likeability values of video A,C, which I believe is caused by the random number generators. While larger sample sizes could reduce the variations at the cost of computational time, such errors may reduce the validity of the results during comparisons. Secondly notice that this metric of likeability had video C exceed video A, opposite of the conclusions made in the naive likeability section. It also confirmed my hypothesis that video B will score higher than video A,D --- this likeability measurement seems to be what I am looking for.
+
+\section{Statistical Approach}
 
 % what are distributions
-In search for an analytic (of symbols and operations) equation of the likeability metric, we must expand the idea of distributions that were touched on during simulations. Remember that the simulation was used to compute the occurrences of a given rating for all ranges of likeabilities, and the statistical mean of the curve it creates is the simulated likeability of the video. It may be helpful to define this curve more mathematically without the element of chance in the occurrence function.
+To formalize and reduce the variations of the simulation approach, I sought for a analytic equation of the likeability metric. Remember that the simulation was used to compute the occurrences of a given rating for all ranges of likeabilities, and the statistical mean of the curve it creates is the simulated likeability of the video. It may be helpful to define this curve more mathematically without the element of chance in the occurrence function.
 
 % examples of distributions
-\subsection{Continuous random variables and Prior PDF}
-Firstly, the likeability of a video can be thought of as a continuous random variable of symbol $L$. A statistical random variable represents uncertainty in a measurement of its domains --- the range of values the random variable could be. I was able to derive both the random likeability variable of a viewer before and after seeing the video.
-
+\subsection{Continuous Random Variables and Prior Distribution}
+Firstly, the likeability of a video can be thought of as a continuous random variable of symbol $L$ of domain $[0, 1]$, as the likeability can range from 0\% to 100\%.
 %\begin{wrapfigure}{r}{0.45\textwidth}
  %   \includegraphics[width=0.43\textwidth,right]{assets/discrete_uniform_pdfs.png}
 %    \caption{}
@@ -382,23 +412,31 @@ Firstly, the likeability of a video can be thought of as a continuous random var
     \label{fig:uniform}
 \end{wrapfigure}
 
-
-The probability density function of a viewer's opinion on a video before they've seen the ratings is a uniform distribution (figure \ref{fig:uniform}). The likeability $L$ of the video will range continuously from zero to one, but unless the viewer has had a bad day, there is no reason to prefer a range of likeabilities to another. That is, the probability density of a specific likeability value is the same as any other value.
-
+Without any assumptions, the probability density function of a viewer's opinion on a video before they've seen the ratings is a uniform distribution (figure \ref{fig:uniform}). Before seeing the ratings, the likeability $L$ of the video will range continuously from zero to one, but unless the viewer has had a bad day, there is no reason to prefer a range of likeabilities to another. That is, the probability density of a specific likeability value is uniform:
+\[
+    L \sim U(0, 1).
+\]
 
 %However, the y-axis of probabilities must be switched to probably densities, because it is no longer accurate to talk about a specific value's probability --- we must now consider the probability of a range of values instead
 
-Additionally, the area under the probability distribution must also be of value one for normalization. Therefore, the initial probability distribution displayed in figure \ref{fig:uniform} has a probability density function $f(L)$ of:
+Additionally, the area under the probability distribution must be of unit 1. Therefore, the initial probability distribution displayed in figure \ref{fig:uniform} has a probability density function $f(L)$ of:
 \[
     f(L) = 1.
 \]
 
-The requirements of continuous distributions restrict the probability distribution of our likeability metric --- it must be positive for all x values in the x-axis domain and have an area of one.
+Moreover, the statistical mean of this distribution should be initial thought of this unwatched and unrated video. I expect this to be 50\% as there is no reason for me to assume its quality initially --- this is a point that is debated later. Mathematically, the mean $\mu$ of this distribution is:
+\begin{align*}
+    \mu &= \int_0^1 x \, dx\\
+    &= \Eval{\frac{x^2}{2}}{1}{0}\\
+    &= 0.5,
+\end{align*}
+which fulfills this expectations.
+%The requirements of continuous distributions restrict the probability distribution of our likeability metric --- it must be positive for all x values in the x-axis domain and have an area of one.
 
-The uniform distribution of a viewer's prior belief of the likeabilities of a video is an indication of a lack of weighting. Therefore I should not need to add weightings to the statistical mean calculations of the final step.
+%The uniform distribution of a viewer's prior belief of the likeabilities of a video is an indication of a lack of weighting. Therefore I should not need to add weightings to the statistical mean calculations of the final step.
 
 % the binominal
-\subsection{Likeability PDF}
+\subsection{Specific and General Likeability Distributions}
 Using the ratings of video one as an example (6 likes and 1 dislike), consider a single likeability value from the domain of the random likeability variable $L$, say 0.5. What is the probability that we see the ratings of video one with a true likeability of 50\%? I decided to use the binomial distribution.
 
 \begin{wrapfigure}{r}{0.45\textwidth}
@@ -432,7 +470,10 @@ When graphed on software, the likeability distribution looks like the left graph
     \label{fig:beta}
 \end{figure}
 
-The curve plotted by $G(l)$ has a tail towards the left, with a singular peek near the value $0.85$. This corresponded with my simulated likeability distribution. But the figure shows that it has an area of only $\approx 0.12$, which does not fit the requirement of a probability density function of area one. I attempted to normalize this distribution by dividing it by its area $A$, that is:
+The curve plotted by $G(l)$ has a tail towards the left, with a singular peek near the value $0.85$. This corresponded with my simulated likeability distribution.
+
+\subsection{Likeability Distribution Normalization}
+But the figure shows that it has an area of only $\approx 0.12$, which does not fit the requirement of a probability density function of area one. I attempted to normalize this distribution by dividing it by its area $A$, that is:
 \begin{align*}
     A &= \int_{0}^{1} G(l) \, dl\\
     &= \int_{0}^{1} {n \choose x} l^x (1-l)^{n-x} \, dl\\
@@ -444,6 +485,7 @@ Thus I was able to construct the normalized probability density function $K(l)$ 
     &= \frac{ {n \choose x} l^x (1-l)^{n-x}} {\int_{0}^{1} {n \choose x} l^x (1-l)^{n-x} \, dl}.
 \end{align*}
 
+\subsection{Statistical Mean of Likeability Distribution}
 We are now able to take the statistical mean $\mu$ of this function, which would be the statistical solution of the estimated likeability of the video. Notice that we can restrict the integral bounds for the probability density function is only defined between 0 to 1:
 \begin{align*}
     \mu &= \int_{-\infty}^{\infty} l K(l) \, dl\\
@@ -478,6 +520,7 @@ I was able to simplify the formula for the statistical mean using the Beta funct
 
 It was surprising how neat the final solution was given the complexity that is the integral beforehand. Furthermore, this shows that the statistical likeability of the video can be calculated by dividing the number of likes plus one over the number of ratings plus two, under the assumption that the initial likeability distribution was uniform.
 
+\subsection{Method Analysis}
 The small difference between the statistical method and the simulation method ($|0.776 - 0.778| = 0.002 \approx 2.58\%$) showcases not only the correctness of this solution, but it also illustrates the power of simulations --- I did not have to do any maths to get an approximate answer. However, this neat solution explains the validity of the naive method at large rating numbers, for the plus ones and twos become insignificant as their operands increases.
 
 Overall, the statistical method required a reasonable amount of statistical knowledge, and I was greatly assisted by the use of a computer program in checking the equalities between each simplifying step. However, it produced a tidy result that is easy to remember and fast to compute. Table \ref{tbl:stat} lists the five videos ranked by their statistical likeability.
@@ -494,15 +537,14 @@ Overall, the statistical method required a reasonable amount of statistical know
     \label{tbl:stat}
 \end{figure}
 
-\section{Bayesian}
-
+\section{Bayesian Approach}
 The premise of this section was hinted upon within the statistical analysis of the probability distribution of the likeability random variable. I am going to break the premise of the uniform prior probability density function. The myriads of reasons include: YouTube recommendations are algorithmic and is unlikely to recommend me a low likeability video; it is very difficult to make a poor maths video on a topic, for I believe the subject has a high skill ceiling of entering; and personally, I enjoy watching these maths videos online, and have slightly higher expectations of the community. While these factors are difficult to capture in traditional statistical distribution analysis, it is the core idea in a branch of statistics called Bayesian statistics.
 
 % frequenist, bayesian
 The core principles in the two branches of statistics differ in their interpretations of probabilities. The frequentists define the probability by its percentage of occurrence as the sample size increases to infinity, with the manipulations of random variables being convolutions; the Bayesians perceive probabilities as a belief of the next event, which updates as new data are seen. The method of combining binomial and uniform distributions fits the frequentists view, but the Bayesian view perfectly fits my requirement of a changeable initial belief.
 
 % set up, definitions
-\subsection{Definitions}
+\subsection{Defining the Bayesian Prior, Posterior, and Event}
 Consider the random variable likeability $L$ of the video. Its probability density function $P(l)$ represents a belief in the likeability of the video given all data available. Before seeing any new data, this function is called the Prior. The arrival of new data is denoted by the symbol $D$, and the updated likeability upon seeing the new data is denoted by $P(l | D)$ --- the probability density function of the likeability \textit{given} the new data. This updated likeability is called the Posterior. In the context of video ratings, the prior probability will denote my initial belief on the likeabilities of the video, to which I can update my prior upon every new rating I see. I will define the Bayesian likeability to be the statistical mean of the prior.
 
 %To find the relations between the prior and posterior probabilities, we can use the example of a medical test of a common illness.
@@ -538,7 +580,7 @@ where $x$ is the prior belief of some event, and $x_i$ representing the space of
 % actual attempt
 I would need to extend this theorem to fit our continuous belief of the likeabilities of a video. To check for the validity of this method, I will be first applying the extended method on an uniform prior.
 
-\subsection{Prior updating}
+\subsection{Prior Updating and the Continous Bayes Theorem}
 With the random variable likeability $L$, the initial prior $P(l)$ of the likeability is a continuous uniform distribution:
 \[
     P(l) = 1.
@@ -564,7 +606,7 @@ Therefore after substitution, the equation simplifies and can be solved:
 \begin{align*}
     P(l|D)(\theta) &= \frac{\theta \times 1}{\int_{0}^{1} \theta \times 1 \, d\theta}\\
     &= \frac{\theta}{\int_0^1 \theta \, d\theta}\\
-    &= \frac{\theta}{[\frac{\theta^2}{2}]^1_0}\\
+    &= \frac{\theta}{\Eval{\frac{\theta^2}{2}}{1}{0}}\\
     &= 2\theta.
 \end{align*}
 
@@ -573,7 +615,7 @@ The posterior probability density function of the likeability of a video is $2\t
 \begin{align*}
     \mu &= \int_0^1 \theta P(l|D)(\theta) \, d\theta\\
     &= \int_0^1 2\theta^2 \, d\theta\\
-    &= [\frac{2\theta^3}{3}]^1_0\\
+    &= \Eval{\frac{2\theta^3}{3}}{1}{0}\\
     &= \frac{2}{3}.
 \end{align*}
 
@@ -583,6 +625,7 @@ The statistical mean of a video with 1 like and no dislikes by the statistical m
         &= \frac{2}{3}
 \end{align*}
 
+\subsection{N-Likes Generalization}
 I thought to generalize this by seeing what happens as the prior is updated $n$ times with $n$ likes only. Consider a prior probability density function at the $n$th like of the form:
 \[
     P(l)(\theta) = A \theta^B,
@@ -599,15 +642,15 @@ and the posterior can be represented by:
 \begin{align*}
     P(\theta|D) &= \frac{\theta A\theta^B}{\int_0^1 \theta A\theta^B \, d\theta}\\
     &= \frac{\theta^{B+1}}{\int_0^1 \theta^{B+1} \, d\theta}\\
-    &= \frac{\theta^{B+1}}{[\frac{\theta^{B+2}}{B+2}]^1_0}\\
+    &= \frac{\theta^{B+1}}{\Eval{\frac{\theta^{B+2}}{B+2}}{1}{0}}\\
     &= (B+2) \theta^{B+1}.
 \end{align*}
 
-Because the posterior is of the same form as the prior, the cycle can continue where $A_1 = B+2$ and $B_1 = B+1$, and so $B_n$ denotes the nth like received, and $A_n$ is the partial sum of $B_n$. The statistical mean $\mu$ of each posterior $B_n$ are:
+Because the posterior is of the same form as the prior, the cycle can continue where $A_{n+1} = B_{n}+2$ and $B_{n+1} = B_n+1$, and so $B_n$ denotes the nth like received, and $A_n$ is one above $B_n$. The statistical mean $\mu_n$ of each posterior $B_n$ are:
 \begin{align*}
-    \mu &= \int_0^1 \theta A_n \theta^{B_n} \, d\theta\\
+    \mu_n &= \int_0^1 \theta A_n \theta^{B_n} \, d\theta\\
     &= \int_0^1 A_n \theta^{B_n + 1} \, d\theta\\
-    &= A_n [\frac{\theta^{B_n+2}}{B_n+2}]^1_0\\
+    &= A_n \Eval{\left(\frac{\theta^{B_n+2}}{B_n+2}\right)}{1}{0}\\
     &= \frac{A_n}{B_n+2}\\
     &= \frac{B_n+1}{B_n+2} = \frac{n+1}{n+2}.
 \end{align*}
@@ -621,7 +664,7 @@ Once again, this generalization states the Bayesian likeability is the increment
     \label{fig:up}
 \end{figure}
 
-\subsection{Generalization}
+\subsection{X-Likes Y-Dislikes Generalization}
 To generalize the likeability solution to both likes and dislikes, consider the variable $R$ to be the event of seeing $X$ likes and $Y$ dislikes on a video. The posterior originating from a uniform prior is:
 \[
     P(l|R)(\theta) = \frac{P(R|l)(\theta) P(l)(\theta)}{\int_0^1 P(R|l)(\theta) P(l)(\theta) \, d\theta}.
@@ -646,7 +689,7 @@ By letting the variable $n=X+Y$ and $x=X$, this is the exact probability density
 
 More importantly, we can also see the Bayesian likeability of a uniform prior can be computed similarly to the naive method of percentages, but adding one to the number of likes and dislikes. It presents an even more handy rule to calculate the mean likeability --- use the naive method with the number of likes plus one and the number of dislikes plus one. The tables of videos A to E are not displayed here for the values are the same as the statistical method.
 
-\subsection{NSqrt Prior}
+\subsection{Personal Square-root Prior}
 Because of the Bayesian method, we are now freely able to switch out the prior probability density function. As the five videos I've sampled are from the recommendations of YouTube, and they are of a topic which I enjoy --- about mathematics, my initial prior ideally should be higher in probability with higher likeabilities, and has a statistical mean higher than 0.5, as well as fitting all attributes of a statistical distribution.
 
 There is a function I've encountered in class when learning about inverse functions, the absolute of the square root of $x$, $|\sqrt{x}|$. The function is the positive values of the inverse function $x^2$ restricted by the domain from zero to one, inclusive, which from now would simply be referred to as the square root function. It is shown on the left graph in figure \ref{fig:sqrt_per}.
@@ -663,7 +706,7 @@ The function has a decreasing positive slope throughout the domain, meaning that
 We can simply scale the function down by the area $A$ it encloses:
 \begin{align*}
     A &= \int_0^1 \sqrt{x} \, dx\\
-    &= [\frac{x^{\frac{3}{2}}}{\frac{3}{2}}]^1_0\\
+    &= \Eval{\frac{x^{\frac{3}{2}}}{\frac{3}{2}}}{1}{0}\\
     &= \frac{2}{3}.
 \end{align*}
 
@@ -677,7 +720,7 @@ The statistical mean $\mu$ of the normalized square root function also plays nic
 \begin{align*}
     \mu &= \int_0^1 x \frac{3}{2} \sqrt{x} \, dx\\
     &= \frac{3}{2} \int_0^1 x^{\frac{3}{2}} \, dx\\
-    &= \frac{3}{2} [\frac{x^{\frac{5}{2}}}{\frac{5}{2}}]^1_0\\
+    &= \frac{3}{2} \Eval{\left(\frac{x^{\frac{5}{2}}}{\frac{5}{2}}\right)}{1}{0}\\
     &= \frac{3}{5} = 0.6.
 \end{align*}
 
@@ -707,6 +750,7 @@ Furthermore, it seems that not only there is no difference between treating the 
 \end{figure}
 
 % conclude, and table
+\subsection{Method Analysis}
 At last, the ability to plug in any prior distribution is the main advantage of the Bayesian method, as it will provide a more accurate measurement of likeability for each individual video personally. Furthermore, it provides an accurate metric for comparing between video genres, as I may have different priors and expectations for different types of videos. However, it lacks the neatness of a solution provided by the statistical method and requires a computer to compute the successive priors. Painfully, my algorithm scales in exponential time, making it less applicable as the number of likes and dislikes increase (appendix \ref{apd:algo}). Table \ref{tbl:baye} shows the Bayesian likeability of a nqsrt prior on the five videos.
 
 \begin{figure}[H]
