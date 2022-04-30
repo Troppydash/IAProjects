@@ -20,7 +20,7 @@ Using this idea, I devised an optimal initial velocity for the player --- the bo
 \[
     \tmag{\tv(0)} = 250,
 \]
-where $250$ is fastest ground running speed\citefoot{counter_2022}.
+where $250$ is the fastest ground running speed set by the game\citefoot{counter_2022}.
 
 
 \begin{figure}[H]
@@ -40,7 +40,7 @@ where $250$ is fastest ground running speed\citefoot{counter_2022}.
 \end{figure}
 
 
-The problem is also top-down rotationally invariant. Let the z-axis denote the vertical axis, and the xy-axis to be the plane axis top down (see figure \ref{fig:1coordinates}, figure \ref{fig:2coordinates_topdown}).
+Additionally, the problem is top-down rotationally invariant. Let the z-axis denote the vertical axis, and the xy-axis to be the plane axis top down (see figure \ref{fig:1coordinates}, figure \ref{fig:2coordinates_topdown}).
 
 \begin{figure}[H]
     \centering
@@ -51,8 +51,9 @@ The problem is also top-down rotationally invariant. Let the z-axis denote the v
 
 In considering only the xy-axis, I realized that an optimal strategy does not depend on the angle of the initial velocity vector within the plane; It is always possible to rotate the initial velocity to rotate the direction of final displacement (see the blue vector and purple curve in figure \ref{fig:2turning}). This meant that the optimal initial velocity is rotational invariant, but I used the initial velocity in the y-axis for the sake of consistency between models:
 \[
-    \tv(0) = \tang{0, 250, 0}.
+    \tv(0) = \tang{0, 250, 0},
 \]
+note that the player cannot accelerate vertically without a jump, hence $\tv_z(0) = 0$.
 
 Additionally, let the initial position of the player to be zero for ease of calculations:
 \[
@@ -92,7 +93,7 @@ To test this model, I recorded the player jumping and performing the actions des
 \end{align}
 
 \subsubsection{Straight line model analysis}
-With the simple empirical data in Eq. \ref{eq:2emp0}, Eq. \ref{eq:2emp1}, and Eq. \ref{eq:2emp2}, not only can I analyze the straight line model, but it also allows me to model the vertical motion. However, I've noticed that the x,z-axis have changed after the jump. The $x$ change is likely the result of human errors in the player looking along the y-axis, but due to the rotational invariant discussed before, this is a non detrimental problem; but the z-axis changed after the jump --- I believe it to be the result of the ``bounciness'' as thelands from the jump\citefoot{bounce}, which can be ignored ($\Delta \tp_z = 0$).
+With the simple empirical data in Eq. \ref{eq:2emp0}, Eq. \ref{eq:2emp1}, and Eq. \ref{eq:2emp2}, not only can I analyze the straight line model, but it also allows me to model the vertical motion. However, I've noticed that the x,z-axis have changed after the jump. The $x$ change is likely the result of human errors in the player looking along the y-axis, but due to the rotational invariant discussed before, this is a non detrimental problem; but the z-axis changed after the jump --- I believe it to be the result of the ``bounciness'' as the player lands from the jump\citefoot{bounce}. I've also tested the flatness of the terrain prior to the jump, so this error can be ignored ($\Delta \tp_z = 0$).
 
 The total displacement of this jump par our definition is the expression $d = \tmag{\tp(t_f) - \tp(0)}$, which is
 \begin{align*}
@@ -149,7 +150,7 @@ Firstly notice the sudden change in the velocity of the player in first frame at
     \label{fig:2verticalimpulse}
 \end{figure}
 
-For $\tau$ is small, I sat the player's initial vertical velocity to this number:
+For $\tau$ is small, I set the player's initial vertical velocity to this number:
 \[
     \tv_{z}(0) = 284.
 \]
@@ -159,7 +160,7 @@ Secondly, by measuring the duration of the jump --- which I've done by counting 
     \tv_{a} = \frac{183.71}{0.7333} \approx 250.42.
 \]
 
-Isn't that surprising? The average velocity does not differ from its initial value --- there is almost a zero net acceleration in the straight line model. The acceleration as a function of time $t$ and wishing direction $\td(t)$ could be zero in the xy-axis:
+I found this supersizing. The average velocity does not differ from its initial value --- there is almost a zero net acceleration in the straight line model. The acceleration as a function of time $t$ and wishing direction $\td(t)$ could be zero in the xy-axis:
 \[
     \ta(t, \td) = \tang{0, 0, ?}.
 \]
@@ -243,7 +244,7 @@ To maximize displacement, we would want the first condition of equation \ref{eq:
     \therefore  \quad \ta(t) &= 0.
 \end{align*}
 
-My acceleration model has confirmed my hypothesis that the player is not accelerating in the xy-axis during the jump. By the key idea, this will reduce the average velocity and in turn, reduces the total displacement of the jump.
+My acceleration model has confirmed my hypothesis that the player is not accelerating in the xy-axis during this jump. By the key idea, this will reduce the average velocity and in turn, reduces the total displacement of the jump.
 
 \subsubsection{Continuous modeling approximation}
 But before I try some other models, let's first evaluate the accuracy of the continuous approximation using this simplistic model. The same article\citefoot{adrianb} reveals an engine constant z-axis acceleration $g$ equal to $800$, and I thought of this as an opportunity to test my continuous approximation by comparing my calculated value with the real value.
@@ -266,7 +267,8 @@ Continuing, the player position is the integral of velocity as shown in Eq. \ref
     &= \tpars{0}{250t}{\frac{1}{2}gt^2 + 284t} + \tp(0)\\
     &= \tpars{0}{250t}{\frac{1}{2}gt^2 + 284t}
 \end{align*}
-shows that the the y-axis displacement is $250t$. Because the actual displacement is $\approx 183.64$, this means that the jump duration $t_f$ is
+
+This shows that the the y-axis displacement is $250t$. Because the actual displacement is $\approx 183.64$, this means that the jump duration $t_f$ is
 \[
     t_f = \frac{183.64}{250} \approx 0.735 \si{s}.
 \]
@@ -285,7 +287,7 @@ Furthermore, the lack of correlation between the z-axis on the xy-axis and vice 
 \subsection{Skilled player's model}
 A better strategy would be the player accelerating not directly along their velocity, but rather at an angle to their velocity. Personally I've been told by numerous skilled players that you need to move your mouse slowly to the right --- meaning rotating the vector $\td$ over time --- to get higher speed and distance. Now I can test this theory.
 
-Currently, any strategy is uniquely defined by the player's direction function $\td(t)$ as a real 2-vector. This model will point $\td(t)$ towards the y-axis at $t=0$, and rotate clockwise over time. This reminded me of a unit circle with the xy-axis switched, creating
+Currently, any strategy is uniquely defined by the player's direction function $\td(t)$ as a real 2-vector. To model the rotation, I will point $\td(t)$ towards the y-axis at $t=0$, and rotate it clockwise over time. This reminded me of a unit circle with the xy-axis switched, creating
 \[
     \td(t) = \tang{\sin(t), \cos(t)}.
 \]
@@ -317,8 +319,8 @@ Let $k=LA$. Notice that the velocity is the integral of acceleration,
     \tv(t) &= \int \ta(t) \, dt\\
     &= \int k \tpar{\sin(wt)}{\cos(wt)} \, dt\\
     &= \frac{k}{w} \tpar{-\cos(wt)}{\sin(wt)} + c_v,\\
-    \tv(0) &= \frac{k}{w} \tpar{-\cos(0)}{\sin(0)} + c_v\\
-    c_v &= \frac{k}{w} \tpar{1}{0} + \tpar{\tv_x(0)}{\tv_y(0)}.
+    \because \tv(0) &= \frac{k}{w} \tpar{-\cos(0)}{\sin(0)} + c_v\\
+    \therefore c_v &= \frac{k}{w} \tpar{1}{0} + \tpar{\tv_x(0)}{\tv_y(0)}.
 \end{align*}
 
 And the position is the integral of velocity,
@@ -372,10 +374,10 @@ must be held for the duration of the jump. Expanding and organizing this inequal
     L &> \text{proj}(\tv, \td)\\
     &> \tv_x \td_x + \tv_y \td_y\\
     &> \left(-\frac{k}{w} \cos(wt) + \frac{k}{w}\right) \sin(wt) + \left(\frac{k}{w} \sin(wt) + 250\right) \cos(wt),\\
-    0 &> \left(-\frac{k}{w} \cos(wt) + \frac{k}{w}\right) \sin(wt) + \left(\frac{k}{w} \sin(wt) + 250\right) \cos(wt) - 250
+    0 &> \left(-\frac{k}{w} \cos(wt) + \frac{k}{w}\right) \sin(wt) + \left(\frac{k}{w} \sin(wt) + 250\right) \cos(wt) - L
 \end{align*}
 
-To find the value of the constant $w$ that best fulfills this inequality would need a quantitative measure on how well this inequality is held through the jump. Ideally the function should only include the failures of fulfilling the inequality, but to be explained in the more advanced models --- that the projection RHS should be as close to zero as possible for high speeds --- I chose an integral from $t=0$ to $t=t_f$ on the absolute values of the RHS, denoted as the error of a model. This uses absolute function $|x|$ defined by
+To find the value of the constant $w$ that best fulfills this inequality would need a quantitative measure on how well this inequality is held through the jump. Ideally the function should only include the failures of fulfilling the inequality, but to be explained in the more advanced models --- that the RHS should be as close to zero as possible for high speeds --- I chose an integral from $t=0$ to $t=t_f$ on the absolute values of the RHS, denoted as the error of this model. This uses the absolute function $|x|$ defined by
 \[
  |x| = \begin{cases}
          x & x \geq 0\\
@@ -386,7 +388,7 @@ as to make all errors positive. Therefore the error function $R(w)$ for each con
 \begin{figure}[H]
  \centering
  \[
-  R(w) = \int_0^{t_f} \left|\left(-\frac{k}{w} \cos(wt) + \frac{k}{w}\right) \sin(wt) + \left(\frac{k}{w} \sin(wt) + 250\right) \cos(wt) - 250\right| \, dt
+  R(w) = \int_0^{t_f} \left|\left(-\frac{k}{w} \cos(wt) + \frac{k}{w}\right) \sin(wt) + \left(\frac{k}{w} \sin(wt) + 250\right) \cos(wt) - L\right| \, dt
  \]
  \caption{The error function}
  \label{eq:2error}

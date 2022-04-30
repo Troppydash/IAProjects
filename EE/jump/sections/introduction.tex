@@ -44,7 +44,7 @@ Continuing, the game stores the velocity of the player as a real 3-vector as wel
 \footnotetext{\citeall{euler_ang}}
 
 
-Figure \ref{fig:1coords} is a snapshot of the game showing the two values; the player is at position \verb|pos|:$\tang{226.96, -474.47, 69.52}$ with a velocity of magnitude \verb|vel|:$51.99$. The \verb|ang| value is the Euler angles of the player's direction, showing a pitch of $1.86$ degrees from the x,y-axis and a yaw of $-96.86$ degrees within the x,y-axis (figure \ref{fig:view_ang}).
+Figure \ref{fig:1coords} is a snapshot of the game showing three values; the player is at position \verb|pos|:$\tang{226.96, -474.47, 69.52}$ with a velocity of magnitude \verb|vel|:$51.99$. The \verb|ang| value is the Euler angles of the player's direction, showing a pitch of $1.86$ degrees from the x,y-axis and a yaw of $-96.86$ degrees within the x,y-axis (figure \ref{fig:view_ang}).
 
 
 The game also keeps track of the time elapsed, and updates the player's position and velocity evenly $64$ times a second\citefoot{ticks}. I will denote the time between updates with $\tau$, of value
@@ -55,7 +55,7 @@ The game also keeps track of the time elapsed, and updates the player's position
 \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
 
 
-Moreover, the acceleration $\ta$ is also a real 3-vector. It is computed every update from the ``wishing'' direction $\td$ --- a real 2-vector in the x,y-axis only --- of the player, which is then applied onto the velocity $\tv_n$ using Euler's method. The position $\tp_n$ is then updated with the new velocity $\tv{n+1}$ through the same method. This sequential process can be represented by the difference equations
+Moreover, the acceleration $\ta$ is also a real 3-vector. It is computed every update from the ``wishing'' direction $\td$ --- a real 2-vector in the x,y-axis only --- of the player, which is then applied onto the velocity $\tv_n$ using Euler's method. The position $\tp_n$ is then updated with the new velocity $\tv_{n+1}$ through the same method. This sequential process can be represented by the difference equations
 \begin{align}
     \tv_{n+1} &= \tv_n + \ta \tau\\
     \tp_{n+1} &= \tp_n + \tv_{n+1} \tau.
@@ -118,9 +118,9 @@ Moreover, the acceleration $\ta$ is also a real 3-vector. It is computed every u
     \label{fig:1vecadd}
 \end{figure}
 
-The process of one such update is called a ``frame'', and can be visualized through vectors scalings and additions as figure \ref{fig:1vecadd} demonstrates.
+The process of one such update is called a ``frame'', and can be visualized through vector scalings and additions as figure \ref{fig:1vecadd} demonstrates.
 
-It is therefore obvious to see that the player position and velocity are discrete functions of time. While it may be conventional to represent the time parameter as subscripts, I decided against it and instead using a continuous function syntax. This is because the powerful optimization technique --- calculus --- only applies to continuous functions, and I conjecture that the small time-step $\tau$ justifies such transition of discrete to continuous time\citefoot{knoebel_2007}. The function syntax ($f(t)$) easily denotes continuous position and velocity, while still allowing discreteness used in section 3 ($f(n\tau), n\in\mathbb{Z}$).
+It is therefore obvious to see that the player position and velocity are discrete functions of time. It is conventional to represent the time parameter as subscripts, but I also want to expand on it and use a continuous function syntax. This is because the powerful optimization technique --- calculus --- only applies to continuous functions, and I conjecture that the small time-step $\tau$ justifies such transition of discrete to continuous time\citefoot{knoebel_2007}. The function syntax $f(t)$ easily denotes continuous position and velocity --- the discreteness in section 3 will still be represented via subscripts.
 
 Without loss of generality, I can model the player's motion with the functions $\tp(t)$ and $\tv(t)$, where $t$ is time elapsed from the start of the jump. The updating process is now approximated by differential equations:
 \begin{align}

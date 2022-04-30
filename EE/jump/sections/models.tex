@@ -500,7 +500,11 @@ Yet this value of $k=-0.16$ is really stable judging by the low gradient around 
 
 % 3866 words, very close
 \subsection{Evaluation}
-Overall, the second discrete model is a significant improvement over the first discrete model. It increased the total jump displacement from $\approx 373.0$ to $\approx 392.15$ due to the pausing of rotation at angle $\phi \approx -0.16$. I also found that the optimal initial velocity should be angled $\approx 0.11$ radians from the ledge if the player wishes to jump across the longest gap.
+Overall, the second discrete model is a significant improvement over the first discrete model. It increased the total jump displacement from $\approx 373.0$ to $\approx 392.15$ due to the pausing of rotation at angle $\phi \approx -0.16$. I also found that the optimal initial velocity should be angled $\approx 0.11$ radians from the ledge if the player wishes to jump across the longest gap using the second discrete model:
+\[
+    \tan \frac{42.2}{389.86} \approx 0.11,
+\]
+because that is the angle of rotation needed to snap the jump endpoint to the x-axis.
 
 \begin{figure}[H]
     \centering
