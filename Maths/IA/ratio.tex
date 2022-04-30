@@ -7,6 +7,7 @@
 \usepackage{amsmath}
 \usepackage{array}
 \usepackage{siunitx}
+\usepackage{amsfonts}
 
 % code
 % Default fixed font does not support bold face
@@ -433,97 +434,129 @@ Moreover, the statistical mean of this distribution should be initial thought of
 which fulfills this expectations.
 %The requirements of continuous distributions restrict the probability distribution of our likeability metric --- it must be positive for all x values in the x-axis domain and have an area of one.
 
-%The uniform distribution of a viewer's prior belief of the likeabilities of a video is an indication of a lack of weighting. Therefore I should not need to add weightings to the statistical mean calculations of the final step.
+The uniform distribution of a viewer's prior belief of the likeabilities of a video is an indication of a lack of weightings to the statistical mean calculations of the final step.
 
 % the binominal
 \subsection{Specific and General Likeability Distributions}
-Using the ratings of video one as an example (6 likes and 1 dislike), consider a single likeability value from the domain of the random likeability variable $L$, say 0.5. What is the probability that we see the ratings of video one with a true likeability of 50\%? I decided to use the binomial distribution.
+Building on the simulation approach, I am looking for an analytic equation to the \verb|simulate_occurence| function performed at each likeability value.
+
+Consider a single likeability value from the domain of the random variable $L$, say $l=0.5$. What is the probability that we see the exact ratings of video A if it had a true likability of 50\%? I remembered the binomial distribution.
 
 \begin{wrapfigure}{r}{0.45\textwidth}
     \includegraphics[width=0.43\textwidth,right]{assets/bino_pdfs.png}
-    \caption{For video one}
+    \caption{For Video A}
     \label{fig:bino}
 \end{wrapfigure}
 
-The binomial distribution is a probability distribution that summarizes the likelihood that a value will take one of two independent values under a given success chance and assumptions \parencite{barone_2021}. In short, the distribution will model the distribution of the number of likes in a sample of ratings given a true likeability. It is a discrete distribution, and its discrete probability distribution function $f(x)$ is of the form:
+The binomial distribution is a probability distribution that determines the number of successes in n trials under a given success chance \parencite{barone_2021}. In short, the distribution can model the probability of seeing x likes in n ratings given a likeability. Its probability distribution function $f(x)$ is of the form:
 \[
-    f(x) = {n \choose x} p^x (1-p)^{n-x},
+    f(x) = {n \choose x} l^x (1-l)^{n-x},
 \]
-where $n$ is the number of ratings, and $p$ is the true likeability of the video. When graphed using the ratings of video one, the distribution resembles that of figure \ref{fig:bino}.
+where $n$ is the number of ratings, $x$ is the number of likes seen, and $l$ is the assumed likeability of the video. When graphed using the ratings of video A, the distribution resembles that of figure \ref{fig:bino}.
 
-While the distribution displays all the possible likes/dislikes combinations, the value that is of interest is colored in red. The figure shows that the probability of getting 6 likes in 7 ratings is about 0.05 or 5\%. Or as a single calculation:
+While the distribution displays all the possible likes/dislikes combinations, the value that is of interest is colored in red. The figure shows that the probability of getting 4 likes in 4 ratings is about 0.06 or 6\% if the underlying likeability is 50\% --- very unlikely. Or as a single calculation:
 \[
-    f(6) = {7 \choose 6} (0.5)^6 (1-0.5)^{7-6} \approx 0.05.
+    f(4) = {4 \choose 4} (0.5)^4 (1-0.5)^{4-4} \approx 0.06.
 \]
-Therefore for each likeability of our random variable $L$, its probability is $f(6)$ with the variable $p$ replaced by the likeability. Therefore I believe the probability density function $G(l)$ of our random variable is a binomial distribution with parameter $p$ rather than $x$, and is written as:
-\[
-    G(l) = {n \choose x} l^x (1-l)^{n-x} = {7 \choose 6} l^6 (1-l) ^{7-1}.
-\]
-where $l$ are the range of likeabilities.
 
-When graphed on software, the likeability distribution looks like the left graph of figure \ref{fig:beta}.
+Therefore for each likeability of our random variable $L$, its occurrence function is $f(4)$ with the specific likeability. Thus I believe the probability density function $G(l)$ of the random variable is a binomial distribution with parameters $l$ rather than $x$, and is written as:
+\begin{align*}
+    G(l) &= {n \choose x} l^x (1-l)^{n-x} = {4 \choose 4} l^4 (1-l) ^{4-4}\\
+    &= l^4
+\end{align*}
+
+When graphed in software, the likeability distribution looks like the left graph of figure \ref{fig:beta}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{assets/beta_pdfs.png}
-    \caption{For video one}
+    \caption{For Video A}
     \label{fig:beta}
 \end{figure}
 
-The curve plotted by $G(l)$ has a tail towards the left, with a singular peek near the value $0.85$. This corresponded with my simulated likeability distribution.
+Notice that the left figure perfectly matches the simulated distribution with a left skew and a peak near $0.83$, albeit smoother and continuous.
 
 \subsection{Likeability Distribution Normalization}
-But the figure shows that it has an area of only $\approx 0.12$, which does not fit the requirement of a probability density function of area one. I attempted to normalize this distribution by dividing it by its area $A$, that is:
+But the figure shows that it has an area of only $\approx 0.20$, which does not fit the requirement of a probability density function of unit area. I attempted to normalize this distribution by dividing it by its area $A$, more accurately:
 \begin{align*}
     A &= \int_{0}^{1} G(l) \, dl\\
-    &= \int_{0}^{1} {n \choose x} l^x (1-l)^{n-x} \, dl\\
-    &\approx 0.12.
-\end{align*}
-Thus I was able to construct the normalized probability density function $K(l)$ for the likeability random variable (shown by the right graph of figure \ref{fig:beta}):
-\begin{align*}
-    K(l) &= \frac{G(l)}{A}\\
-    &= \frac{ {n \choose x} l^x (1-l)^{n-x}} {\int_{0}^{1} {n \choose x} l^x (1-l)^{n-x} \, dl}.
+    &= \int_{0}^{1} l^4 \, dl\\
+    &= \Eval{\frac{l^5}{5}}{1}{0}\\
+    &= 0.2,
 \end{align*}
 
-\subsection{Statistical Mean of Likeability Distribution}
-We are now able to take the statistical mean $\mu$ of this function, which would be the statistical solution of the estimated likeability of the video. Notice that we can restrict the integral bounds for the probability density function is only defined between 0 to 1:
+and the normalized distribution $K(l)$ is (shown by the right graph of figure \ref{fig:beta}):
 \begin{align*}
-    \mu &= \int_{-\infty}^{\infty} l K(l) \, dl\\
-    &=\int_{0}^{1} l K(l) \, dl\\
+    K(l) &= \frac{G(l)}{A}\\
+    &= \frac{l^4}{0.2}\\
+    &= 5l^4
+\end{align*}
+
+To generalize, the normalized distribution of a video with any amount of ratings is:
+\begin{align*}
+    K(l) &= \frac{G(l)}{A}\\
+     &= \frac{ {n \choose x} l^x (1-l)^{n-x}} {\int_{0}^{1} {n \choose x} l^x (1-l)^{n-x} \, dl},
+\end{align*}
+where $n$ is the amount of ratings, and $x$ is the number of likes.
+
+\subsection{Statistical Mean of Likeability Distribution}
+I can now precisely compute the statistical mean $\mu$ of this distribution, which directly reflects the simulation approach and is likely to be the likeability metric I am looking for. Notice the uniform weighting of the statistical mean justified by the uniform prior distribution, and that the integral bounds for the probability density function is restricted between 0 to 1 as $K(l)$ is precisely $0$ outside the domain:
+\begin{align*}
+    \mu &= \int_{0}^{1} l K(l) \, dl\\
+    &= \int_{0}^{1} 5l^5 \, dl\\
+    &= \Eval{\frac{5}{6} l^6}{1}{0}\\
+    &= \frac{5}{6} \approx 0.83,
+\end{align*}
+thus agreeing with the result of the simulation approach on video A.
+
+Generally, the statistical mean for a video with $n$ amount of ratings and $x$ likes is:
+\begin{align*}
+    \mu &=\int_{0}^{1} l K(l) \, dl\\
     &=\int_{0}^{1} l \frac{ {n \choose x} l^x (1-l)^{n-x}} {\int_{0}^{1} {n \choose x} l^x (1-l)^{n-x} \, dl} \, dl.
 \end{align*}
 
 While I was able to reduce the complexity of this integral by canceling the choose function and combining the exponents, the remain integral seems unsolvable to any integration method I know:
 \begin{align*}
-    \mu &=\int_{0}^{1} \frac{ l^{x+1} (1-l)^{n-x}} {\int_{0}^{1} l^x (1-l)^{n-x} \, dl} \, dl\\
+    \mu &= \int_{0}^{1} \frac{ l^{x+1} (1-l)^{n-x}} {\int_{0}^{1} l^x (1-l)^{n-x} \, dl} \, dl\\
     &= \frac{1}{\int_{0}^{1} l^x (1-l)^{n-x} \, dl} \int_{0}^{1}  l^{x+1} (1-l)^{n-x} \, dl.
 \end{align*}
 
 Thankfully, the internet was able to provide me a solution via a special function named the Beta function $B(x,y)$ \parencite{wikipedia_2021} and its relative the Gamma function $\Gamma(z)$ \parencite{artin_2006}, which are defined as:
+\begin{align}
+    B(a, b) &= \int_{0}^{1} l^{a-1} (1-l)^{b-1} dl\label{eq:beta}\\
+    \Gamma(z) &= \int_{0}^{\infty} x^{z-1} e^{-x} \, dx.\label{eq:gammma}
+\end{align}
+
+There are two relevant identities for the Gamma function. The first states its relation with the factorial operation when its arguments are integers, the second showing its identity with the Beta function:
+\begin{align}
+    \Gamma(z) &= (z-1)! \label{eq:gammaident}\\
+    B(a, b) &= \frac{\Gamma(a) \Gamma(b)}{\Gamma(a + b)} \label{eq:betaident}.
+\end{align}
+
+I was able to simplify the formula for the statistical mean using the Beta function, which can be converted to a series of Gamma functions and therefore into factorials.
+
+Through identity Eq. \ref{eq:beta}, notice that:
 \begin{align*}
-    B(x, y) &= \int_{0}^{1} l^{x-1} (1-l)^{y-1} dl\\
-    \Gamma(z) &= \int_{0}^{\infty} x^{z-1} e^{-x} \, dx.
+    \int_{0}^{1} l^x (1-l)^{n-x} \, dl &= B(x+1, n-x+1)\\
+    \int_{0}^{1}  l^{x+1} (1-l)^{n-x} \, dl &= B(x+2, n-x+1),
 \end{align*}
 
-To put it simply, the Gamma function is an analytic continuation of the factorial operation --- meaning that it generalizes the factorial operation outside the positive integers. It has two relevant identities. The first states its relation with the factorial operation, the second showing its identity with the Beta function:
+therefore
 \begin{align*}
-    \Gamma(z) &= (z-1)!\\
-    B(x, y) &= \frac{\Gamma(x) \Gamma(y)}{\Gamma(x + y)}.
+    \mu &= \frac{1}{B(x+1, n-x+1)}B(x+2, n-x+1)\\
+    &= \frac{\frac{\Gamma(x+2)\Gamma(n-x+1)}{\Gamma(n+3)}}{\frac{\Gamma(x+1)\Gamma(n-x+1)}{\Gamma(n+2)}} \tag*{using Eq. \ref{eq:betaident}}\\
+    &=  \frac{\frac{(x+1)!(n-x)!}{(n+2)!}}{\frac{x!(n-x)!}{(n+1)!}}  \tag*{using Eq. \ref{eq:gammaident}}\\
+    &= \frac{x+1}{n+2}
 \end{align*}
 
-I was able to simplify the formula for the statistical mean using the Beta function, which can be converted to a series of Gamma functions and therefore into factorials:
-\begin{align*}
-    \mu &= \frac{1}{B(x+2, n-x+1)}B(x+1, n-x+1)\\
-    &= \frac{\frac{\Gamma(x+2)\Gamma(n-x+1)}{\Gamma(n+3)}}{\frac{\Gamma(x+1)\Gamma(n-x+1)}{\Gamma(n+2)}} =  \frac{\frac{(x+1)!(n-x)!}{(n+2)!}}{\frac{x!(n-x)!}{(n+1)!}}\\
-    &= \frac{x+1}{n+2} = \frac{6+1}{7+2} \approx 0.778.
-\end{align*}
-
-It was surprising how neat the final solution was given the complexity that is the integral beforehand. Furthermore, this shows that the statistical likeability of the video can be calculated by dividing the number of likes plus one over the number of ratings plus two, under the assumption that the initial likeability distribution was uniform.
+I was surprised by how neat the final solution turned out, contrasting the messy integrals beforehand. Nevertheless, this shows that the statistical likeability of any video can be calculated by dividing the number of likes plus one over the number of ratings plus two.
 
 \subsection{Method Analysis}
-The small difference between the statistical method and the simulation method ($|0.776 - 0.778| = 0.002 \approx 2.58\%$) showcases not only the correctness of this solution, but it also illustrates the power of simulations --- I did not have to do any maths to get an approximate answer. However, this neat solution explains the validity of the naive method at large rating numbers, for the plus ones and twos become insignificant as their operands increases.
+The statistical approach is in agreement with the simulation approach, in that it ranks the likeability of video C ($\frac{34+1}{34+6+2} \approx 0.854$) higher than that of video A ($\frac{5}{6} \approx 0.833$). The contrast is the lack of variance in this analytic solution. If this metric of likeability is really representative, the high accuracy of the statistical solution and simple calculations helps to make the approach to be viable in large scales in real world review sites, where small ratings are frequent and computational time is costly.
 
-Overall, the statistical method required a reasonable amount of statistical knowledge, and I was greatly assisted by the use of a computer program in checking the equalities between each simplifying step. However, it produced a tidy result that is easy to remember and fast to compute. Table \ref{tbl:stat} lists the five videos ranked by their statistical likeability.
+%The small difference between the statistical method and the simulation method ($|0.776 - 0.778| = 0.002 \approx 2.58\%$) showcases not only the correctness of this solution, but it also illustrates the power of simulations --- I did not have to do any maths to get an approximate answer. However, this neat solution explains the validity of the naive method at large rating numbers, for the plus ones and twos become insignificant as their operands increases.
+
+Overall, the statistical method required a reasonable amount of statistical knowledge, and I was greatly assisted by the use of a computer program in checking the equalities between each simplifying step. Nevertheless, it produced a tidy result that is easy to remember and fast to compute --- the number of likes plus one over the number of ratings plus two. Table \ref{tbl:stat} lists the five videos ranked by their statistical likeability. Notice that the numbers and the trends of likeability closely resembles that of the simulated likeabilities.
 
 \begin{figure}[H]
     \centering
@@ -531,21 +564,25 @@ Overall, the statistical method required a reasonable amount of statistical know
         & Video A & Video B & Video C & Video D & Video E \\
         \hline
         \hline
-        Statistical Likeability (3dp) & 0.833 & 0.926 & 0.854 & 0.941 & 0.994
+        Statistical Likeability (3dp) & 0.833 & 0.962 & 0.854 & 0.941 & 0.996
     \end{tabular}
     \captionof{table}{}
     \label{tbl:stat}
 \end{figure}
 
+Upon inspection, I've noticed that when compared with the naive method, their differences decrease when the number of ratings increase --- notice that video B's difference ($1-0.962 = 0.038$) is much smaller than video A's difference ($1-0.833= 0.167$). Mathematically, the plus one and plus two has diminishing effects on the likeability of a video as the numerator and denominator increases, which confirms my hypothesis that the naive method approaches the representative likeability at larger ratings.
+
+While this inspection could justify the use of likes to ratings ratios as metrics for judgment of quality for popular videos, I believe the minimal additional computation required for the statistical measurement does not justify such approximations on review sites --- especially for arguments of the largeness of ratings needed for a close approximation. Is 1000 ratings enough? What about 2000? I believe that the statistical approach that is simple and representative should always be used for consistency and correctness.
+
 \section{Bayesian Approach}
-The premise of this section was hinted upon within the statistical analysis of the probability distribution of the likeability random variable. I am going to break the premise of the uniform prior probability density function. The myriads of reasons include: YouTube recommendations are algorithmic and is unlikely to recommend me a low likeability video; it is very difficult to make a poor maths video on a topic, for I believe the subject has a high skill ceiling of entering; and personally, I enjoy watching these maths videos online, and have slightly higher expectations of the community. While these factors are difficult to capture in traditional statistical distribution analysis, it is the core idea in a branch of statistics called Bayesian statistics.
+The premise of this section was hinted upon within the statistical analysis of the probability distribution of the likeability random variable. I am going to break the premise of the prior uniform probability density function. The myriads of reasons include: YouTube recommendations are algorithmic and is unlikely to recommend me a low likeability video; it is very difficult to make a poor maths video on a topic, for I believe the subject has a high skill ceiling of entering; and personally, I enjoy watching these maths videos online, and have slightly higher expectations of the community. While these factors are difficult to capture in traditional statistical distribution analysis, it is the core idea in a branch of statistics called Bayesian statistics.
 
 % frequenist, bayesian
 The core principles in the two branches of statistics differ in their interpretations of probabilities. The frequentists define the probability by its percentage of occurrence as the sample size increases to infinity, with the manipulations of random variables being convolutions; the Bayesians perceive probabilities as a belief of the next event, which updates as new data are seen. The method of combining binomial and uniform distributions fits the frequentists view, but the Bayesian view perfectly fits my requirement of a changeable initial belief.
 
 % set up, definitions
 \subsection{Defining the Bayesian Prior, Posterior, and Event}
-Consider the random variable likeability $L$ of the video. Its probability density function $P(l)$ represents a belief in the likeability of the video given all data available. Before seeing any new data, this function is called the Prior. The arrival of new data is denoted by the symbol $D$, and the updated likeability upon seeing the new data is denoted by $P(l | D)$ --- the probability density function of the likeability \textit{given} the new data. This updated likeability is called the Posterior. In the context of video ratings, the prior probability will denote my initial belief on the likeabilities of the video, to which I can update my prior upon every new rating I see. I will define the Bayesian likeability to be the statistical mean of the prior.
+Consider the random variable likeability $L$ of the video. Its probability density function $P(l)$ represents a belief in the likeability of the video given all data available. Before seeing any new data, this function is called the Prior. The arrival of new data is denoted by the symbol $D$, and the updated likeability upon seeing the new data is denoted by $P(l | D)$ --- the probability density function of the likeability \textit{given} the new data. This updated likeability is called the Posterior. In the context of video ratings, the prior probability will denote my initial belief on the likeabilities of the video, to which I can update my prior upon every new rating I see. I believe that I can define the Bayesian likeability to be the statistical mean of the belief function after seeings the ratings of the videos.
 
 %To find the relations between the prior and posterior probabilities, we can use the example of a medical test of a common illness.
 
@@ -563,10 +600,9 @@ Consider the random variable likeability $L$ of the video. Its probability densi
 %\]
 
 %The notation of the probability of $A$ and $B$ is defined by the probability of $A$ times the probability of $B$ given $A$ is true. And by substituting for the symbols $P(x)$ for the probability of illness, we have found Bayes Theorem:
-The regular Bayes theorem for updating scalar probabilities should be familiar:
+The regular Bayes theorem for updating discrete probabilities should be familiar:
 \begin{align*}
-    P(x|D) &= \frac{P(D|x) P(x)}{\sum P(D|x_i) P(x_i) }\\
-     &= \frac{P(D|x)P(x)}{P(D|x)P(x) + P(D|\neg x)P(\neg x)},
+    P(x|D) &= \frac{P(D|x) P(x)}{\sum P(D|x_i) P(x_i) }
 \end{align*}
 where $x$ is the prior belief of some event, and $x_i$ representing the space of all possible events.
 
@@ -578,7 +614,7 @@ where $x$ is the prior belief of some event, and $x_i$ representing the space of
 %Our belief of the probability of illness of the patient had been updated from $0.01$ to $0.308$. While it is reasonable that a positive test result conveys a higher chance of illness, it still really surprised me when I first saw it. How is it that we can only be 31\% sure of the illness if the test has an accuracy of 40\%? This discrepancy with naive solutions is also present in the naive likeability method, which may be a warning that special care is needed to tread in the field of statistics --- especially if one may be diagnosing a patient wrongly.
 
 % actual attempt
-I would need to extend this theorem to fit our continuous belief of the likeabilities of a video. To check for the validity of this method, I will be first applying the extended method on an uniform prior.
+I would need to extend this theorem to fit the continuous belief of the likeabilities of a video. To check for the validity of this method, I will be first applying the extended method on an uniform prior.
 
 \subsection{Prior Updating and the Continous Bayes Theorem}
 With the random variable likeability $L$, the initial prior $P(l)$ of the likeability is a continuous uniform distribution:
@@ -611,7 +647,7 @@ Therefore after substitution, the equation simplifies and can be solved:
 \end{align*}
 
 \newpage
-The posterior probability density function of the likeability of a video is $2\theta$ given a prior uniform distribution of $1$. The statistical mean $\mu$ of this function can also be calculated to be around $66\%$.
+The posterior probability density function of the likeability of a video is $2\theta$ given a prior uniform distribution of $1$. The statistical mean $\mu$ of this function can also be calculated to be around $66.7\%$.
 \begin{align*}
     \mu &= \int_0^1 \theta P(l|D)(\theta) \, d\theta\\
     &= \int_0^1 2\theta^2 \, d\theta\\
@@ -619,34 +655,24 @@ The posterior probability density function of the likeability of a video is $2\t
     &= \frac{2}{3}.
 \end{align*}
 
-The statistical mean of a video with 1 like and no dislikes by the statistical method also agree to this value, showing the validity of the Bayesian method for the first like.
+The statistical mean of a video with 1 like and no dislikes by the statistical method also agree with this value, showing the agreement of the Bayesian method for the first like.
 \begin{align*}
     \mu &= \frac{x+1}{n+2}\\
         &= \frac{2}{3}
 \end{align*}
 
 \subsection{N-Likes Generalization}
-I thought to generalize this by seeing what happens as the prior is updated $n$ times with $n$ likes only. Consider a prior probability density function at the $n$th like of the form:
+I thought to generalize this by seeing what happens as the prior is updated $n$ times with $n$ likes only. Consider a belief probability density function at the $n$th like of the form:
 \[
-    P(l)(\theta) = A \theta^B,
+    P(l)_n(\theta) = A_n \theta^{B_n},
 \]
-where $A$ and $B$ are constants. Our initial prior is achieved by setting $A=1$ and $B=0$.
+where $A_n$ and $B_n$ are constants. Our initial prior is achieved by setting $A_0=1$ and $B_0=0$. The example of 1 like shows that $A_1 = 2$ and $B_1 = 1$, thus I hypothesize that $A_n = n+1$ and $B_n = n$ (for proof, see appendix \ref{eq:nlikeproof}).
 
-Therefore the unknown probabilities are:
-\begin{align*}
-    P(D|l) &= \theta\\
-    P(D) &= \int_0^1 \theta A\theta^B \, d\theta,
-\end{align*}
 
-and the posterior can be represented by:
-\begin{align*}
-    P(\theta|D) &= \frac{\theta A\theta^B}{\int_0^1 \theta A\theta^B \, d\theta}\\
-    &= \frac{\theta^{B+1}}{\int_0^1 \theta^{B+1} \, d\theta}\\
-    &= \frac{\theta^{B+1}}{\Eval{\frac{\theta^{B+2}}{B+2}}{1}{0}}\\
-    &= (B+2) \theta^{B+1}.
-\end{align*}
+%Because the posterior is of the same form as the prior, the cycle can continue where $A_{n+1} = B_{n}+2$ and $B_{n+1} = B_n+1$, and so $B_n$ denotes the nth like received, and $A_n$ is one above $B_n$.
 
-Because the posterior is of the same form as the prior, the cycle can continue where $A_{n+1} = B_{n}+2$ and $B_{n+1} = B_n+1$, and so $B_n$ denotes the nth like received, and $A_n$ is one above $B_n$. The statistical mean $\mu_n$ of each posterior $B_n$ are:
+
+Therefore statistical mean $\mu_n$ for the $n$th like's posterior function is:
 \begin{align*}
     \mu_n &= \int_0^1 \theta A_n \theta^{B_n} \, d\theta\\
     &= \int_0^1 A_n \theta^{B_n + 1} \, d\theta\\
@@ -675,24 +701,26 @@ The probability of seeing $X$ likes and $Y$ dislikes given a likeability $\theta
     P(R|l)(\theta) = {X+Y \choose X} \theta^X (1-\theta)^Y.
 \]
 
-Therefore by substitution, we see a familiar form of the posterior:
+When canceling the choose functions in the numerator and denominator, I saw a familiar form of the posterior:
 \begin{align*}
     P(l|R)(\theta) &= \frac{1}{\int_0^1 {X+Y \choose X} \theta^X (1-\theta)^Y P(l)(\theta)\,d\theta}{X+Y \choose X} \theta^X (1-\theta)^Y P(l)(\theta)\\
     &= \frac{1}{\int_0^1 \theta^X (1-\theta)^Y \,d\theta} \theta^X (1-\theta)^Y.
 \end{align*}
 
-By letting the variable $n=X+Y$ and $x=X$, this is the exact probability density function from the statistical method. As that method has shown using Beta and Gamma functions, the statistical mean $\mu$ of the posterior probability density function is of the form:
+By letting the variable $n=X+Y$ and $x=X$, this is the exact probability density function from the statistical method $K(l)$. As that method has shown using Beta and Gamma functions, the statistical mean $\mu$ of the posterior probability density function is of the form:
 \begin{align*}
     \mu &= \frac{x+1}{n+2}\\
     &= \frac{X+1}{(X+1) + (Y+1)}.
 \end{align*}
 
-More importantly, we can also see the Bayesian likeability of a uniform prior can be computed similarly to the naive method of percentages, but adding one to the number of likes and dislikes. It presents an even more handy rule to calculate the mean likeability --- use the naive method with the number of likes plus one and the number of dislikes plus one. The tables of videos A to E are not displayed here for the values are the same as the statistical method.
+More importantly, we can also see the Bayesian likeability of a uniform prior can be computed similarly to the naive method of percentages, but adding one to the number of likes and dislikes. It presents an even more handy rule to calculate the mean likeability --- use the naive method with the number of likes plus one and the number of dislikes plus one. This had confirmed my hypothesis earlier in that videos with symmetrical ratings have unchanged naive and simulation likeabilities, for the ratio between $a$ likes against $b$ dislikes is the same as the ratio between $a+1$ likes and $b+1$ dislikes. I wonder also if naive likeabilities also becomes more accurate when the likeability approaches near 50\% where the skewness is lower.
+
+The tables of videos A to E are not displayed here for the values are the same as the statistical method.
 
 \subsection{Personal Square-root Prior}
-Because of the Bayesian method, we are now freely able to switch out the prior probability density function. As the five videos I've sampled are from the recommendations of YouTube, and they are of a topic which I enjoy --- about mathematics, my initial prior ideally should be higher in probability with higher likeabilities, and has a statistical mean higher than 0.5, as well as fitting all attributes of a statistical distribution.
+Because of the Bayesian method, I can now freely switch out the prior probability density function. As the five videos I've sampled are from the recommendations of YouTube, and they are of a topic which I enjoy --- about mathematics, my initial prior ideally should be higher in probability with higher likeabilities, and has a statistical mean higher than 0.5, as well as fitting all attributes of a statistical distribution.
 
-There is a function I've encountered in class when learning about inverse functions, the absolute of the square root of $x$, $|\sqrt{x}|$. The function is the positive values of the inverse function $x^2$ restricted by the domain from zero to one, inclusive, which from now would simply be referred to as the square root function. It is shown on the left graph in figure \ref{fig:sqrt_per}.
+There is a function I've encountered in class when learning about inverse functions, the absolute of the square root of $x$, $y=|\sqrt{x}|$. The function contains the positive values of $x^2$'s inverse function. I will restrict it from $0$ to $1$ and call it the square root function. It is shown on the left graph in figure \ref{fig:sqrt_per}.
 
 \begin{figure}[H]
     \centering
@@ -701,7 +729,7 @@ There is a function I've encountered in class when learning about inverse functi
     \label{fig:sqrt_per}
 \end{figure}
 
-The function has a decreasing positive slope throughout the domain, meaning that while higher likeabilities are more probable, the rate at which this increases is decreasing so that I am not heavily favoring these videos. However, it needs to be normalized $\text{nsqrt}(x)$ for the area it encloses is less than one.
+The function has a decreasing positive slope throughout the domain, meaning that while higher likeabilities are more probable, the rate at which this increases is decreasing so that I am not heavily favoring these videos exponentially. However, it needs to be normalized to $\text{nsqrt}(x)$ for the area it encloses is less than one.
 
 We can simply scale the function down by the area $A$ it encloses:
 \begin{align*}
@@ -716,7 +744,7 @@ Therefore I've defined the normalized square-root function to be:
     &= \frac{3}{2} \sqrt{x}.
 \end{align*}
 
-The statistical mean $\mu$ of the normalized square root function also plays nicely, for it is above 0.5, corresponding to my initial high expectations of these videos.
+The statistical mean $\mu$ of the normalized square root function also satisfies my prior, for it is above 0.5, corresponding to my initial high expectations of these videos.
 \begin{align*}
     \mu &= \int_0^1 x \frac{3}{2} \sqrt{x} \, dx\\
     &= \frac{3}{2} \int_0^1 x^{\frac{3}{2}} \, dx\\
@@ -738,9 +766,9 @@ This integral is extremely difficult to compute analytically, for there is a non
     \label{fig:up_nsqrt}
 \end{figure}
 
-Therefore the Bayesian likeability of video one is numerically computed to be $\approx 0.789$. This is slightly higher than the statistical likeability of $0.778$, reflecting how I had initial high expectations expressed by the nsqrt prior probability density function.
+%Therefore the Bayesian likeability of video one is numerically computed to be $\approx 0.789$. This is slightly higher than the statistical likeability of $0.778$, reflecting how I had initial high expectations expressed by the nsqrt prior probability density function.
 
-Furthermore, it seems that not only there is no difference between treating the event seeing $X$ likes and $Y$ dislikes as one event $R$, or as multiple updates of events $D$ of one like or dislike, the order of likes and dislikes when sequentially updating also does not impact the final Bayesian likeability. This is shown in figure \ref{fig:nsqrt_incre} where the mean likeability is plotted against the nth rating for three ways of achieving the ratings of video one (6 likes and 1 dislike).
+Furthermore, I found that not only is there no difference between treating the event seeing $X$ likes and $Y$ dislikes as one event $R$, or as multiple updates of events $D$ of one like or dislike, the order of likes and dislikes when sequentially updating also does not impact the final Bayesian likeability. This is shown in figure \ref{fig:nsqrt_incre} where the mean likeability is plotted against the nth rating for three ways of achieving the ratings of a video with 6 likes and 1 dislike.
 
 \begin{figure}[H]
     \centering
@@ -751,7 +779,7 @@ Furthermore, it seems that not only there is no difference between treating the 
 
 % conclude, and table
 \subsection{Method Analysis}
-At last, the ability to plug in any prior distribution is the main advantage of the Bayesian method, as it will provide a more accurate measurement of likeability for each individual video personally. Furthermore, it provides an accurate metric for comparing between video genres, as I may have different priors and expectations for different types of videos. However, it lacks the neatness of a solution provided by the statistical method and requires a computer to compute the successive priors. Painfully, my algorithm scales in exponential time, making it less applicable as the number of likes and dislikes increase (appendix \ref{apd:algo}). Table \ref{tbl:baye} shows the Bayesian likeability of a nqsrt prior on the five videos.
+At last, the ability to substitute in any prior distribution is the main advantage of the Bayesian method. This will provide a more accurate measurement of likeability for each individual video on a personal basis, which could increase the satisfaction of viewers and save me time. Furthermore, it provides an accurate metric for comparing between video genres, for I may have different priors and expectations for different types of videos --- I am likely to have a lower expectation to cooking videos, and will use a decreasing prior of $y=e^{-x}$. However, it lacks the swiftness of a solution provided by the statistical method and requires a computer to compute the successive priors. Painfully, my algorithm scales in exponential time, making it less applicable as the number of likes and dislikes increase (appendix \ref{apd:algo}). Table \ref{tbl:baye} shows the Bayesian likeability of a nqsrt prior on the five videos.
 
 \begin{figure}[H]
     \centering
@@ -765,10 +793,12 @@ At last, the ability to plug in any prior distribution is the main advantage of 
     \label{tbl:baye}
 \end{figure}
 
+I've noticed that while the order of viewing is unchanged from the case of uniform priors, the likeability values did shift for a majority of the videos. Video A is rated slightly higher than before (from $0.833$ to $0.846$), placing it closer to video C. I believe that this indicates the additional trust I've given to videos with less ratings, and could be more significant with more samples.
+
 \section{Conclusion}
 In this exploration, I investigated a total of five different methods of finding a solution to my problem. Three of the methods have analytic solutions, while two required computers to crunch integrals and random numbers. Due of the variety of the methods, each of them has their pros and cons and usages. While the analytic solutions are the cleanest and easiest to apply with little mental effort, they require the use of algebra manipulations and calculus understandings to derive, and lack the freedom the numerical solution contains. The simulations and the Bayesian method are both computationally intensive, especially at large rating amounts, but does not require much previous knowledge and offers a lot of flexibility in choosing priors, in that order.
 
-Ultimately, I would choose to use the Bayesian likeability with my nsqrt prior as rankings when watching the SoME1 videos. This is because it both accounts for the amount of information available on a video, and fits my prior expectations of the videos. My watching ordering will therefore be: Video E, Video B, Video D, Video C, and Video A. Nevertheless, table \ref{tbl:all}  summaries the likeabilities of the five videos with all methods shown in this exploration.
+Ultimately, I would choose to use the Bayesian likeability with my nsqrt prior as rankings when watching the SoME1 videos. This is because it both accounts for the amount of information available on a video, and fits my prior expectations of the videos --- its downside of extra computing time is minimal as the rating counts are small. My watching ordering will therefore be: Video E, Video B, Video D, Video C, and Video A. Nevertheless, table \ref{tbl:all}  summaries the likeabilities of the five videos with all methods shown in this exploration.
 
 \begin{figure}[H]
     \centering
@@ -778,14 +808,16 @@ Ultimately, I would choose to use the Bayesian likeability with my nsqrt prior a
         \hline
          Naive Likeability (3dp) & 1.000 & 1.000 & 0.872 & 1.000 & 0.997\\ \hline
          Simulated Likeability (3dp) & 0.828 & 0.958 &  0.853 & 0.937 & 0.987\\ \hline
-         Statistical (Bayesian) Likeability (3dp) & 0.833 & 0.926 & 0.854 & 0.941 & 0.994\\ \hline
+         Statistical (Bayesian) Likeability (3dp) & 0.833 & 0.962 & 0.854 & 0.941 & 0.996\\ \hline
         Bayesian Likeability (nsqrt) (3dp) & 0.846 & 0.964 & 0.855 & 0.943 & 0.996
     \end{tabular}
     \captionof{table}{}
     \label{tbl:all}
 \end{figure}
 
-This project has been both entertaining to research, and also applicable in a lot of areas that I will be facing in the future for my generalizations. Whether it is finding the best book online given the ratings, or selecting the most favorable bowling place given user reviews, the five methods offer me a spectrum of techniques to statistically analyze the problem. This has been a worthwhile exploration.
+Looking at the full picture, I realized that while this conclusion of watching orders can be held starting from the simulated likeability, but just like the naive approach, it only approximate the likeabilities. The custom prior method is the only that will truly reflect my personal perception of the quality of these videos, and at higher sample counts, even the smallest changes in likeability values will be significant.
+
+This project has been both entertaining to research, and also applicable in a lot of areas that I will be facing in the future. In the scope of this analysis, I can use various prior distributions to model to model each genre of videos that I'll watch, saving me time. I can also use it to find the best book online given the ratings, or select the most favorable bowling place given user reviews, the five methods offer me a spectrum of techniques to statistically analyze the problem. For future studies, it is likely that I will be including the view counts and creating a more inclusive metric to account for videos that does not follow my main assumption --- that people are rating the videos solely based on its quality. This may reduce the  impact of dislike-bombing or view-botting on YouTube and other video sharing platforms. Nevertheless, this has been a worthwhile exploration.
 
 % bib
 \newpage
@@ -865,6 +897,48 @@ def likeability(rolls, prior):
     \end{pythonln}
     \caption{The algorithm to compute the Bayesian likeability given an initial prior probability density function}
     \label{apd:algo}
+\end{figure}
+
+\begin{figure}[H]
+    \paragraph{Proof} I will prove the N-Likes Generalization statement for $n\in \mathbb{N}$ through mathematical induction.
+
+    The case when $n=1$ is already proven through the example.
+
+    Now assume that the case holds when $n=k$, $k > 1$. Therefore $A_k = k+1$ and $B_k = k$.
+
+    The prior probability density at $k$ likes is thus:
+    \[
+    P(l)(\theta) = (k+1) \theta ^{k}
+    \]
+
+    The probability of the next like is still $\theta$:
+    \begin{align*}
+        P(D|l) &= \theta
+    \end{align*}
+
+    and the posterior is computed via the continuous Bayes theorem:
+    \begin{align*}
+        P(\theta|D) &= \frac{P(D|l)(\theta) \times P(l)(\theta)}{\int_{0}^{1} P(D|l)(\theta) \times P(l)(\theta) \, d\theta}\\
+        &= \frac{\theta (k+1)\theta^k}{\theta \int_0^1 (k+1)\theta^k \, d\theta}\\
+        &= \frac{\theta^{k+1}}{\int_0^1 \theta^{k+1} \, d\theta}\\
+        &= \frac{\theta^{k+1}}{\Eval{\frac{\theta^{k+2}}{k+2}}{1}{0}}\\
+        &= (k+2) \theta^{k+1}.
+    \end{align*}
+
+    Because the posterior is the belief function of $k+1$ likes, the following holds:
+    \begin{align*}
+        A_{k+1} \theta^{B_{k+1}} &= (k+2) \theta ^{k+1}\\
+        A_{k+1} &= k+2\\
+        &= (k+1) + 1\\
+        B_{k+1} &= k+1\\
+        &= (k+1),
+    \end{align*}
+    hence proving that the case holds for $n=k+1$ as well.
+
+    Therefore by the principle of mathematical induction, because the case holds for $n=1$, and if $n=k$ is held, $n=k+1$ will be held, so the case holds for all $n\in\mathbb{N}$.
+
+    \caption{Proof of the N-Likes Generalization}
+    \label{eq:nlikeproof}
 \end{figure}
 
 \end{document}
