@@ -59,7 +59,7 @@
 
 \newcommand\pythonstyleln{\lstset{
         language=Python,
-        basicstyle=\ttm,
+        basicstyle=\ttfamily\footnotesize,
         morekeywords={self},              % Add keywords here
         keywordstyle=\ttb\color{deepblue},
         emph={MyClass,__init__},          % Custom highlighting
@@ -67,7 +67,8 @@
         stringstyle=\color{deepgreen},
         frame=tb,                         % Any extra options here
         showstringspaces=false,
-        numbers=left
+        numbers=left,
+        breaklines=true
 }}
 
 % Python environment
@@ -161,7 +162,18 @@
 \newcommand{\citefoot}[1]{\footnote{\citeall{#1}}}
 \newcommand{\citeall}[1]{\citeauthor{#1}, \citetitle{#1} (\citeyear{#1})}
 
+
+% change section title font
+\usepackage{sectsty}
+\sectionfont{\fontsize{12}{12}\selectfont}
+\subsectionfont{\fontsize{12}{12}\selectfont}
+\subsubsectionfont{\fontsize{12}{12}\selectfont}
+
 \usepackage{hyperref}
+
+
+
+% JUPYTER NOTEBOOK
 
 
 
@@ -188,6 +200,7 @@
     \tableofcontents
 
     \newpage
+
 
 
 % introduction
@@ -251,5 +264,13 @@
 \newpage
 \addcontentsline{toc}{section}{References}
 \printbibliography
+
+%\newpage
+%\appendix
+%\counterwithin{figure}{section}
+%\counterwithin{table}{section}
+%\section{Image Creation Code}
+
+%\input{appendix/code.tex}
 
 \end{document}
