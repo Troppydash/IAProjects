@@ -8,7 +8,7 @@ through the advice from skilled players using calculus.
 
 % straight line
 \subsection{Key idea and boundary conditions}
-The key idea that will be repeated throughout models is that the maximization of the player velocity and acceleration will maximize the jump displacement. I hypothesized this from the positional differential equations, Eq. \ref{eq:1de2}, where if velocity is constant, the final displacement will be proportional to that constant:
+The key idea that repeats throughout models is the maximization of the player velocity will maximize the jump displacement. I hypothesized this from the positional differential equations, Eq. \ref{eq:1de2}, where if velocity is constant, the final displacement will be proportional to that constant:
 \begin{align*}
     \tp'(t) &= \tv(t)\\
     \tp(t) &= \int \tv(t) \, dt\\
@@ -63,7 +63,7 @@ Additionally, let the initial position of the player to be zero for ease of calc
 The z-axis initial velocity can be experimentally determined. This is because the player cannot accelerate in the z-axis during the jump, so the only vertical acceleration is initial\citefoot{chong_2022}. In fact, we will soon see that the z-axis can be pre-computed to reduce the dimensions of this problem.
 
 \subsection{Straight line model}
-With the key idea and boundary conditions in mind, I attempted a straight line strategy. This model has the player accelerate and move in a straight line, as mathematics has taught me that the shortest displacement between two points comes from a line, reducing the unnecessary displacements and maximizing total displacement. To achieve this, the player will accelerate along its initial velocity in the y-axis. Mathematically, this is equivalent to setting the directional vector to
+With the key idea and boundary conditions in mind, I attempted a straight line strategy. This model has the player accelerate in a straight line --- as mathematics has taught me that the shortest displacement between two points comes from a line --- which minimizes uncessary displacements and maximiz total displacement. I chose the y-axis to accelerate towards. Mathematically, this is equivalent to setting the directional vector to
 \[
     \td(t) = \tang{0, 1}.
 \]
@@ -102,7 +102,7 @@ The total displacement of this jump par our definition is the expression $d = \t
     &\approx 183.64.
 \end{align*}
 
-Firstly notice the sudden change in the velocity of the player in first frame at time $\tau$. So I modeled the jump by an impulse --- a sudden change in velocity --- upon the z-axis. With the assumption that no such impulses occurs in the xy-axis, and that the x,y-plane acceleration in the first frame is negligible, I found the size of the impulse using the Pythagorean Theorem\citefoot{Pythagoreantheorem} (figure \ref{fig:2verticalimpulse}).
+Firstly notice the sudden change in the player position in first frame, meaning an impulse --- a sudden change in velocity --- upon the z-axis. By assuming that the xy-axis impulse is minimal, I found the impulse magnitude using the Pythagorean Theorem\citefoot{Pythagoreantheorem} (figure \ref{fig:2verticalimpulse}).
 
 \begin{align*}
     \tmag{\tv}^2 &= \tv_y^2 + \tv_z^2\\
@@ -220,7 +220,7 @@ Also, because the z-component of $\td$ is always zero, the projection is simply 
     &= \tv_x \td_x + \tv_y \td_y.
 \end{align*}
 
-Crucially, this projection vector is limited by an engine constant $L$ set to $250$ (all engines constants\citefoot{wei_2022}). If the projection exceeds $L$, acceleration will be zero; else, acceleration is a constant in the direction of $\td$ equal to $LA\tau$ in the discrete sense, and $LA$ in the continuous approximation --- with $A$ being $10$, another engine constant. The player's planer acceleration function can therefore be defined piecewisely as:
+Crucially, this projection vector is limited by an engine constant $L$ set to $250$ (all engisize of the impulsenes constants\citefoot{wei_2022}). If the projection exceeds $L$, acceleration will be zero; else, acceleration is constant in the direction of $\td$ of magnitude $LA\tau$ in the discrete sense, and $LA$ in the continuous approximation --- with $A$ being $10$, another engine constant. The player's planer acceleration function can therefore be defined piecewisely as:
 \begin{figure}[H]
     \centering
     \[
@@ -244,10 +244,10 @@ To maximize displacement, we would want the first condition of equation \ref{eq:
     \therefore  \quad \ta(t) &= 0.
 \end{align*}
 
-My acceleration model has confirmed my hypothesis that the player is not accelerating in the xy-axis during this jump. By the key idea, this will reduce the average velocity and in turn, reduces the total displacement of the jump.
+My acceleration model has confirmed my hypothesis that the player is not accelerating in the xy-axis during this jump. By the key idea, this will reduce the average velocity and in turn, reducing the total displacement of the jump.
 
 \subsubsection{Continuous modeling approximation}
-But before I try some other models, let's first evaluate the accuracy of the continuous approximation using this simplistic model. The same article\citefoot{adrianb} reveals an engine constant z-axis acceleration $g$ equal to $800$, and I thought of this as an opportunity to test my continuous approximation by comparing my calculated value with the real value.
+Using the straigh-line model, I can evaluate the accuracy of the continuous approximation. The same article\citefoot{adrianb} reveals a constant z-axis acceleration $g=800$, and I thought of this as an opportunity to test my continuous approximation by comparing my calculated value with the real value.
 
 The objective is to solve the differential equations of motion for the player. For the xy-axis acceleration of the player is zero, and let $g$ be the signed z-axis acceleration:
 \[
