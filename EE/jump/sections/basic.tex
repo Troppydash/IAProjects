@@ -2,7 +2,7 @@
 \section{Basic Models}
 I want to create some basic models in this section to help me visualize the problem; it can also test my conjuncture of the continuous approximations.
 
-Firstly I will find an optimal starting condition, leading to a basic straight line model that empirically models vertical motion. Then I will confirm the continuous approximation, and model the x,y-axis
+Firstly I will find an optimal starting condition, leading to a basic straight line model that empirically models vertical motion. Then I will test the continuous approximation, and model the x,y-axis
 %Firstly, I wish to find an optimal starting condition --- this leads to the precalculation of the vertical motion. Secondly, I will model the motion of the remaining two axis of motion. Lastly, I will fit various acceleration models
 through the advice from skilled players using calculus.
 
@@ -60,10 +60,10 @@ Additionally, let the initial position of the player to be zero for ease of calc
     \tp(0) = \tang{0, 0, 0}
 \]
 
-The z-axis initial velocity can be experimentally determined. This is because the player cannot accelerate in the z-axis during the jump, so the only vertical acceleration is initial\citefoot{chong_2022}. In fact, we will soon see that the z-axis can be pre-computed to reduce the dimensions of this problem.
+The z-axis initial velocity can be experimentally determined. This is because the player cannot accelerate in the z-axis during the jump, so the only player vertical acceleration is initial\citefoot{chong_2022}. In fact, we will soon see that the z-axis can be pre-computed to reduce the dimensions of this problem.
 
 \subsection{Straight line model}
-With the key idea and boundary conditions in mind, I attempted a straight line strategy. This model has the player accelerate in a straight line --- as mathematics has taught me that the shortest displacement between two points comes from a line --- which minimizes uncessary displacements and maximiz total displacement. I chose the y-axis to accelerate towards. Mathematically, this is equivalent to setting the directional vector to
+With the key idea and boundary conditions in mind, I attempted a straight line strategy. This model has the player accelerate in a straight line --- as mathematics has taught me that the shortest displacement between two points comes from a line\citefoot{webb_1974} --- which minimizes unnecessary displacements and maximize total displacement. I chose the y-axis to accelerate towards. Mathematically, this is equivalent to setting the directional vector to
 \[
     \td(t) = \tang{0, 1}.
 \]
@@ -85,7 +85,7 @@ Realistically, this will be equivalent to pressing down the move forward button 
     \end{minipage}
 \end{figure}
 
-To test this model, I recorded the player jumping and performing the actions described above on a flat plane. Figure \ref{fig:straight_constraint} shows the estimation of the player's path using software\footnote{python37}\footnote{matplotlib}; Figure \ref{fig:2straightjumping} shows the coordinates of the player at the start of the jump $\tp(0)$, the first frame of the jump $\tp(\tau)$, and the end of the jump $\tp(t_f)$:
+To test this model, I recorded the player jumping and performing the actions described above on a flat plane in game. Figure \ref{fig:straight_constraint} shows my estimation of the player's path using software\footnote{python37}\footnote{matplotlib}; Figure \ref{fig:2straightjumping} shows the coordinates of the player at the start of the jump $\tp(0)$, the first frame of the jump $\tp(\tau)$, and the end of the jump $\tp(t_f)$:
 \begin{align}
  \tp(0) &= \tang{1702.63, 725.59, 128.03}, \quad \tmag{\tv(0)} = 250.00 \label{eq:2emp0}\\
  \tp(\tau) &= \tang{1702.63, 721.27, 130.83}, \quad \tmag{\tv(\tau)} = 378.35 \label{eq:2emp1}\\
@@ -280,7 +280,7 @@ Since the z-axis displacement is zero, the gravitational acceleration $g$ is cal
     &\approx -772.79.
 \end{align*}
 
-Comparing to the actual value of $g$, $772.79$ is not far off --- the relative error of $\frac{800 - 772.79}{800} \approx 3.4\%$ is small enough for an approximation. Therefore it is justified that I can continuously use the continuous approximations, to which I will.
+Comparing to the actual value of $g$ and $t_f$, $772.79$ and $0.735$ are not far off --- the relative errors of $\frac{800 - 772.79}{800} \approx 3.4\%$ and $\frac{0.735-0.733}{0.735} \approx 0.27\%$ are small enough for an approximation. Therefore it is justified that I can continuously use the continuous approximations, to which I will.
 
 Furthermore, the lack of correlation between the z-axis on the xy-axis and vice versa ($\tp_z(t_f)$ doesn't depend on $\td$) means that no changes in the xy-axis can change the z-axis --- the jump duration $t_f$ is constant. Therefore all subsequent models will be uniquely identified by their planer $\td(t)$ functions.
 
@@ -330,18 +330,18 @@ And the position is the integral of velocity,
     &= \frac{-k}{w^2} \tpar{\sin(wt)}{\cos(wt)} + \frac{k}{w}\tpar{t}{0}  + t\tpar{\tv_x(0)}{\tv_y(0)} + c.
 \end{align*}
 
-To find the integration constant $c$, consider the x-axis displacement function
+To find the integration constant $c$, consider the x-axis displacement function at $t=0$,
 \begin{align*}
-    \tp_x(t) &= \frac{-k}{w^2} \sin(wt) + t\tv_x(0) + t\tv_x(0) + c_x = 0\\
+    \tp_x(0) &= \frac{-k}{w^2} \sin(w \times 0) + \frac{k}{w}0 + 0\tv_x(0) + c_x = 0\\
     c_x &= 0,
 \end{align*}
 and the y-axis displacement function
 \begin{align*}
-    \tp_y(t) &= \frac{-k}{w^2} \cos(wt) + t\tv_y(0) + c_y = 0\\
+    \tp_y(0) &= \frac{-k}{w^2} \cos(w \times 0) + 0\tv_y(0) + c_y = 0\\
     c_y &= \frac{k}{w^2}.
 \end{align*}
 
-Using the Pythagorean Theorem, the magnitude of the player's displacement using this model after a jump at $t=t_f$ is:
+Using the Pythagorean Theorem, the magnitude of the player's displacement using this model after a jump:
 \begin{figure}[H]
     \centering
     \begin{align*}
@@ -373,7 +373,7 @@ must be held for the duration of the jump. Expanding and organizing this inequal
 \begin{align*}
     L &> \text{proj}(\tv, \td)\\
     &> \tv_x \td_x + \tv_y \td_y\\
-    &> \left(-\frac{k}{w} \cos(wt) + \frac{k}{w}\right) \sin(wt) + \left(\frac{k}{w} \sin(wt) + 250\right) \cos(wt),\\
+    &> \left(-\frac{k}{w} \cos(wt) + \frac{k}{w}\right) \sin(wt) + \left(\frac{k}{w} \sin(wt) + \tv_y(0)\right) \cos(wt),\\
     0 &> \left(-\frac{k}{w} \cos(wt) + \frac{k}{w}\right) \sin(wt) + \left(\frac{k}{w} \sin(wt) + 250\right) \cos(wt) - L
 \end{align*}
 
@@ -422,10 +422,10 @@ indicating a relatively fast rate of turning of a period $\frac{2\pi}{4.2884} = 
 \end{figure}
 
 
-When unrestricted, there should be a displacement of $627.35$ using figure \ref{fig:skilled_displacement}. But I suspect error $184.4228$ had decreased the displacement by quite an amount. Figure \ref{fig:skilled_player} shows the actual path of the player when simulated in game; this is in combination with a correctly estimated lower displacement of $254.19$ units.
+When unrestricted, there should be a displacement of $627.35$ using figure \ref{fig:skilled_displacement}. But I suspect the error $184.4228$ had decreased the displacement by quite an amount. Figure \ref{fig:skilled_player} shows the actual path of the player when simulated in game; this is in combination with a lower displacement of $254.19$ units.
 \begin{align*}
     \tp(t_f) &= \tang{88.3021, 238.3556}\\
     \tmag{\tp(t_f)} &\approx 254.19
 \end{align*}
 
-The skilled player's model does indeed produce a higher displacement ($254.19$) than the straight line model ($183.64$). Not only does this confirm the theory from these skilled people, but the large error of the even optimized model could indicate further possible optimizations when I look at the problem discretely.
+The skilled player's model does indeed produce a higher displacement ($254.19$) than the straight line model ($183.64$). Not only does this confirm the theory from these skilled people, but the large error of this model could indicate further possible optimizations when I look at the problem discretely.
