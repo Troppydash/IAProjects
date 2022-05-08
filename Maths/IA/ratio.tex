@@ -5,6 +5,7 @@
 
 % science
 \usepackage{amsmath}
+\usepackage{amsthm}
 \usepackage{array}
 \usepackage{siunitx}
 \usepackage{amsfonts}
@@ -115,8 +116,11 @@
 
 % custom
 \DeclareMathOperator{\di}{d\!}
-\newcommand*\Eval[3]{\left.#1\right\rvert_{#3}^{#2}}
+\newcommand*\Eval[3]{\left[#1\right]_{#3}^{#2}}
 
+\newenvironment{Proof}[1][Proof]
+{\proof[#1]\leftskip=1cm\rightskip=1cm}
+{\endproof}
 
 \usepackage{hyperref}
 
@@ -154,7 +158,7 @@ The topic of my exploration originates from a personal hobby I've developed in t
 
 Due to first year IB, I am familiar with the maths channel 3Blue1Brown (3B1B) on YouTube, for his videos are of high quality. When Grant (owner of 3B1B) announced a contest (figure \ref{fig:some1}) \parencite{sanderson} encouraging amateur video-makers to share their hidden maths knowledge, I was understandably very excited to have my entire YouTube home page filled with these new maths videos. While I did find some brilliantly made videos like ``The Beauty of B\'{e}zier Curves'' \parencite{holmer_2021}, and ``an explanation of Noether's Theorem'' \parencite{m_2021}, I quickly realized my inability to view all of the thousands of videos over a two week holiday. The solution? I will only watch the best ones.
 
-But how do you tell if a YouTube video is the ``best'' out of the bunch? Visual indicators like interesting thumbnails is tempting, but I decided not to judge a book by its cover; while comparing view counts is fast, it is against the purpose of the maths event --- to discover new talented video creators. So I am left with the only other numerical indicators --- I want to judge the quality of the video through the number of likes and dislikes it has. While this measure can still contain subjectivity, it is certainly the most objective and interesting metric.
+But how do you tell if a YouTube video is the ``best'' out of the bunch? Visual indicators like interesting thumbnails are tempting, but I decided not to judge a book by its cover; while comparing view counts is fast, it is against the purpose of the maths event --- to discover new talented video creators. So I am left with the only other numerical indicators --- I want to judge the quality of the video through the number of likes and dislikes it has. While this measure can still contain subjectivity, it is certainly the most objective and interesting metric.
 
 %(At the time of writing, the company YouTube has removed the dislike count on all videos, which is disappointing)
 
@@ -666,17 +670,58 @@ I thought to generalize this by seeing what happens as the prior is updated $n$ 
 \[
     P(l)_n(\theta) = A_n \theta^{B_n},
 \]
-where $A_n$ and $B_n$ are constants. Our initial prior is achieved by setting $A_0=1$ and $B_0=0$. The example of 1 like shows that $A_1 = 2$ and $B_1 = 1$, thus I hypothesize that $A_n = n+1$ and $B_n = n$ (for proof, see appendix \ref{eq:nlikeproof}).
+where $A_n$ and $B_n$ are constants. Our initial prior is achieved by setting $A_0=1$ and $B_0=0$. The example of 1 like shows that $A_1 = 2$ and $B_1 = 1$, thus I hypothesize that $A_n = n+1$ and $B_n = n$. I proved this statement below.
+
+\begin{Proof}
+	I will prove the N-Likes Generalization statement for $n\in \mathbb{N}$ through mathematical induction.
+	
+	The case when $n=1$ is already proven through the example.
+	
+	Now assume that the case holds when $n=k$, $k > 1$. Therefore $A_k = k+1$ and $B_k = k$.
+	
+	The prior probability density at $k$ likes is thus:
+	\[
+	P(l)(\theta) = (k+1) \theta ^{k}
+	\]
+	
+	The probability of the next like is still $\theta$:
+	\begin{align*}
+	P(D|l) &= \theta
+	\end{align*}
+	
+	and the posterior is computed via the continuous Bayes theorem:
+	\begin{align*}
+	P(\theta|D) &= \frac{P(D|l)(\theta) \times P(l)(\theta)}{\int_{0}^{1} P(D|l)(\theta) \times P(l)(\theta) \, d\theta}\\
+	&= \frac{\theta (k+1)\theta^k}{\theta \int_0^1 (k+1)\theta^k \, d\theta}\\
+	&= \frac{\theta^{k+1}}{\int_0^1 \theta^{k+1} \, d\theta}\\
+	&= \frac{\theta^{k+1}}{\Eval{\frac{\theta^{k+2}}{k+2}}{1}{0}}\\
+	&= (k+2) \theta^{k+1}.
+	\end{align*}
+	
+	Because the posterior is the belief function of $k+1$ likes, the following holds:
+	\begin{align*}
+	A_{k+1} \theta^{B_{k+1}} &= (k+2) \theta ^{k+1}\\
+	A_{k+1} &= k+2\\
+	&= (k+1) + 1\\
+	B_{k+1} &= k+1\\
+	&= (k+1),
+	\end{align*}
+	hence proving that the case holds for $n=k+1$ as well.
+	
+	Therefore by the principle of mathematical induction, because the case holds for $n=1$, and if $n=k$ is held, $n=k+1$ will be held, the case will hold for all $n\in\mathbb{N}$.
+\end{Proof}
+
+
 
 
 %Because the posterior is of the same form as the prior, the cycle can continue where $A_{n+1} = B_{n}+2$ and $B_{n+1} = B_n+1$, and so $B_n$ denotes the nth like received, and $A_n$ is one above $B_n$.
 
 
-Therefore statistical mean $\mu_n$ for the $n$th like's posterior function is:
+Therefore the statistical mean $\mu_n$ for the $n$th like's posterior function is:
 \begin{align*}
     \mu_n &= \int_0^1 \theta A_n \theta^{B_n} \, d\theta\\
     &= \int_0^1 A_n \theta^{B_n + 1} \, d\theta\\
-    &= A_n \Eval{\left(\frac{\theta^{B_n+2}}{B_n+2}\right)}{1}{0}\\
+    &= A_n \Eval{\frac{\theta^{B_n+2}}{B_n+2}}{1}{0}\\
     &= \frac{A_n}{B_n+2}\\
     &= \frac{B_n+1}{B_n+2} = \frac{n+1}{n+2}.
 \end{align*}
@@ -748,7 +793,7 @@ The statistical mean $\mu$ of the normalized square root function also satisfies
 \begin{align*}
     \mu &= \int_0^1 x \frac{3}{2} \sqrt{x} \, dx\\
     &= \frac{3}{2} \int_0^1 x^{\frac{3}{2}} \, dx\\
-    &= \frac{3}{2} \Eval{\left(\frac{x^{\frac{5}{2}}}{\frac{5}{2}}\right)}{1}{0}\\
+    &= \frac{3}{2} \Eval{\frac{x^{\frac{5}{2}}}{\frac{5}{2}}}{1}{0}\\
     &= \frac{3}{5} = 0.6.
 \end{align*}
 
@@ -900,42 +945,7 @@ def likeability(rolls, prior):
 \end{figure}
 
 \begin{figure}[H]
-    \paragraph{Proof} I will prove the N-Likes Generalization statement for $n\in \mathbb{N}$ through mathematical induction.
-
-    The case when $n=1$ is already proven through the example.
-
-    Now assume that the case holds when $n=k$, $k > 1$. Therefore $A_k = k+1$ and $B_k = k$.
-
-    The prior probability density at $k$ likes is thus:
-    \[
-    P(l)(\theta) = (k+1) \theta ^{k}
-    \]
-
-    The probability of the next like is still $\theta$:
-    \begin{align*}
-        P(D|l) &= \theta
-    \end{align*}
-
-    and the posterior is computed via the continuous Bayes theorem:
-    \begin{align*}
-        P(\theta|D) &= \frac{P(D|l)(\theta) \times P(l)(\theta)}{\int_{0}^{1} P(D|l)(\theta) \times P(l)(\theta) \, d\theta}\\
-        &= \frac{\theta (k+1)\theta^k}{\theta \int_0^1 (k+1)\theta^k \, d\theta}\\
-        &= \frac{\theta^{k+1}}{\int_0^1 \theta^{k+1} \, d\theta}\\
-        &= \frac{\theta^{k+1}}{\Eval{\frac{\theta^{k+2}}{k+2}}{1}{0}}\\
-        &= (k+2) \theta^{k+1}.
-    \end{align*}
-
-    Because the posterior is the belief function of $k+1$ likes, the following holds:
-    \begin{align*}
-        A_{k+1} \theta^{B_{k+1}} &= (k+2) \theta ^{k+1}\\
-        A_{k+1} &= k+2\\
-        &= (k+1) + 1\\
-        B_{k+1} &= k+1\\
-        &= (k+1),
-    \end{align*}
-    hence proving that the case holds for $n=k+1$ as well.
-
-    Therefore by the principle of mathematical induction, because the case holds for $n=1$, and if $n=k$ is held, $n=k+1$ will be held, so the case holds for all $n\in\mathbb{N}$.
+    \paragraph{Proof} 
 
     \caption{Proof of the N-Likes Generalization}
     \label{eq:nlikeproof}
