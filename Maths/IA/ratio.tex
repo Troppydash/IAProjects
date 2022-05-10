@@ -195,7 +195,8 @@ Therefore within this exploration, I will be finding an equation relating the nu
 \begin{figure}[H]
     \centering
     \begin{tabular}{c|c|c|c|c|c}
-        & Video A & Video B & Video C & Video D & Video E \\
+        & Video A & Video B  & Video C  & Video D  & Video E  \\
+        &  \parencite{marinov_2021} & \parencite{youtube_2021} & \parencite{aggarwal_2021} & \parencite{hoodys_2021} & \parencite{callaham_2021}\\
         \hline
         \hline
         Views & 138 & 440 & 467 & 756 & 10907 \\
@@ -212,7 +213,7 @@ Therefore within this exploration, I will be finding an equation relating the nu
 \section{Ideas and Keywords}
 First, we have to define some keywords that I used throughout the analysis. All YouTube videos are referred to as videos; the ratings of a video are its likes and dislikes, which are both positive integers; the likeability is the metric used to convey the quality of a video, and is represents a probability between 0 and 1, which can be defined as the mean probability of a viewer rating the video to select ``like''. (A likeability of $0.5$ means that a person rating the video is pressing the like button 50\% of the time) The focus would be to find a mathematical formula relating to this likeability.
 
-Additionally, I am assuming that people can and will rate the video solely based on its quality --- the quality being the fundamental objective value. This eliminates rating from viewers who watched only a section of the video, or ratings given based on the creator and not the video it self. The assumption is both very idealistic and hard to confirm; notice that the five chosen videos have more views and ratings, revealing a potential bias towards the negative ratings for the satisfied viewers simply move on. This will restrict the scope of any models created in this essay, but I believe that the spirit of the contest --- to promote small creators --- will offset the usual biases, pushing these sample videos into the scope of the models.
+Additionally, I am assuming that people can and will rate the video solely based on its quality --- the quality being the fundamental objective value. This eliminates rating from viewers who watched only a section of the video, or ratings given based on the creator and not the video itself. The assumption is both very idealistic and hard to confirm; notice that the five chosen videos have more views than ratings, revealing a potential bias towards the negative ratings for the satisfied viewers simply move on. This will restrict the scope of any models created in this essay, but I believe that the spirit of the contest --- to promote small creators --- will offset the usual biases, pushing these sample videos into the scope of the models.
 
 \subsection{Naive likeability}
 For my first attempt towards a formula of video likeabilities, consider video A and video C (table \ref{tbl:ex}).
@@ -226,7 +227,7 @@ For my first attempt towards a formula of video likeabilities, consider video A 
         \hline
         Likes & 4 & 34\\
         \hline
-        Dislikes & 0 & 6
+        Dislikes & 0 & 5
     \end{tabular}
     \captionof{table}{}
     \label{tbl:ex}
@@ -247,7 +248,7 @@ For my first attempt towards a formula of video likeabilities, consider video A 
 %    \label{fig:vid2}
 %\end{figure}
 
-Video A has 4 likes and 0 dislike. Video C has 34 likes and 6 dislikes. I found it tempting to define the likeability by the percentage of the likes received on a video, for I imagine likeability increases as the number of likes increase, and decreases as the number of dislikes increases. I will call this method the naive likeability, defined by:
+Video A has 4 likes and 0 dislike. Video C has 34 likes and 5 dislikes. I found it tempting to define the likeability by the percentage of the likes received on a video, for I imagine likeability increases as the number of likes increase, and decreases as the number of dislikes increases. I will call this method the naive likeability, defined by:
 \[
     L = \frac{x}{n},
 \]
@@ -255,7 +256,7 @@ where $L$ is the naive likeability, $x$ is the amount of likes, and $n$ is the a
 
 The naive likeabilities of video A ($L_1$) and video C ($L_2$) can thus be computed:
 \begin{align*}
-    L_{1} &= \frac{4}{4} = 1, \,\, L_{2} = \frac{34}{34 + 6} \approx 0.872
+    L_{1} &= \frac{4}{4} = 1, \,\, L_{2} = \frac{34}{34 + 5} \approx 0.872
 \end{align*}
 
 If we assume this naive mathematical definition of the likeabilities represents my language definition, then the first video rates higher than the second because it has a higher likeability ($1 > 0.872$). So I should watch video A first, right?
@@ -358,10 +359,10 @@ The blue dots in figure \ref{fig:sim_ratings_v1} represents the simulated occurr
 
 The graph was both an expected and unexpected turnout. The simulation placed the likeability of video at $0.838$, this is expected for there is certainly very little information available in only 4 ratings, but unexpected in size of the difference ($1-0.838=0.162$) against the naive likeability. This confirms my suspicion that the naive likeability overvalued the true likeability of the video for.
 
-By running the program with the parameters of the second video with 34 likes and 6 dislikes,
+By running the program with the parameters of the second video with 34 likes and 5 dislikes,
 I've obtained a mean of $0.857$ and figure \ref{fig:sim_ratings_v2}.
 
-In comparison with its naive likeability, video C is less affected by the lack of information for the simulated likeability has a much smaller difference ($0.872-0.857=0.015$) than that of video one's. This partially confirmed my hypothesis of the naive method gaining accuracy at larger rating counts (tested in appendix \ref{apd:acc}), and could justify the use of the naive likeability to judge popular videos.
+In comparison with its naive likeability, video C is less affected by the lack of information for the simulated likeability has a much smaller difference ($0.872-0.857=0.015$) than that of video A's. This partially confirmed my hypothesis of the naive method gaining accuracy at larger rating counts (tested in appendix \ref{apd:acc}), and could justify the use of the naive likeability to judge popular videos.
 
 The shape of the graphs are also worth noting.
 While the two figures are very distinct in shape and symmetry, I've noticed that the peak x-value of the graphs are the naive likeabilities of the videos. This is in contrast to the statistical mean of the graphs, which leans closer to the middle and away from the peak. Statistically, this is a comparison between mode and means, and the skewness of the distributions seemed to affect the exact differences between the mode and the mean. I wonder if when the graphs are symmetrical (like a normal distribution), the naive likeability really does equate to the correct likeability.
@@ -674,21 +675,21 @@ where $A_n$ and $B_n$ are constants. Our initial prior is achieved by setting $A
 
 \begin{Proof}
 	I will prove the N-Likes Generalization statement for $n\in \mathbb{N}$ through mathematical induction.
-	
+
 	The case when $n=1$ is already proven through the example.
-	
+
 	Now assume that the case holds when $n=k$, $k > 1$. Therefore $A_k = k+1$ and $B_k = k$.
-	
+
 	The prior probability density at $k$ likes is thus:
 	\[
 	P(l)(\theta) = (k+1) \theta ^{k}
 	\]
-	
+
 	The probability of the next like is still $\theta$:
 	\begin{align*}
 	P(D|l) &= \theta
 	\end{align*}
-	
+
 	and the posterior is computed via the continuous Bayes theorem:
 	\begin{align*}
 	P(\theta|D) &= \frac{P(D|l)(\theta) \times P(l)(\theta)}{\int_{0}^{1} P(D|l)(\theta) \times P(l)(\theta) \, d\theta}\\
@@ -697,7 +698,7 @@ where $A_n$ and $B_n$ are constants. Our initial prior is achieved by setting $A
 	&= \frac{\theta^{k+1}}{\Eval{\frac{\theta^{k+2}}{k+2}}{1}{0}}\\
 	&= (k+2) \theta^{k+1}.
 	\end{align*}
-	
+
 	Because the posterior is the belief function of $k+1$ likes, the following holds:
 	\begin{align*}
 	A_{k+1} \theta^{B_{k+1}} &= (k+2) \theta ^{k+1}\\
@@ -707,7 +708,7 @@ where $A_n$ and $B_n$ are constants. Our initial prior is achieved by setting $A
 	&= (k+1),
 	\end{align*}
 	hence proving that the case holds for $n=k+1$ as well.
-	
+
 	Therefore by the principle of mathematical induction, because the case holds for $n=1$, and if $n=k$ is held, $n=k+1$ will be held, the case will hold for all $n\in\mathbb{N}$.
 \end{Proof}
 
@@ -945,7 +946,7 @@ def likeability(rolls, prior):
 \end{figure}
 
 \begin{figure}[H]
-    \paragraph{Proof} 
+    \paragraph{Proof}
 
     \caption{Proof of the N-Likes Generalization}
     \label{eq:nlikeproof}
