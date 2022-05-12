@@ -336,7 +336,7 @@ Finally, I decided to plot the relationship between \pythoninline{occurrence} ag
 %\newpage
 
 
-To see the output, I ran the program with the parameters of 4 likes and 0 dislike from video one, and 1000 samples later I was greeted with the graph in figure \ref{fig:sim_ratings_v1}.
+To see the output, I ran the program with the parameters of 4 likes and 0 dislike from video A, and 1000 samples later I was greeted with the graph in figure \ref{fig:sim_ratings_v1}.
 
 \begin{figure}[H]
     \centering
@@ -357,7 +357,7 @@ To see the output, I ran the program with the parameters of 4 likes and 0 dislik
 \subsection{Simulation Analysis}
 The blue dots in figure \ref{fig:sim_ratings_v1} represents the simulated occurrence of the video ratings out of 1000 samples of a chosen likeability (the likeabilities are selected with steps of 0.01 for clarity). The red vertical line graphs the mean likeability.
 
-The graph was both an expected and unexpected turnout. The simulation placed the likeability of video at $0.838$, this is expected for there is certainly very little information available in only 4 ratings, but unexpected in size of the difference ($1-0.838=0.162$) against the naive likeability. This confirms my suspicion that the naive likeability overvalued the true likeability of the video for.
+The graph was both an expected and unexpected turnout. The simulation placed the likeability of video at $0.838$, this is expected for there is certainly very little information available in only 4 ratings, but unexpected in size of the difference ($1-0.838=0.162$) against the naive likeability. This confirms my suspicion that the naive likeability overvalued the true likeability of the video.
 
 By running the program with the parameters of the second video with 34 likes and 5 dislikes,
 I've obtained a mean of $0.857$ and figure \ref{fig:sim_ratings_v2}.
@@ -389,7 +389,7 @@ Two things are to be highlighted here. Firstly notice the slight variations in t
 \section{Statistical Approach}
 
 % what are distributions
-To formalize and reduce the variations of the simulation approach, I sought for a analytic equation of the likeability metric. Remember that the simulation was used to compute the occurrences of a given rating for all ranges of likeabilities, and the statistical mean of the curve it creates is the simulated likeability of the video. It may be helpful to define this curve more mathematically without the element of chance in the occurrence function.
+To formalize and reduce the variations of the simulation approach, I sought for an analytic equation of the likeability metric. Remember that the simulation was used to compute the occurrences of a given rating for all ranges of likeabilities, and the statistical mean of the curve it creates is the simulated likeability of the video. It may be helpful to define this curve more mathematically without the element of chance in the occurrence function.
 
 % examples of distributions
 \subsection{Continuous Random Variables and Prior Distribution}
@@ -577,13 +577,13 @@ Overall, the statistical method required a reasonable amount of statistical know
 
 Upon inspection, I've noticed that when compared with the naive method, their differences decrease when the number of ratings increase --- notice that video B's difference ($1-0.962 = 0.038$) is much smaller than video A's difference ($1-0.833= 0.167$). Mathematically, the plus one and plus two has diminishing effects on the likeability of a video as the numerator and denominator increases, which confirms my hypothesis that the naive method approaches the representative likeability at larger ratings.
 
-While this inspection could justify the use of likes to ratings ratios as metrics for judgment of quality for popular videos, I believe the minimal additional computation required for the statistical measurement does not justify such approximations on review sites --- especially for arguments of the largeness of ratings needed for a close approximation. Is 1000 ratings enough? What about 2000? I believe that the statistical approach that is simple and representative should always be used for consistency and correctness.
+While this inspection could justify the use of likes to ratings ratios as metrics for judgment of the quality of popular videos, I believe the minimal additional computation required for the statistical measurement does not justify such approximations on review sites --- especially for arguments of the largeness of ratings needed for a close approximation. Are 1000 ratings enough? What about 2000? I believe that a statistical approach that is simple and representative should always be used for consistency and correctness.
 
 \section{Bayesian Approach}
-The premise of this section was hinted upon within the statistical analysis of the probability distribution of the likeability random variable. I am going to break the premise of the prior uniform probability density function. The myriads of reasons include: YouTube recommendations are algorithmic and is unlikely to recommend me a low likeability video; it is very difficult to make a poor maths video on a topic, for I believe the subject has a high skill ceiling of entering; and personally, I enjoy watching these maths videos online, and have slightly higher expectations of the community. While these factors are difficult to capture in traditional statistical distribution analysis, it is the core idea in a branch of statistics called Bayesian statistics.
+The premise of this section was hinted upon within the statistical analysis of the probability distribution of the likeability random variable. I am going to break the premise of the prior uniform probability density function. The myriads of reasons include: YouTube recommendations is algorithmic and is unlikely to recommend me a low likeability video; it is very difficult to make a poor maths video on a topic, for I believe the subject has a high skill ceiling of entering; and personally, I enjoy watching these maths videos online, and have slightly higher expectations of the community. While these factors are difficult to capture in traditional statistical distribution analysis, it is the core idea in a branch of statistics called Bayesian statistics.
 
 % frequenist, bayesian
-The core principles in the two branches of statistics differ in their interpretations of probabilities. The frequentists define the probability by its percentage of occurrence as the sample size increases to infinity, with the manipulations of random variables being convolutions; the Bayesians perceive probabilities as a belief of the next event, which updates as new data are seen. The method of combining binomial and uniform distributions fits the frequentists view, but the Bayesian view perfectly fits my requirement of a changeable initial belief.
+The core principles in the two branches of statistics differ in their interpretations of probabilities. The frequentists define the probability by its percentage of occurrence as the sample size increases to infinity, with the manipulations of random variables being convolutions; the Bayesians perceive probabilities as a belief of the next event, which updates as new data are seen. The method of combining binomial and uniform distributions fits the frequentists' view, but the Bayesian view perfectly fits my requirement of a changeable initial belief.
 
 % set up, definitions
 \subsection{Defining the Bayesian Prior, Posterior, and Event}
@@ -619,7 +619,7 @@ where $x$ is the prior belief of some event, and $x_i$ representing the space of
 %Our belief of the probability of illness of the patient had been updated from $0.01$ to $0.308$. While it is reasonable that a positive test result conveys a higher chance of illness, it still really surprised me when I first saw it. How is it that we can only be 31\% sure of the illness if the test has an accuracy of 40\%? This discrepancy with naive solutions is also present in the naive likeability method, which may be a warning that special care is needed to tread in the field of statistics --- especially if one may be diagnosing a patient wrongly.
 
 % actual attempt
-I would need to extend this theorem to fit the continuous belief of the likeabilities of a video. To check for the validity of this method, I will be first applying the extended method on an uniform prior.
+I would need to extend this theorem to fit the continuous belief of the likeabilities of a video. To check for the validity of this method, I will first apply it on an uniform prior.
 
 \subsection{Prior Updating and the Continous Bayes Theorem}
 With the random variable likeability $L$, the initial prior $P(l)$ of the likeability is a continuous uniform distribution:
@@ -693,7 +693,7 @@ where $A_n$ and $B_n$ are constants. Our initial prior is achieved by setting $A
 	and the posterior is computed via the continuous Bayes theorem:
 	\begin{align*}
 	P(\theta|D) &= \frac{P(D|l)(\theta) \times P(l)(\theta)}{\int_{0}^{1} P(D|l)(\theta) \times P(l)(\theta) \, d\theta}\\
-	&= \frac{\theta (k+1)\theta^k}{\theta \int_0^1 (k+1)\theta^k \, d\theta}\\
+	&= \frac{\theta (k+1)\theta^k}{ \int_0^1 \theta (k+1)\theta^k \, d\theta}\\
 	&= \frac{\theta^{k+1}}{\int_0^1 \theta^{k+1} \, d\theta}\\
 	&= \frac{\theta^{k+1}}{\Eval{\frac{\theta^{k+2}}{k+2}}{1}{0}}\\
 	&= (k+2) \theta^{k+1}.
@@ -861,7 +861,7 @@ Ultimately, I would choose to use the Bayesian likeability with my nsqrt prior a
     \label{tbl:all}
 \end{figure}
 
-Looking at the full picture, I realized that while this conclusion of watching orders can be held starting from the simulated likeability, but just like the naive approach, it only approximate the likeabilities. The custom prior method is the only that will truly reflect my personal perception of the quality of these videos, and at higher sample counts, even the smallest changes in likeability values will be significant.
+Looking at the full picture, I realized that while this conclusion of watching orders can be held starting from the simulated likeability, but just like the naive approach, it only approximate the likeabilities. The custom prior method is the only method that will truly reflect my personal perception of the qualities of these videos, and at higher sample counts, even the smallest changes in likeability values will be significant.
 
 This project has been both entertaining to research, and also applicable in a lot of areas that I will be facing in the future. In the scope of this analysis, I can use various prior distributions to model to model each genre of videos that I'll watch, saving me time. I can also use it to find the best book online given the ratings, or select the most favorable bowling place given user reviews, the five methods offer me a spectrum of techniques to statistically analyze the problem. For future studies, it is likely that I will be including the view counts and creating a more inclusive metric to account for videos that does not follow my main assumption --- that people are rating the videos solely based on its quality. This may reduce the  impact of dislike-bombing or view-botting on YouTube and other video sharing platforms. Nevertheless, this has been a worthwhile exploration.
 
