@@ -28,8 +28,6 @@
 %Straight Lines [id:da23437668964441416] 
 \draw [line width=1.5]    (375.9,273.7) -- (375.9,227.7) ;
 \draw [shift={(375.9,223.7)}, rotate = 90] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (11.61,-5.58) -- (0,0) -- (11.61,5.58) -- cycle    ;
-%Shape: Rectangle [id:dp036411208549921525] 
-\draw  [color={rgb, 255:red, 255; green, 255; blue, 255 }  ,draw opacity=1 ][fill={rgb, 255:red, 255; green, 255; blue, 255 }  ,fill opacity=0.9 ] (180.9,163.7) -- (235.9,163.7) -- (235.9,214.7) -- (180.9,214.7) -- cycle ;
 
 % Text Node
 \draw (345,338) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {Quantity of Imported \\Chinese Aluminum (Million Tons)};

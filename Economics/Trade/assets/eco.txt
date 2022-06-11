@@ -1,0 +1,50 @@
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1,scale=0.9, every node/.style={scale=0.9}]
+%uncomment if require: \path (0,488); %set diagram left start at 0, and has height of 488
+
+%Shape: Axis 2D [id:dp9378080944723584] 
+\draw [line width=2.25]  (152,358.2) -- (491.9,358.2)(185.99,101.7) -- (185.99,386.7) (484.9,353.2) -- (491.9,358.2) -- (484.9,363.2) (180.99,108.7) -- (185.99,101.7) -- (190.99,108.7)  ;
+%Straight Lines [id:da6161930533085839] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=3]    (431.33,344.87) -- (244.33,148.87) ;
+%Straight Lines [id:da952453677860792] 
+\draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][line width=3]    (413.9,151.7) -- (234.33,334.87) ;
+%Straight Lines [id:da013650279070511417] 
+\draw [line width=1.5]    (364.9,190.87) -- (364.9,162.7) ;
+\draw [shift={(364.9,158.7)}, rotate = 90] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (11.61,-5.58) -- (0,0) -- (11.61,5.58) -- cycle    ;
+%Straight Lines [id:da14772370305868365] 
+\draw [line width=1.5]  [dash pattern={on 5.63pt off 4.5pt}]  (304.33,210.87) -- (304.33,355.87) ;
+%Straight Lines [id:da8471313221831461] 
+\draw [line width=1.5]  [dash pattern={on 5.63pt off 4.5pt}]  (329.9,237.7) -- (329.9,356.87) ;
+%Straight Lines [id:da4988123104743337] 
+\draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][line width=3]    (371.9,140.7) -- (192.33,323.87) ;
+%Straight Lines [id:da9196551899228869] 
+\draw [line width=1.5]  [dash pattern={on 5.63pt off 4.5pt}]  (304.33,210.87) -- (186.33,210.87) ;
+%Straight Lines [id:da8644451540577958] 
+\draw [line width=1.5]  [dash pattern={on 5.63pt off 4.5pt}]  (329.9,237.7) -- (185.33,237.7) ;
+
+% Text Node
+\draw (400,367) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {British Real Output (\$billion)};
+% Text Node
+\draw (158.95,157.52) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize,rotate=-270.03] [align=left] {British CPI (\$)};
+% Text Node
+\draw (245,68) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {\textbf{British Economy}};
+% Text Node
+\draw (321,370.4) node [anchor=north west][inner sep=0.75pt]    {$Y_{1}$};
+% Text Node
+\draw (292,369.93) node [anchor=north west][inner sep=0.75pt]    {$Y_{2}$};
+% Text Node
+\draw (413,127) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {SRAS};
+% Text Node
+\draw (364,119) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {SRAS'};
+% Text Node
+\draw (438,321) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {AD};
+% Text Node
+\draw (146,200.93) node [anchor=north west][inner sep=0.75pt]    {$PL_{2}$};
+% Text Node
+\draw (148,227.93) node [anchor=north west][inner sep=0.75pt]    {$PL_{1}$};
+
+
+\end{tikzpicture}

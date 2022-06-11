@@ -35,18 +35,19 @@
 
 % TEXCOUNT
 \usepackage{moreverb} % for verbatim ouput
-\newcommand{\initTexcount}[1]{\immediate\write18{texcount -inc -incbib 
-		-sum #1 > /tmp/wordcount.tex}}
+\newcommand{\initTexcount}[1]{\immediate\write18{texcount -inc -incbib
+		-sum #1 > .wordcount.tex}}
 \newcommand\wordcount{
-		\verbatiminput{/tmp/wordcount.tex}}
+		\verbatiminput{.wordcount.tex}}
 
-\title{The possibilities of UK import tariffs}
-\author{Terry Qi}
+\title{The consequences of interdependence through UK's import tariffs on Chinese exported Aluminum Extrusion}
+\author{\vspace{-8ex}}
+\date{\vspace{-8ex}}
 
 \begin{document}
 
 \maketitle
-Word count: 800\\
+Word count: 822\\
 Article: https://www.reuters.com/markets/commodities/uk-may-impose-duties-up-29-chinese-aluminium-extrusions-2022-05-20/, ``UK may impose duties of up to 29\% on Chinese aluminium extrusions'', published by Reuters, written on 21/05/2022, accessed 07/06/2022\\
 Topic: The Global Economy\\
 Key Concept: Interdependence
@@ -87,7 +88,7 @@ One major firm that produces aluminium extrusions in Britain is Norway's Norsk H
 % STRUCTURE
 
 % DEFINITION
-The article described the motifs behind Britain's possible imposition of imported Chinese aluminum extrusion as anti-dumping measures. Import tariffs are taxes imposed per unit good or service import from a particular country --- the proposed tariff is proportional of maximum 29\%. Such tariff imposition is a protectionist policy aiming to reduce international interdependence and assist domestic firms through reduced competition. The argument is based on dumping, the exporting of goods and services under their costs of production often caused by governmental subsidies, that was viewed by the TRA (Trade Rememdies Authority) as ``unfair trade practices''. I will be evaluating the policy's effectiveness and its potential consequences within the two nations through the key concept of interdependence.
+The article described the motifs behind Britain's possible imposition of imported Chinese aluminum extrusion as anti-dumping measures. Import tariffs are taxes imposed per unit good or service import from a particular country --- the proposed tariff is proportional of maximum 29\%. Such tariff imposition is a protectionist policy aiming to reduce international interdependence and assist domestic firms through reduced competition. The argument is based on dumping, the exporting of goods and services under their costs of production often caused by governmental subsidies, that was viewed by the TRA (Trade Remedies Authority) as ``unfair trade practices''. I will be evaluating the policy's effectiveness and its potential consequences within the two nations through the key concept of interdependence.
 
 % State the addition of tariff, brief connection to intended purpose.
 This trade protectionism is likely to benefit British Aluminum Extrusions producers in the short term at a cost of reduced international trade. A trade supply-demand diagram (figure \ref{fig:tariff}) can be used to explain this.
@@ -102,28 +103,41 @@ This trade protectionism is likely to benefit British Aluminum Extrusions produc
 The imposition of a proportional tariff on Chinese-exported Aluminum Extrusions will evenly increase the Chinese supply in the British market, causing an upwards shift from $S(China)$ to $S'(China)$. Assuming that the Chinese supply is perfectly elastic --- infinite supply quality at a price --- for its large Aluminum manufacturing sector (citation), the shift will increase domestic extrusions price from $P_w$ to $P_2$ as consumption decreases from $Q_{d1}$ to $Q_{d2}$. If the new price $P_2$ is below the equilibrium price where $D=S(Domestic)$, foreign imports will drop from $Q_{d1}-Q_{1}$ to $Q_{d2}-Q_{2}$ decreasing revenue from $J+I+H$ to $I$; British producers will increase production from $Q_1$ to $Q_2$ increasing revenue from $F+G$ to $B+C+F+G+H$. The British government will collect revenue $D$ due to the tariff. Overall, the inefficiency of British producers and the decreased consumption both reduce welfare of size $C$ and $E$, a dead-weight loss of decreasing social surplus.
 
 % Key concept
-The key concept of interdependence is revealed in the interdependence between economies during international trade, as well as the interconnectivity between protectionism policies with the benefits and harms to domestic or foreigns producers and the British economy as a whole. The policy is unlikely to affect only a few stakeholders in this interdependent global economy and may have long term effects.
+The key concept of interdependence is demonstrated in the interconnectivity between the Chinese and British economy during trade, including the interdependence between foreign producer and domestic consumers. The protectionist policy's reduction in social welfare and efficiency through comparative advantages of the nations is more apparent in this interdependent global economy.
 
 
 % TODO: NEED THREE POINTS
 % CONCLUSION, LONG,SHORT-TERM, ASSUMPTIONS, STAKEHOLDERS, PRO CON, PRIORITiES
 % Point 1, tariff's effect on domestic firms and foreign firms.
-Directly in the medium term, the tariff will benefit domestic aluminum producers and increase government revenue that can create supply-side growth in the long-run. For the tariff has increased domestic producer production and revenues, it is likely to lift ``struggling'' domestic firms back into operation by decreasing the competitiveness in the subsidized Chinese imported extrusions within the domestic market. The domestic effects are increased employment in the metallic industry and the benefits to national security in an important commodity --- aluminum are widely used in infrastructure --- that may reduce political uncertainty during the Ukraine-Russia conflict. The additional government revenue will also be benefitical in achieving domestic supply-side development through subsidies in periods of high inflation caused by supply-side shocks (citation), particularlly in the energy and commodity sector. Furthermore, while the British tariff does create various DWL for society, it may be justified through the massive alleged subsides of Chinese producers in that the decreased consumption to $Q_{d2}$ prevented overconsumption and overproduction of aluminium extrusions. This retaliation may ensure a fairer international interdependence and increase the sustainability of production in the long term.
+The tariff will directly benefit domestic aluminum producers and increase government revenue that can create supply-side growth in the long-run. For the tariff has increased domestic producer production and revenues, it is likely to lift ``struggling'' domestic firms back into operation by decreasing the competitiveness in the subsidized Chinese imported extrusions within the domestic market. The domestic effects are increased employment in the metallic industry and the benefits to national security in an important commodity --- aluminum are widely used in infrastructure --- that may reduce political uncertainty during the Ukraine-Russia conflict. The additional government revenue will also be beneficial in achieving domestic supply-side development through subsidies in periods of high inflation caused by supply-side shocks (citation), particularly in the energy and commodity sector. Furthermore, while the British tariff does create various DWL for society, it may be justified through the massive alleged subsides of Chinese producers in that the decreased consumption to $Q_{d2}$ prevented overconsumption and overproduction of aluminum extrusions. This retaliation may ensure a fairer international interdependence and increase the sustainability of production in the long term.
 % Point 1, Job protection and fair competition long run. Subsides of misallocation in resources offset.
 
 % Point 2, demand elasticity stuff, MLC and inflation.
-However, the inelasticities of aluminum extrusion demand can reduce the effectiveness of the policy that runs risk in inflating the already inflated economy in the short-run. Due to a lack of substitutes (citation) and the importance of the extrusions in infrastructure projects, the British demand for these goods will be highly inelastic (figure).
+\begin{figure}[H]
+    \centering
+    \tikzfig{assets/eco.txt}
+    \caption{}
+    \label{fig:eco}
+\end{figure}
+However, the elasticity of aluminum extrusion demand can reduce the effectiveness of the policy that runs risk in inflating the already inflated economy in the short-run. Due to a lack of substitutes (citation), the short time period, and the importance of the extrusions in infrastructure projects, the British demand for these goods will be highly inelastic (figure \ref{fig:tariff}).
+Assuming that the tariff intends to benefit domestic producers, a large tax is required to reduce foreign imports, implying a larger rise in consumer price of aluminum. It is likely that not only will the policy affect construction firms through higher costs, the interdependence between sectors of economy can propagate the higher cost of production within the economy due to the high utility of aluminum for infrastructure. The upwards shift in the $SRAS$ to $SRAS'$ in figure \ref{fig:eco} will decrease economic activity to $Y_2$ and increase price level to $PL_2$, further applying inflationary pressure on a heated economy (citation). Such high rates of inflation will generate uncertainty and reduce the real value of savings, affecting investors and elder savers.
 
 
 
+\begin{figure}[H]
+    \centering
+    \tikzfig{assets/forex.txt}
+    \caption{}
+    \label{fig:forex}
+\end{figure}
 
-
-
-% Point 3, Tariff's consequences of retailiation and inflationary,  Compariative advantage of internationalization.
-
+% Point 3, Tariff's consequences of retailiation and inflationary
+Moreover, this inflationary pressure may be worsened if China takes retaliation actions in tit-for-tat for the loss of Chinese revenue through imposing UK machinery export tariffs. UK trade deficit will increases in such scenarios as British exports becomes less competitive in Chinese markets. This causes the pound to depreciate from $P_1$ to $P_2$ on the Forex market (figure \ref{fig:forex}) as the demand for British currency decreases to $AD'$. The fall in the purchasing power of the pound would increase the economy's cost of imports, especially against the large portion of Chinese commodities (citation), which fuels existing cost-push inflation (figure \ref{fig:eco}). A full on trade-war will benefit neither economy in the long-run demonstrated by the US (citation).
 
 % Summary
-% Affects stakeholders, priorities in long run, yet faces possible consequences reduce overall efficiency.
+% Affects stakeholders, priorities in long run, yet faces possible consequences
+While the tariff on Chinese aluminum extrusions would benefit British producers helping with supply-side growth in the long-term, the inelastic demand of the product in an interdependent economy may increase short-run inflationary pressure, worsened by the mere prospect of foreign retaliation.
+
 
 
 
