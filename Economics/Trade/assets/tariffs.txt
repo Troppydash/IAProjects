@@ -38,9 +38,9 @@
 % Text Node
 \draw (403,254.4) node [anchor=north west][inner sep=0.75pt]    {$S( China)$};
 % Text Node
-\draw (299,96.4) node [anchor=north west][inner sep=0.75pt]    {$S( Domestic)$};
+\draw (296,90.4) node [anchor=north west][inner sep=0.75pt]    {$S( Domestic)$};
 % Text Node
-\draw (155,85.4) node [anchor=north west][inner sep=0.75pt]    {$D$};
+\draw (163,87.4) node [anchor=north west][inner sep=0.75pt]    {$D$};
 % Text Node
 \draw (125,16) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {\textbf{Britain's Domestic Market of Aluminum Extrusions}\\\textbf{Upon Tariff Imposition}};
 % Text Node
@@ -56,13 +56,11 @@
 % Text Node
 \draw (102,206.4) node [anchor=north west][inner sep=0.75pt]    {$P_{2}$};
 % Text Node
-\draw (194,172) node [anchor=north west][inner sep=0.75pt]   [align=left] {A};
+\draw (146,242) node [anchor=north west][inner sep=0.75pt]   [align=left] {A};
 % Text Node
-\draw (146,242) node [anchor=north west][inner sep=0.75pt]   [align=left] {B};
+\draw (183,244) node [anchor=north west][inner sep=0.75pt]   [align=left] {B};
 % Text Node
-\draw (183,244) node [anchor=north west][inner sep=0.75pt]   [align=left] {C};
-% Text Node
-\draw (232,244) node [anchor=north west][inner sep=0.75pt]   [align=left] {D};
+\draw (232,244) node [anchor=north west][inner sep=0.75pt]   [align=left] {C};
 % Text Node
 \draw (281,243) node [anchor=north west][inner sep=0.75pt]   [align=left] {E};
 % Text Node
