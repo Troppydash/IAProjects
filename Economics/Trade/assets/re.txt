@@ -1,0 +1,62 @@
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1,scale=0.9, every node/.style={scale=0.9}]
+%uncomment if require: \path (0,430); %set diagram left start at 0, and has height of 430
+
+%Shape: Axis 2D [id:dp25235200392473156] 
+\draw [line width=2.25]  (117,356.2) -- (456.9,356.2)(150.99,99.7) -- (150.99,384.7) (449.9,351.2) -- (456.9,356.2) -- (449.9,361.2) (145.99,106.7) -- (150.99,99.7) -- (155.99,106.7)  ;
+%Straight Lines [id:da38547398386783804] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=3]    (370.9,354.7) -- (173.6,149.33) ;
+%Straight Lines [id:da3566187335753367] 
+\draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][line width=3]    (364.6,148.33) -- (150.9,344.7) ;
+%Straight Lines [id:da36569304581386564] 
+\draw [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ][line width=3]    (417.9,305.7) -- (150.9,305.7) ;
+%Straight Lines [id:da7730139940644812] 
+\draw [color={rgb, 255:red, 0; green, 0; blue, 0 }  ,draw opacity=1 ][line width=3]    (420.9,258.7) -- (153.9,258.7) ;
+%Straight Lines [id:da83966282753872] 
+\draw [line width=1.5]  [dash pattern={on 5.63pt off 4.5pt}]  (246.9,263.33) -- (246.9,355.33) ;
+%Straight Lines [id:da9495396091061512] 
+\draw [line width=1.5]  [dash pattern={on 5.63pt off 4.5pt}]  (192.6,310.33) -- (192.9,353.7) ;
+%Straight Lines [id:da6726366152485083] 
+\draw [line width=1.5]  [dash pattern={on 5.63pt off 4.5pt}]  (326.9,307.7) -- (326.9,356.7) ;
+%Straight Lines [id:da043384583707519186] 
+\draw [line width=1.5]  [dash pattern={on 5.63pt off 4.5pt}]  (280.9,261.7) -- (280.9,356.33) ;
+%Straight Lines [id:da4221440550056438] 
+\draw [line width=1.5]    (395.9,300.7) -- (395.9,272.33) ;
+\draw [shift={(395.9,268.33)}, rotate = 90] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (11.61,-5.58) -- (0,0) -- (11.61,5.58) -- cycle    ;
+
+% Text Node
+\draw (365,365) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {Quantity of Imported \\British Machinery (Million units)};
+% Text Node
+\draw (96.95,194.52) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize,rotate=-270.03] [align=left] {Domestic Price of \\Machinery\\(\$ per Ton)};
+% Text Node
+\draw (421,233.4) node [anchor=north west][inner sep=0.75pt]    {$S'( Britain)$};
+% Text Node
+\draw (423,281.4) node [anchor=north west][inner sep=0.75pt]    {$S( Britain)$};
+% Text Node
+\draw (316,117.4) node [anchor=north west][inner sep=0.75pt]    {$S( Domestic)$};
+% Text Node
+\draw (182,127.4) node [anchor=north west][inner sep=0.75pt]    {$D$};
+% Text Node
+\draw (145,43) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {\textbf{Chinese Domestic Market of Machinery Upon}\\\textbf{Chinese Retaliation Tariffs}};
+% Text Node
+\draw (179,364.4) node [anchor=north west][inner sep=0.75pt]    {$Q_{1}$};
+% Text Node
+\draw (234,364.4) node [anchor=north west][inner sep=0.75pt]    {$Q_{2}$};
+% Text Node
+\draw (275,364.4) node [anchor=north west][inner sep=0.75pt]    {$Q_{d2}$};
+% Text Node
+\draw (312,364.4) node [anchor=north west][inner sep=0.75pt]    {$Q_{d1}$};
+% Text Node
+\draw (121,295.4) node [anchor=north west][inner sep=0.75pt]    {$P_{w}$};
+% Text Node
+\draw (122,248.4) node [anchor=north west][inner sep=0.75pt]    {$P_{2}$};
+% Text Node
+\draw (227,283) node [anchor=north west][inner sep=0.75pt]   [align=left] {B};
+% Text Node
+\draw (289,283) node [anchor=north west][inner sep=0.75pt]   [align=left] {E};
+
+
+\end{tikzpicture}
