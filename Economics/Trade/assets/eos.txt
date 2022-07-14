@@ -1,0 +1,42 @@
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1,scale=0.9, every node/.style={scale=0.9}]
+%uncomment if require: \path (0,367); %set diagram left start at 0, and has height of 367
+
+%Shape: Axis 2D [id:dp17190071961873343] 
+\draw [line width=2.25]  (139,296.5) -- (478.9,296.5)(172.99,40) -- (172.99,325) (471.9,291.5) -- (478.9,296.5) -- (471.9,301.5) (167.99,47) -- (172.99,40) -- (177.99,47)  ;
+%Curve Lines [id:da11930433386965411] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=3]    (200.9,102.55) .. controls (240.9,254.55) and (405.9,247.55) .. (433.9,179.55) ;
+%Straight Lines [id:da8518278193879306] 
+\draw [line width=1.5]  [dash pattern={on 5.63pt off 4.5pt}]  (306.9,221.52) -- (306.9,271.22) -- (306.9,298.53) ;
+%Straight Lines [id:da36284603496534307] 
+\draw [line width=1.5]  [dash pattern={on 5.63pt off 4.5pt}]  (258.9,198.52) -- (258.9,248.22) -- (258.9,298.22) ;
+%Straight Lines [id:da17782300385614047] 
+\draw [line width=1.5]  [dash pattern={on 5.63pt off 4.5pt}]  (258.9,198.52) -- (175.1,198.52) ;
+%Straight Lines [id:da1412679691100306] 
+\draw [line width=1.5]  [dash pattern={on 5.63pt off 4.5pt}]  (306.9,221.52) -- (173.1,221.52) ;
+%Straight Lines [id:da019228710703635188] 
+\draw [line width=1.5]    (308.1,210.52) -- (271.92,192.64) ;
+\draw [shift={(268.33,190.87)}, rotate = 26.3] [fill={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.08]  [draw opacity=0] (11.61,-5.58) -- (0,0) -- (11.61,5.58) -- cycle    ;
+
+% Text Node
+\draw (133.95,150.52) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize,rotate=-270.03] [align=left] {Average Cost of Aluminium \\Per Tonne ($\displaystyle \$)$};
+% Text Node
+\draw (381,309.53) node [anchor=north west][inner sep=0.75pt]  [font=\scriptsize] [align=left] {Output of Aluminium\\(million tonnes)};
+% Text Node
+\draw (144,212.4) node [anchor=north west][inner sep=0.75pt]    {$C_{1}$};
+% Text Node
+\draw (144,187.4) node [anchor=north west][inner sep=0.75pt]    {$C_{2}$};
+% Text Node
+\draw (300,303.4) node [anchor=north west][inner sep=0.75pt]    {$Q_{1}$};
+% Text Node
+\draw (251,305.4) node [anchor=north west][inner sep=0.75pt]    {$Q_{2}$};
+% Text Node
+\draw (437,161.4) node [anchor=north west][inner sep=0.75pt]    {$AC$};
+% Text Node
+\draw (202,28) node [anchor=north west][inner sep=0.75pt]  [font=\small] [align=left] {\textbf{The Average Cost Curve of British }\\\textbf{Aluminium Producers}};
+
+
+\end{tikzpicture}
